@@ -21,7 +21,12 @@ def main():
   Gtk.main()
 
 def draw(da, ctx):
+  # draw background
+  ctx.set_source_rgb(255, 255, 255) # color white
+  ctx.paint()
+
   ctx.set_source_rgb(0, 0, 0) # color black
+  
   ctx.set_line_width(2)
   ctx.move_to(20, 20)
   ctx.rel_line_to(50,50)
