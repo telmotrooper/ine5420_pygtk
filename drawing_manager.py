@@ -1,3 +1,5 @@
+from shapes.point import Point
+
 class DrawingManager:
   def draw_background(self, da, ctx):
     ctx.set_source_rgb(255, 255, 255) # color white
@@ -15,3 +17,7 @@ class DrawingManager:
     ctx.move_to(20, 20)
     ctx.rel_line_to(50,50)
     ctx.stroke()
+
+    p = Point("Point 1")
+    p.addCoords(20, 200)  
+    p.draw(ctx)

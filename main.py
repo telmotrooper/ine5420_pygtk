@@ -8,6 +8,7 @@ from gi.repository import Gtk
 from handler import Handler
 from drawing_manager import DrawingManager
 
+
 def main():
   dm = DrawingManager()
 
