@@ -3,19 +3,17 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+from handler import Handler
 
-class Handler:
-    def onDestroy(self, *args):
-        Gtk.main_quit()
+def main():
+  builder = Gtk.Builder()
+  builder.add_from_file("gui.glade")
+  builder.connect_signals(Handler(builder))
 
-    def onButtonPressed(self, button):
-        print("Hello World!")
+  window = builder.get_object("MainWindow")
+  window.show_all()
 
-builder = Gtk.Builder()
-builder.add_from_file("gui.glade")
-builder.connect_signals(Handler())
+  Gtk.main()
 
-window = builder.get_object("MainWindow")
-window.show_all()
-
-Gtk.main()
+if __name__ == "__main__":
+  main()
