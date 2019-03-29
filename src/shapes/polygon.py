@@ -1,7 +1,6 @@
 class Polygon:
-  coords = []
-
   def __init__(self, name):
+    self.coords = []
     self.name = name
   
   def addCoords(self, x, y):
@@ -16,5 +15,5 @@ class Polygon:
       x2 = entry["x"]
       y2 = entry["y"]
       ctx.line_to(x2,y2)
-
+    ctx.close_path()
     ctx.stroke()

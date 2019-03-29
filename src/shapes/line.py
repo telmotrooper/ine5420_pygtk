@@ -1,7 +1,6 @@
 class Line:
-  coords = []
-
   def __init__(self, name):
+    self.coords = []
     self.name = name
   
   def addCoords(self, x, y):
