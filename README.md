@@ -2,10 +2,4 @@
 
 ## Usage
 
-Install dependencies:
-
-`pipenv install`
-
-Run application:
-
-`pipenv run python main.py`
+Install `pipenv` and run `setup.sh`
