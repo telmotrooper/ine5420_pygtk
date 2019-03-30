@@ -759,7 +759,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="yalign">0.4699999988079071</property>
-                        <signal name="clicked" handler="openAddObjectWindow" swapped="no"/>
+                        <signal name="clicked" handler="onAddObjectClicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -773,7 +773,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <signal name="clicked" handler="removeObject" swapped="no"/>
+                        <signal name="clicked" handler="onRemoveObjectClicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1085,12 +1085,12 @@
               </packing>
             </child>
             <child>
-              <object class="GtkScrolledWindow" id="OutputWindow">
+              <object class="GtkScrolledWindow" id="ScrolledWindow">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="shadow_type">in</property>
                 <child>
-                  <object class="GtkTextView" id="OutputCommandsShell">
+                  <object class="GtkTextView" id="Log">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="right_margin">1</property>
