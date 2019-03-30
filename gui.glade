@@ -658,7 +658,7 @@
     <property name="title" translatable="yes">INE5420 - Computação Gráfica</property>
     <property name="default_width">1152</property>
     <property name="default_height">648</property>
-    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
+    <signal name="destroy" handler="onDestroy" swapped="no"/>
     <child>
       <placeholder/>
     </child>
