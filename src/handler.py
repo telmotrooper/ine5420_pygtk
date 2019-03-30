@@ -16,14 +16,14 @@ class Handler:
     add_object_window = self.builder.get_object("AddObjectWindow")
     add_object_window.show_all()
 
-  def addPoint(self, button):
+  def onAddPoint(self, button):
     name_entry = self.builder.get_object("PointNameEntry")
     x_entry = self.builder.get_object("PointXEntry")
     y_entry = self.builder.get_object("PointYEntry")
     p1 = Point(name_entry.get_text())
     p1.addCoords(x_entry.get_text(), y_entry.get_text())
 
-  def addLine(self, button):
+  def onAddLine(self, button):
     name_entry = self.builder.get_object("EntryNameNewLine")
     x1_entry = self.builder.get_object("EntryX1Line")
     y1_entry = self.builder.get_object("EntryY1Line")
