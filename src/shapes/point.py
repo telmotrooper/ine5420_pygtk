@@ -14,7 +14,7 @@ class Point:
   def draw(self, ctx):  # Reference: https://pycairo.readthedocs.io/    
     x = self.coords[0]["x"]
     y = self.coords[0]["y"]
-
+  
     ctx.move_to(x,y)
     ctx.rel_line_to(1,1)  # equivalent to ctx.line_to(x+1,y+1)
     ctx.stroke()
