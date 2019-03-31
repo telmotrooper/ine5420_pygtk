@@ -20,12 +20,12 @@ class DrawingManager:
 
     self.viewport.setWindow(self.window)
 
-  def draw_background(self, da, ctx):
+  def drawBackground(self, da, ctx):
     ctx.set_source_rgb(255, 255, 255)  # color white
     ctx.paint()
 
   def draw(self, da, ctx):
-    self.draw_background(da, ctx)
+    self.drawBackground(da, ctx)
 
     ctx.set_source_rgb(0, 0, 0)  # color black
     ctx.set_line_width(2)

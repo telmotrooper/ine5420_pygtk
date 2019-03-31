@@ -18,3 +18,9 @@ class Window:
   def setMax(self, x, y):
     self.x_max = x
     self.y_max = y
+
+  def move(self, x, y):
+    self.x_min += x
+    self.y_min += y
+    self.x_max += x
+    self.y_max += y
