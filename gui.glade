@@ -778,6 +778,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="margin_top">5</property>
                         <property name="yalign">0.4699999988079071</property>
                         <signal name="clicked" handler="onAddObjectClicked" swapped="no"/>
                       </object>
@@ -793,6 +794,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="margin_top">5</property>
                         <signal name="clicked" handler="onRemoveObjectClicked" swapped="no"/>
                       </object>
                       <packing>
@@ -987,6 +989,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
+                                        <property name="margin_bottom">5</property>
                                         <signal name="clicked" handler="onZoomIn" swapped="no"/>
                                       </object>
                                       <packing>
