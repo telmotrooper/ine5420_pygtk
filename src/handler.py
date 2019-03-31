@@ -48,7 +48,7 @@ class Handler:
     else:
       self.printToLog("No point to remove")
     
-    self.printToLog("onRemovePolygonPoint".format(x_entry, y_entry))
+    self.printToLog("onRemovePolygonPoint")
 
   def onAddPolygon(self, button):
     self.printToLog("onAddPolygon")
