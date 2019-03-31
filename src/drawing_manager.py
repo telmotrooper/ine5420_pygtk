@@ -23,6 +23,9 @@ class DrawingManager:
   def getWindow(self):
     return self.window
 
+  def redraw(self):
+    self.da.queue_draw()
+
   def drawBackground(self, da, ctx):
     ctx.set_source_rgb(255, 255, 255)  # color white
     ctx.paint()

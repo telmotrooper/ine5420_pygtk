@@ -92,18 +92,25 @@ class Handler:
   def onMoveWindowUp(self, button):
     self.printToLog("onMoveWindowUp")
     self.dm.getWindow().move(0, 100)
+    self.dm.redraw()
 
   def onMoveWindowDown(self, button):
     self.printToLog("onMoveWindowDown")
     self.dm.getWindow().move(0, -100)
+    self.dm.redraw()
+
   
   def onMoveWindowLeft(self, button):
     self.printToLog("onMoveWindowLeft")
     self.dm.getWindow().move(-100, 0)
+    self.dm.redraw()
+
   
   def onMoveWindowRight(self, button):
     self.printToLog("onMoveWindowRight")
     self.dm.getWindow().move(100, 0)
+    self.dm.redraw()
+
 
   def printToLog(self, text):
     buffer, view = self.text_buffer, self.text_view
