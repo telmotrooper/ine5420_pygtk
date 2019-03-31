@@ -15,6 +15,9 @@ class Handler:
     self.text_buffer = self.text_view.get_buffer()
     self.display_file = DisplayFile()
 
+    # Used to keep state of polygon when points are added
+    self.temp_polygon = []
+
   def onDestroy(self, *args):
     Gtk.main_quit()
 
@@ -32,12 +35,25 @@ class Handler:
   def onAddPolygonPoint(self, button):
     x_entry = self.builder.get_object("EntryXPolygon").get_text()
     y_entry = self.builder.get_object("EntryYPolygon").get_text()
+    self.temp_polygon.append({"x": x_entry, "y": y_entry})
     self.printToLog("onAddPolygonPoint ({},{})".format(x_entry, y_entry))
 
+  def onRemovePolygonPoint(self, button):
+    x_entry = self.builder.get_object("EntryXPolygon").get_text()
+    y_entry = self.builder.get_object("EntryYPolygon").get_text()
 
+    if(len(self.temp_polygon) > 0):
+      self.temp_polygon.pop()
+    else:
+      self.printToLog("No point to remove")
+    
+    self.printToLog("onRemovePolygonPoint ({},{})".format(x_entry, y_entry))
 
   def onAddPolygon(self, button):
     self.printToLog("onAddPolygon")
+
+
+
     self.add_object_window.hide()
 
   def onAddPoint(self, button):
