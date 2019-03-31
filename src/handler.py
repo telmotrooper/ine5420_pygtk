@@ -105,4 +105,3 @@ class Handler:
     buffer, view = self.text_buffer, self.text_view
     buffer.insert_at_cursor(text + "\n")
     view.scroll_to_mark(buffer.get_insert(), 0, 0, 0, 0)
-
