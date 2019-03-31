@@ -22,12 +22,6 @@ class Handler:
   def onDestroy(self, *args):
     Gtk.main_quit()
 
-  def onZoomOut(self, button):
-    self.printToLog("onZoomOut")  
-
-  def onZoomIn(self, button):
-    self.printToLog("onZoomIn")  
-
   def onAddObjectClicked(self, button):
     self.printToLog("onAddObjectClicked")
     add_object_window = self.builder.get_object("AddObjectWindow")
@@ -88,6 +82,12 @@ class Handler:
   
   def onRemoveObjectClicked(self, button):
     self.printToLog("onRemoveObjectClicked")
+
+  def onZoomOut(self, button):
+    self.printToLog("onZoomOut")  
+
+  def onZoomIn(self, button):
+    self.printToLog("onZoomIn")  
 
   def onMoveWindowUp(self, button):
     self.printToLog("onMoveWindowUp")

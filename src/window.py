@@ -11,6 +11,18 @@ class Window:
   def getMax(self):
     return { "x": self.x_max, "y": self.y_max }
 
+  def getWidth(self):
+    return self.x_max - self.x_min
+  
+  def getHeight(self):
+    return self.y_max - self.y_min
+  
+  def getCenter(self):
+    return {
+      "x": self.getWidth() / 2,
+      "y": self.getHeight() / 2
+    }
+
   def setMin(self, x, y):
     self.x_min = x
     self.y_min = y
