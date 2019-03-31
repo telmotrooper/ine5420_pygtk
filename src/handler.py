@@ -40,9 +40,6 @@ class Handler:
     self.printToLog("onAddPolygonPoint ({},{})".format(x_entry, y_entry))
 
   def onRemovePolygonPoint(self, button):
-    x_entry = self.builder.get_object("EntryXPolygon").get_text()
-    y_entry = self.builder.get_object("EntryYPolygon").get_text()
-
     if(len(self.temp_polygon) > 0):
       self.temp_polygon.pop()
     else:
