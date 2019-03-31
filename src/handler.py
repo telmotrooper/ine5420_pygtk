@@ -1,6 +1,7 @@
 from gi.repository import Gtk
 from shapes.point import Point
 from shapes.line import Line
+from shapes.polygon import Polygon
 from display_file import DisplayFile
 
 class Handler:
@@ -52,8 +53,14 @@ class Handler:
   def onAddPolygon(self, button):
     self.printToLog("onAddPolygon")
 
+    name = self.builder.get_object("PolygonName")
+    polygon = Polygon(name)
 
+    for point in self.temp_polygon:
+      polygon.addCoords(int(point["x"]), int(point["y"]))
 
+    self.display_file.addObject(polygon)
+    self.temp_polygon = []
     self.add_object_window.hide()
 
   def onAddPoint(self, button):
