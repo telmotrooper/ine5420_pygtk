@@ -1,6 +1,5 @@
 class DisplayFile:
-  def __init__(self):
-    self.objects = []
+  objects = []
 
   def addObject(self, object):
     self.objects.append(object)

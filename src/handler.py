@@ -1,13 +1,14 @@
 from gi.repository import Gtk
 from shapes.point import Point
 from shapes.line import Line
+from display_file import DisplayFile
 
 class Handler:
-  def __init__(self, builder, displayfile, drawingmanager):
+  def __init__(self, builder, drawingmanager):
     self.builder = builder
     self.text_view = self.builder.get_object("Log")
     self.text_buffer = self.text_view.get_buffer()
-    self.display_file = displayfile
+    self.display_file = DisplayFile()
     self.drawingmanager = drawingmanager
 
   def onDestroy(self, *args):
@@ -36,7 +37,6 @@ class Handler:
 
     p1.addCoords(int(x_entry.get_text()), int(y_entry.get_text()))
     self.display_file.addObject(p1)
-    self.drawingmanager.reDraw(self.display_file)
 
 
   def onAddLine(self, button):
@@ -50,7 +50,6 @@ class Handler:
     l1.addCoords(int(x1_entry.get_text()), int(y1_entry.get_text()))
     l1.addCoords(int(x2_entry.get_text()), int(y2_entry.get_text()))
     self.display_file.addObject(l1)
-    self.drawingmanager.reDraw(self.display_file)
   
   def onRemoveObjectClicked(self, button):
     self.printToLog("onRemoveObjectClicked")

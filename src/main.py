@@ -16,7 +16,7 @@ def main():
 
   builder = Gtk.Builder()
   builder.add_from_file("gui.glade")
-  builder.connect_signals(Handler(builder, df, dm))
+  builder.connect_signals(Handler(builder, dm))
 
   window = builder.get_object("MainWindow")
   window.show_all()
