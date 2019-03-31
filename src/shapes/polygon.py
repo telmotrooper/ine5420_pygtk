@@ -8,6 +8,9 @@ class Polygon:
       {"x": x, "y": y}
     )
 
+  def getName(self):
+    return self.name
+
   def draw(self, ctx):  # reference: https://pycairo.readthedocs.io/
     ctx.move_to(self.coords[0]["x"], self.coords[0]["y"])
 

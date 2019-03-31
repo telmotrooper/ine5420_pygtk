@@ -32,10 +32,9 @@ class Handler:
     x_entry = self.builder.get_object("PointXEntry")
     y_entry = self.builder.get_object("PointYEntry")
     p1 = Point(name_entry.get_text())
+
     p1.addCoords(x_entry.get_text(), y_entry.get_text())
     self.display_file.addObject(p1)
-    print(self.display_file.getObjects())
-
 
   def onAddLine(self, button):
     self.printToLog("onAddLine")
@@ -48,7 +47,6 @@ class Handler:
     l1.addCoords(x1_entry.get_text(), y1_entry.get_text())
     l1.addCoords(x2_entry.get_text(), y2_entry.get_text())
     self.display_file.addObject(l1)
-    print(self.display_file.getObjects())
   
   def onRemoveObjectClicked(self, button):
     self.printToLog("onRemoveObjectClicked")

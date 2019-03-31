@@ -11,10 +11,12 @@ from display_file import DisplayFile
 
 def main():
   dm = DrawingManager()
+  df = DisplayFile()
+
 
   builder = Gtk.Builder()
   builder.add_from_file("gui.glade")
-  builder.connect_signals(Handler(builder, DisplayFile()))
+  builder.connect_signals(Handler(builder, df))
 
   window = builder.get_object("MainWindow")
   window.show_all()

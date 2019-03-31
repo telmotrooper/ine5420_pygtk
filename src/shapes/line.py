@@ -9,7 +9,7 @@ class Line:
     )
 
   def getName(self):
-    print(self.name)
+    return self.name
 
   def draw(self, ctx):  # reference: https://pycairo.readthedocs.io/  
     x = self.coords[0]["x"]
