@@ -26,4 +26,4 @@ class DrawingManager:
 
       self.draw_counter += 1
       print("draw() #{0}".format(self.draw_counter))'''
-      self.viewport.transformada(ctx)
+      self.viewport.transform(ctx)

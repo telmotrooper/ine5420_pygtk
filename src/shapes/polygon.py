@@ -8,15 +8,18 @@ class Polygon:
       {"x": x, "y": y}
     )
 
+  def getCoords(self):
+    return self.coords
+
   def getName(self):
     return self.name
 
-  def draw(self, ctx):  # reference: https://pycairo.readthedocs.io/
-    ctx.move_to(self.coords[0]["x"], self.coords[0]["y"])
+  def draw(self, ctx, coords):  # reference: https://pycairo.readthedocs.io/
+    ctx.move_to(coords[0]["xViewPort"], coords[0]["yViewPort"])
 
-    for entry in self.coords:  # 1st interation does move_to and line_to to same point
-      x2 = entry["x"]
-      y2 = entry["y"]
+    for entry in coords:  # 1st interation does move_to and line_to to same point
+      x2 = entry["xViewPort"]
+      y2 = entry["yViewPort"]
       ctx.line_to(x2,y2)
     ctx.close_path()
     ctx.stroke()
