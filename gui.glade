@@ -189,7 +189,7 @@
                     <property name="margin_top">15</property>
                     <property name="margin_bottom">15</property>
                     <property name="yalign">0.47999998927116394</property>
-                    <signal name="clicked" handler="addPoint" swapped="no"/>
+                    <signal name="clicked" handler="onAddPoint" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -425,7 +425,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <signal name="clicked" handler="addLine" swapped="no"/>
+                    <signal name="clicked" handler="onAddLine" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -589,7 +589,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="xalign">0.51999998092651367</property>
-                    <signal name="clicked" handler="addPolygon" swapped="no"/>
+                    <signal name="clicked" handler="onAddPolygon" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -835,7 +835,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <signal name="clicked" handler="moveWindowDown" swapped="no"/>
+                                        <signal name="clicked" handler="onMoveWindowDown" swapped="no"/>
                                       </object>
                                       <packing>
                                         <property name="left_attach">1</property>
@@ -848,7 +848,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <signal name="clicked" handler="moveWindowRight" swapped="no"/>
+                                        <signal name="clicked" handler="onMoveWindowRight" swapped="no"/>
                                       </object>
                                       <packing>
                                         <property name="left_attach">2</property>
@@ -862,7 +862,7 @@
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
                                         <property name="xalign">0.49000000953674316</property>
-                                        <signal name="clicked" handler="moveWindowLeft" swapped="no"/>
+                                        <signal name="clicked" handler="onMoveWindowLeft" swapped="no"/>
                                       </object>
                                       <packing>
                                         <property name="left_attach">0</property>
@@ -876,7 +876,7 @@
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
                                         <property name="yalign">0.46000000834465027</property>
-                                        <signal name="clicked" handler="moveWindowUp" swapped="no"/>
+                                        <signal name="clicked" handler="onMoveWindowUp" swapped="no"/>
                                       </object>
                                       <packing>
                                         <property name="left_attach">1</property>
@@ -967,7 +967,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <signal name="clicked" handler="zoomIn" swapped="no"/>
+                                        <signal name="clicked" handler="onZoomIn" swapped="no"/>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -981,7 +981,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <signal name="clicked" handler="zoomOut" swapped="no"/>
+                                        <signal name="clicked" handler="onZoomOut" swapped="no"/>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>

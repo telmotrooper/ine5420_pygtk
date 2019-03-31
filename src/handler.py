@@ -12,12 +12,22 @@ class Handler:
   def onDestroy(self, *args):
     Gtk.main_quit()
 
+  def onZoomOut(self, button):
+    self.printToLog("onZoomOut")  
+
+  def onZoomIn(self, button):
+    self.printToLog("onZoomIn")  
+
   def onAddObjectClicked(self, button):
     self.printToLog("onAddObjectClicked")
     add_object_window = self.builder.get_object("AddObjectWindow")
     add_object_window.show_all()
 
-  def addPoint(self, button):
+  def onAddPolygon(self, button):
+    self.printToLog("onAddPolygon")
+
+  def onAddPoint(self, button):
+    self.printToLog("onAddPoint")
     name_entry = self.builder.get_object("PointNameEntry")
     x_entry = self.builder.get_object("PointXEntry")
     y_entry = self.builder.get_object("PointYEntry")
@@ -27,7 +37,8 @@ class Handler:
     print(self.display_file.getObjects())
 
 
-  def addLine(self, button):
+  def onAddLine(self, button):
+    self.printToLog("onAddLine")
     name_entry = self.builder.get_object("EntryNameNewLine")
     x1_entry = self.builder.get_object("EntryX1Line")
     y1_entry = self.builder.get_object("EntryY1Line")
@@ -41,6 +52,18 @@ class Handler:
   
   def onRemoveObjectClicked(self, button):
     self.printToLog("onRemoveObjectClicked")
+
+  def onMoveWindowUp(self, button):
+    self.printToLog("onMoveWindowUp")
+
+  def onMoveWindowDown(self, button):
+    self.printToLog("onMoveWindowDown")
+  
+  def onMoveWindowLeft(self, button):
+    self.printToLog("onMoveWindowLeft")
+  
+  def onMoveWindowRight(self, button):
+    self.printToLog("onMoveWindowRight")
 
   def printToLog(self, text):
     self.text_buffer.insert_at_cursor(text + "\n")
