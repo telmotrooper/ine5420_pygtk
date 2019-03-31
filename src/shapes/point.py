@@ -8,6 +8,9 @@ class Point:
       {"x": x, "y": y}
     )
 
+  def getCoords(self):
+    return self.coords
+    
   def getName(self):
     return self.name
 

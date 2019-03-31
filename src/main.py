@@ -16,8 +16,8 @@ def main():
   builder.add_from_file("gui.glade")
   builder.connect_signals(Handler(builder, DisplayFile()))
 
-  window = builder.get_object("MainWindow")
-  window.show_all()
+  window_object = builder.get_object("MainWindow")
+  window_object.show_all()
 
   add_object_window = builder.get_object("AddObjectWindow")
   add_object_window.connect("delete-event", lambda w, e: w.hide() or True)
