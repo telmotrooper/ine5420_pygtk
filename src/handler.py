@@ -5,9 +5,9 @@ from shapes.polygon import Polygon
 from display_file import DisplayFile
 
 class Handler:
-  def __init__(self, builder, drawingmanager):
+  def __init__(self, builder, drawing_manager):
     self.builder = builder
-    self.drawingmanager = drawingmanager
+    self.dm = drawing_manager
 
     # References to GTK objects
     self.add_object_window = self.builder.get_object("AddObjectWindow")
@@ -91,15 +91,19 @@ class Handler:
 
   def onMoveWindowUp(self, button):
     self.printToLog("onMoveWindowUp")
+    self.dm.getWindow().move(0, 100)
 
   def onMoveWindowDown(self, button):
     self.printToLog("onMoveWindowDown")
+    self.dm.getWindow().move(0, -100)
   
   def onMoveWindowLeft(self, button):
     self.printToLog("onMoveWindowLeft")
+    self.dm.getWindow().move(-100, 0)
   
   def onMoveWindowRight(self, button):
     self.printToLog("onMoveWindowRight")
+    self.dm.getWindow().move(100, 0)
 
   def printToLog(self, text):
     buffer, view = self.text_buffer, self.text_view
