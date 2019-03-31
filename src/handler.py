@@ -48,12 +48,12 @@ class Handler:
     else:
       self.printToLog("No point to remove")
     
-    self.printToLog("onRemovePolygonPoint ({},{})".format(x_entry, y_entry))
+    self.printToLog("onRemovePolygonPoint".format(x_entry, y_entry))
 
   def onAddPolygon(self, button):
     self.printToLog("onAddPolygon")
 
-    name = self.builder.get_object("PolygonName")
+    name = self.builder.get_object("PolygonName").get_text()
     polygon = Polygon(name)
 
     for point in self.temp_polygon:

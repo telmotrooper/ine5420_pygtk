@@ -182,7 +182,7 @@
                 <property name="baseline_position">bottom</property>
                 <child>
                   <object class="GtkButton" id="AddPoint">
-                    <property name="label" translatable="yes">Add</property>
+                    <property name="label" translatable="yes">Add and draw</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -486,7 +486,7 @@
                 <property name="baseline_position">bottom</property>
                 <child>
                   <object class="GtkButton" id="ButtonOkLine">
-                    <property name="label" translatable="yes">Add</property>
+                    <property name="label" translatable="yes">Add and draw</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -677,7 +677,7 @@
                 <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkButton" id="button4">
-                    <property name="label" translatable="yes">Remove</property>
+                    <property name="label" translatable="yes">Remove last point</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -694,7 +694,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button5">
-                    <property name="label" translatable="yes">Add</property>
+                    <property name="label" translatable="yes">Add point</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -723,7 +723,7 @@
                 <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkButton">
-                    <property name="label" translatable="yes">Finish</property>
+                    <property name="label" translatable="yes">Draw</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -876,7 +876,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="AddObjectButton">
-                        <property name="label" translatable="yes">Add Object</property>
+                        <property name="label" translatable="yes">Add object</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -892,7 +892,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="RemoveObjectButton">
-                        <property name="label" translatable="yes">Remove Object</property>
+                        <property name="label" translatable="yes">Remove object</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
