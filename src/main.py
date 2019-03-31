@@ -10,7 +10,6 @@ from drawing_manager import DrawingManager
 from display_file import DisplayFile
 
 def main():
-  dm = DrawingManager()
   df = DisplayFile()
 
   builder = Gtk.Builder()
@@ -24,7 +23,7 @@ def main():
   add_object_window.connect("delete-event", lambda w, e: w.hide() or True)
 
   drawing_area = builder.get_object("DrawingArea")
-
+  dm = DrawingManager(drawing_area)
   drawing_area.connect("draw", dm.draw)
 
   Gtk.main()

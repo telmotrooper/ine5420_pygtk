@@ -5,14 +5,11 @@ class Viewport(Window):
     super().__init__(x_min, y_min, x_max, y_max)
   
   def setWindow(self, window):
-    self.xw_min = window.getMin()["x"]
-    self.yw_min = window.getMin()["y"]
-    self.xw_max = window.getMax()["x"]
-    self.yw_max = window.getMax()["y"]
+    self.window = window
 
   def transform(self, x, y):
-    xw_min, yw_min = self.xw_min, self.yw_min
-    xw_max, yw_max = self.xw_max, self.yw_max
+    xw_min, yw_min = self.window.getMin()["x"], self.window.getMin()["y"]
+    xw_max, yw_max = self.window.getMax()["x"], self.window.getMax()["y"]
 
     xvp_min, yvp_min = self.x_min, self.y_min
     xvp_max, yvp_max = self.x_max, self.y_max
