@@ -8,15 +8,18 @@ class Line:
       {"x": x, "y": y}
     )
 
+  def getCoords(self):
+    return self.coords
+
   def getName(self):
     return self.name
 
-  def draw(self, ctx):  # reference: https://pycairo.readthedocs.io/  
-    x = self.coords[0]["x"]
-    y = self.coords[0]["y"]
+  def draw(self, ctx, coords):  # reference: https://pycairo.readthedocs.io/  
+    x = coords[0]["xViewPort"]
+    y = coords[0]["yViewPort"]
 
-    x2 = self.coords[1]["x"]
-    y2 = self.coords[1]["y"]
+    x2 = coords[1]["xViewPort"]
+    y2 = coords[1]["yViewPort"]
 
     ctx.move_to(x,y)
     ctx.line_to(x2,y2)
