@@ -19,6 +19,9 @@ def main():
   window = builder.get_object("MainWindow")
   window.show_all()
 
+  add_object_window = builder.get_object("AddObjectWindow")
+  add_object_window.connect("delete-event", lambda w, e: w.hide() or True)
+
   drawing_area = builder.get_object("DrawingArea")
   drawing_area.connect("draw", dm.draw)
 
