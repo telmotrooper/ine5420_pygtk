@@ -20,6 +20,8 @@ class DrawingManager:
     da_width = da.get_allocation().width
     da_height = da.get_allocation().height
 
+    # This is required because window starts with a placeholder max point
+    # Window starts with the same size as the viewport, based on the drawing area size
     self.window.setMax(da_width, da_height)  # This will cause problems with zoom
 
     self.viewport.setWindow(self.window)

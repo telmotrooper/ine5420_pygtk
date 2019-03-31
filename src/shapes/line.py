@@ -22,7 +22,7 @@ class Line:
     ctx.line_to(x2,y2)
     ctx.stroke()
 
-  def drawToViewport(self, ctx, viewport):  # reference: https://pycairo.readthedocs.io/  
+  def drawToViewport(self, ctx, viewport):
     x, y = self.coords[0]["x"], self.coords[0]["y"]
     x2, y2 = self.coords[1]["x"], self.coords[1]["y"]
 

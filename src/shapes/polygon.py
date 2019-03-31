@@ -20,3 +20,14 @@ class Polygon:
       ctx.line_to(x2,y2)
     ctx.close_path()
     ctx.stroke()
+
+  def drawToViewport(self, ctx, viewport):
+    point = viewport.transform(self.coords[0]["x"], self.coords[0]["y"])
+    ctx.move_to(point["x"],point["y"])
+
+    for entry in self.coords:  # 1st interation does move_to and line_to to same point
+      x2, y2 = entry["x"], entry["y"]
+      point2 = viewport.transform(x2, y2)
+      ctx.line_to(point2["x"],point2["y"])
+    ctx.close_path()
+    ctx.stroke()
