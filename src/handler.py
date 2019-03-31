@@ -82,7 +82,7 @@ class Handler:
     self.printToLog("onMoveWindowRight")
 
   def printToLog(self, text):
-    text_buffer, text_view = self.text_buffer, self.text_view
-    text_buffer.insert_at_cursor(text + "\n")
-    text_view.scroll_to_mark(text_buffer.get_insert(), 0, 0, 0, 0)
+    buffer, view = self.text_buffer, self.text_view
+    buffer.insert_at_cursor(text + "\n")
+    view.scroll_to_mark(buffer.get_insert(), 0, 0, 0, 0)
 
