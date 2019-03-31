@@ -25,6 +25,11 @@ class Handler:
     add_object_window = self.builder.get_object("AddObjectWindow")
     add_object_window.show_all()
 
+  def onCloseAddObjectClicked(self, button):
+    self.printToLog("onCloseAddObjectClicked")
+    add_object_window = self.builder.get_object("AddObjectWindow")
+    # add_object_window.destroy()
+
   def onAddPolygon(self, button):
     self.printToLog("onAddPolygon")
 
