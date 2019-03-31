@@ -85,9 +85,13 @@ class Handler:
 
   def onZoomOut(self, button):
     self.printToLog("onZoomOut")  
+    self.dm.getWindow().zoom(0.9)
+    self.dm.redraw()
 
   def onZoomIn(self, button):
     self.printToLog("onZoomIn")  
+    self.dm.getWindow().zoom(1.1)
+    self.dm.redraw()
 
   def onMoveWindowUp(self, button):
     self.printToLog("onMoveWindowUp")
