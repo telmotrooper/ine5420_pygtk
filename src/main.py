@@ -7,14 +7,14 @@ from gi.repository import Gtk
 
 from handler import Handler
 from drawing_manager import DrawingManager
-
+from display_file import DisplayFile
 
 def main():
   dm = DrawingManager()
 
   builder = Gtk.Builder()
   builder.add_from_file("gui.glade")
-  builder.connect_signals(Handler(builder))
+  builder.connect_signals(Handler(builder, DisplayFile()))
 
   window = builder.get_object("MainWindow")
   window.show_all()

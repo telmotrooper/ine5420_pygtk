@@ -3,10 +3,11 @@ from shapes.point import Point
 from shapes.line import Line
 
 class Handler:
-  def __init__(self, builder):
+  def __init__(self, builder, displayfile):
     self.builder = builder
     self.text_view = self.builder.get_object("Log")
     self.text_buffer = self.text_view.get_buffer()
+    self.display_file = displayfile
 
   def onDestroy(self, *args):
     Gtk.main_quit()
@@ -22,6 +23,9 @@ class Handler:
     y_entry = self.builder.get_object("PointYEntry")
     p1 = Point(name_entry.get_text())
     p1.addCoords(x_entry.get_text(), y_entry.get_text())
+    self.display_file.addObject(p1)
+    print(self.display_file.getObjects())
+
 
   def addLine(self, button):
     name_entry = self.builder.get_object("EntryNameNewLine")
@@ -32,6 +36,8 @@ class Handler:
     l1 = Line(name_entry.get_text())
     l1.addCoords(x1_entry.get_text(), y1_entry.get_text())
     l1.addCoords(x2_entry.get_text(), y2_entry.get_text())
+    self.display_file.addObject(l1)
+    print(self.display_file.getObjects())
   
   def onRemoveObjectClicked(self, button):
     self.printToLog("onRemoveObjectClicked")

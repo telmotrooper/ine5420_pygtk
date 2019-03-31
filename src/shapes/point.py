@@ -8,6 +8,9 @@ class Point:
       {"x": x, "y": y}
     )
 
+  def getName(self):
+    print(self.name)
+
   def draw(self, ctx):  # Reference: https://pycairo.readthedocs.io/    
     x = self.coords[0]["x"]
     y = self.coords[0]["y"]
