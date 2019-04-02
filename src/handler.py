@@ -15,6 +15,7 @@ class Handler:
 
     self.text_buffer = self.text_view.get_buffer()
     self.display_file = DisplayFile()
+    self.display_file.setBuilder(builder)
 
     # Used to keep state of polygon when points are added
     self.temp_polygon = []
