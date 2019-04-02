@@ -12,6 +12,7 @@ class Handler:
     # References to GTK objects
     self.add_object_window = self.builder.get_object("AddObjectWindow")
     self.text_view = self.builder.get_object("Log")
+    self.tree_view = self.builder.get_object("TreeView")
 
     self.text_buffer = self.text_view.get_buffer()
     self.display_file = DisplayFile()
@@ -83,6 +84,11 @@ class Handler:
   
   def onRemoveObjectClicked(self, button):
     self.printToLog("onRemoveObjectClicked")
+    model, treeiter = self.tree_view.get_selection().get_selected()
+    if treeiter != None:
+      print(model[treeiter][0])
+
+
 
   def onZoomOut(self, button):
     self.printToLog("onZoomOut")  

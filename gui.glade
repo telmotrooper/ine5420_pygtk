@@ -839,7 +839,7 @@
                                 <property name="min_content_width">3</property>
                                 <property name="min_content_height">200</property>
                                 <child>
-                                  <object class="GtkTreeView" id="ObjectTreeViewList">
+                                  <object class="GtkTreeView" id="TreeView">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="model">ObjectList</property>
