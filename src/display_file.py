@@ -12,3 +12,8 @@ class DisplayFile:
 
   def setBuilder(self, builder):
     DisplayFile.builder = builder
+    DisplayFile.objectList = self.builder.get_object("ObjectList")
+    DisplayFile.objectList.append(["TesteX", "TesteX"])
+    DisplayFile.objectList.append(["Blabla", "Blabla"])
+
+
