@@ -16,4 +16,8 @@ class DisplayFile:
     DisplayFile.builder = builder
     DisplayFile.objectList = self.builder.get_object("ObjectList")
 
- # def removeObject(self, object_name):
+  def removeObject(self, object_name):
+    for i, o in enumerate(DisplayFile.objects):
+      if o.name == object_name:
+        del DisplayFile.objects[i]
+        break

@@ -86,9 +86,9 @@ class Handler:
     self.printToLog("onRemoveObjectClicked")
     obj_list, index = self.tree_view.get_selection().get_selected()
     if index != None:
-      print(obj_list[index][0])
-
-
+      self.display_file.removeObject(obj_list[index][0])
+      obj_list.remove(index)
+      self.dm.redraw()
 
   def onZoomOut(self, button):
     self.printToLog("onZoomOut")  
