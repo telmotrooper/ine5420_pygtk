@@ -7,7 +7,7 @@ class DisplayFile:
 
   def addObject(self, object):
     self.objects.append(object)
-    DisplayFile.objectList.append([object.getName(), "Blabla"])
+    DisplayFile.objectList.append([object.getName(), object.__class__.__name__])
 
   def getObjects(self):
     return self.objects
