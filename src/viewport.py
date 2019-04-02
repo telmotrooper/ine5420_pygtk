@@ -1,22 +1,19 @@
-from display_file import DisplayFile
 from window import Window
 
-class Viewport:
-  def __init__(self):
-    self.beginning_coords = {"x": 0, "y": 0}
-    self.ending_coords = {"x": 300, "y": 300}
+class Viewport(Window):
+  def __init__(self, x_min, y_min, x_max, y_max):
+    super().__init__(x_min, y_min, x_max, y_max)
   
-  def transform(self, ctx):
-    displayFile = DisplayFile()
-    window = Window()
-    for obj in displayFile.getObjects():
-      coordsInVp = []
-      coordsObj = obj.getCoords()
-      for coords in coordsObj:
-        coordsInVp.append(self.calcTransform(coords, window.getBeginningWindow(), window.getEndingWindow()))
-      obj.draw(ctx, coordsInVp)
+  def setWindow(self, window):
+    self.window = window
 
-  def calcTransform(self, coords, window_beginning, window_ending):
-    xViewport = ((coords["x"] - window_beginning["x"])/(window_ending["x"] - window_beginning["x"])) * (self.ending_coords["x"] - self.beginning_coords["x"])
-    yViewport = (1 - (coords["y"] - window_beginning["y"])/(window_ending["y"] - window_beginning["y"])) * (self.ending_coords["y"] - self.beginning_coords["y"])
-    return { "xViewPort": xViewport, "yViewPort": yViewport }
+  def transform(self, x, y):
+    xw_min, yw_min = self.window.getMin()["x"], self.window.getMin()["y"]
+    xw_max, yw_max = self.window.getMax()["x"], self.window.getMax()["y"]
+
+    xvp_min, yvp_min = self.x_min, self.y_min
+    xvp_max, yvp_max = self.x_max, self.y_max
+
+    xvp = ((x - xw_min)/(xw_max - xw_min)) * (xvp_max - xvp_min)
+    yvp = (1 - (y - yw_min)/(yw_max - yw_min)) * (yvp_max - yvp_min)
+    return { "x": xvp, "y": yvp }

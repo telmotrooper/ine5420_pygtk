@@ -5,28 +5,24 @@ from shapes.polygon import Polygon
 from display_file import DisplayFile
 
 class Handler:
-  def __init__(self, builder, drawingmanager):
+  def __init__(self, builder, drawing_manager):
     self.builder = builder
-    self.drawingmanager = drawingmanager
+    self.dm = drawing_manager
 
     # References to GTK objects
     self.add_object_window = self.builder.get_object("AddObjectWindow")
     self.text_view = self.builder.get_object("Log")
+    self.tree_view = self.builder.get_object("TreeView")
 
     self.text_buffer = self.text_view.get_buffer()
     self.display_file = DisplayFile()
+    self.display_file.setBuilder(builder)
 
     # Used to keep state of polygon when points are added
     self.temp_polygon = []
 
   def onDestroy(self, *args):
     Gtk.main_quit()
-
-  def onZoomOut(self, button):
-    self.printToLog("onZoomOut")  
-
-  def onZoomIn(self, button):
-    self.printToLog("onZoomIn")  
 
   def onAddObjectClicked(self, button):
     self.printToLog("onAddObjectClicked")
@@ -40,15 +36,12 @@ class Handler:
     self.printToLog("onAddPolygonPoint ({},{})".format(x_entry, y_entry))
 
   def onRemovePolygonPoint(self, button):
-    x_entry = self.builder.get_object("EntryXPolygon").get_text()
-    y_entry = self.builder.get_object("EntryYPolygon").get_text()
-
     if(len(self.temp_polygon) > 0):
       self.temp_polygon.pop()
     else:
       self.printToLog("No point to remove")
     
-    self.printToLog("onRemovePolygonPoint".format(x_entry, y_entry))
+    self.printToLog("onRemovePolygonPoint")
 
   def onAddPolygon(self, button):
     self.printToLog("onAddPolygon")
@@ -91,21 +84,46 @@ class Handler:
   
   def onRemoveObjectClicked(self, button):
     self.printToLog("onRemoveObjectClicked")
+    obj_list, index = self.tree_view.get_selection().get_selected()
+    if index != None:
+      print(obj_list[index][0])
+
+
+
+  def onZoomOut(self, button):
+    self.printToLog("onZoomOut")  
+    self.dm.getWindow().zoom(0.9)
+    self.dm.redraw()
+
+  def onZoomIn(self, button):
+    self.printToLog("onZoomIn")  
+    self.dm.getWindow().zoom(1.1)
+    self.dm.redraw()
 
   def onMoveWindowUp(self, button):
     self.printToLog("onMoveWindowUp")
+    self.dm.getWindow().move(0, 100)
+    self.dm.redraw()
 
   def onMoveWindowDown(self, button):
     self.printToLog("onMoveWindowDown")
+    self.dm.getWindow().move(0, -100)
+    self.dm.redraw()
+
   
   def onMoveWindowLeft(self, button):
     self.printToLog("onMoveWindowLeft")
+    self.dm.getWindow().move(-100, 0)
+    self.dm.redraw()
+
   
   def onMoveWindowRight(self, button):
     self.printToLog("onMoveWindowRight")
+    self.dm.getWindow().move(100, 0)
+    self.dm.redraw()
+
 
   def printToLog(self, text):
     buffer, view = self.text_buffer, self.text_view
     buffer.insert_at_cursor(text + "\n")
     view.scroll_to_mark(buffer.get_insert(), 0, 0, 0, 0)
-

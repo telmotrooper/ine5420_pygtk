@@ -10,11 +10,8 @@ from drawing_manager import DrawingManager
 from display_file import DisplayFile
 
 def main():
-  dm = DrawingManager()
-
   builder = Gtk.Builder()
   builder.add_from_file("gui.glade")
-  builder.connect_signals(Handler(builder, DisplayFile()))
 
   window_object = builder.get_object("MainWindow")
   window_object.show_all()
@@ -23,7 +20,10 @@ def main():
   add_object_window.connect("delete-event", lambda w, e: w.hide() or True)
 
   drawing_area = builder.get_object("DrawingArea")
+  dm = DrawingManager(drawing_area)
   drawing_area.connect("draw", dm.draw)
+
+  builder.connect_signals(Handler(builder, dm))
 
   Gtk.main()
 
