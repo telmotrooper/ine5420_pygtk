@@ -3,6 +3,7 @@ from shapes.point import Point
 from shapes.line import Line
 from shapes.polygon import Polygon
 from display_file import DisplayFile
+import transformation as transform
 
 class Handler:
   def __init__(self, builder, drawing_manager):
@@ -102,6 +103,13 @@ class Handler:
 
   def onMoveObjectUp(self, button):
     self.printToLog("onMoveObjectUp")
+    obj_list, index = self.tree_view.get_selection().get_selected()
+    obj = self.display_file.getObject(obj_list[index][0])
+    line = Line(obj_list[index][0])
+    for i in obj.getCoords():
+      new_coords = transform.translation(i["x"], i["y"], 0, 10)
+      line.addCoords(new_coords[0],new_coords[1])
+    self.display_file.addObject(line)
     self.dm.redraw()
 
   def onMoveObjectDown(self, button):
