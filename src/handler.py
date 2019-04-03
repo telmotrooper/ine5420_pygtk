@@ -100,6 +100,38 @@ class Handler:
     self.dm.getWindow().zoom(1.1)
     self.dm.redraw()
 
+  def onMoveObjectUp(self, button):
+    self.printToLog("onMoveObjectUp")
+    self.dm.redraw()
+
+  def onMoveObjectDown(self, button):
+    self.printToLog("onMoveObjectDown")
+    self.dm.redraw()
+
+  def onMoveObjectLeft(self, button):
+    self.printToLog("onMoveObjectLeft")
+    self.dm.redraw()
+
+  def onMoveObjectRight(self, button):
+    self.printToLog("onMoveObjectRight")
+    self.dm.redraw()
+
+  def onRotateObjectLeft(self, button):
+    self.printToLog("onRotateObjectLeft")
+    self.dm.redraw()
+
+  def onRotateObjectRight(self, button):
+    self.printToLog("onRotateObjectRight")
+    self.dm.redraw()
+  
+  def onScaleObjectUp(self, button):
+    self.printToLog("onScaleObjectUp")
+    self.dm.redraw()
+
+  def onScaleObjectDown(self, button):
+    self.printToLog("onScaleObjectDown")
+    self.dm.redraw()
+
   def onMoveWindowUp(self, button):
     self.printToLog("onMoveWindowUp")
     self.dm.getWindow().move(0, 100)
