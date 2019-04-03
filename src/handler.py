@@ -103,28 +103,23 @@ class Handler:
 
   def onMoveObjectUp(self, button):
     self.printToLog("onMoveObjectUp")
-    
-    obj_list, index = self.tree_view.get_selection().get_selected()
-    obj_name = obj_list[index][0]
-    obj = self.display_file.getObject(obj_name)
-    coords = obj.getCoords()
-
-    for i in range(len(coords)):
-      new_coords = transform.translation(coords[i]["x"], coords[i]["y"], 0, 10)
-      coords[i] = {"x": new_coords[0], "y": new_coords[1]}
-    
+    transform.move(self.tree_view, 0, 10)
+   
     self.dm.redraw()
 
   def onMoveObjectDown(self, button):
     self.printToLog("onMoveObjectDown")
+    transform.move(self.tree_view, 0, -10)
     self.dm.redraw()
 
   def onMoveObjectLeft(self, button):
     self.printToLog("onMoveObjectLeft")
+    transform.move(self.tree_view, -10, 0)
     self.dm.redraw()
 
   def onMoveObjectRight(self, button):
     self.printToLog("onMoveObjectRight")
+    transform.move(self.tree_view, 10, 0)
     self.dm.redraw()
 
   def onRotateObjectLeft(self, button):
