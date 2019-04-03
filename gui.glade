@@ -1225,6 +1225,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <signal name="clicked" handler="onScaleObjectUp" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -1250,6 +1251,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <signal name="clicked" handler="onScaleObjectDown" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="left_attach">2</property>
