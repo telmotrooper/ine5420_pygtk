@@ -16,12 +16,14 @@ def scale(x, y, sx, sy, cx, cy):
   
   return a.dot(b).dot(c).dot(d)
 
-def rotation(x, y, degrees):
+def rotation(x, y, dx, dy, degrees):
   sin = np.sin(np.deg2rad(degrees))
   cos = np.cos(np.deg2rad(degrees))
   a = np.array([x, y, 1])
-  b = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
-  return a.dot(b)
+  b = np.array([[1,0,0],[0,1,0],[-dx, -dy, 1]])
+  c = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
+  d = np.array([[1,0,0],[0,1,0],[dx, dy, 1]])
+  return a.dot(b).dot(c).dot(d)
 
 def center(coords):
   x = 0
@@ -53,4 +55,20 @@ def zoom(tree_view, sx, sy):
 
   for i in range(len(coords)):
     new_coords = scale(coords[i]["x"], coords[i]["y"], sx, sy, center_point["cx"], center_point["cy"])
+    coords[i] = {"x": new_coords[0], "y": new_coords[1]}
+
+def rotate(tree_view, degrees, rotation_type, x, y):
+  obj_list, index = tree_view.get_selection().get_selected()
+  obj_name = obj_list[index][0]
+  obj = display_file.getObject(obj_name)
+  coords = obj.getCoords()
+  if(rotation_type == 'center'):
+    point = center(coords)
+  elif(rotation_type == 'world'):
+    point = {"cx": 0, "cy": 0}
+  else:
+    point = {"cx": x, "cy": y}
+
+  for i in range(len(coords)):
+    new_coords = rotation(coords[i]["x"], coords[i]["y"], point["cx"], point["cy"], degrees)
     coords[i] = {"x": new_coords[0], "y": new_coords[1]}

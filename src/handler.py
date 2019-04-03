@@ -15,6 +15,13 @@ class Handler:
     self.text_view = self.builder.get_object("Log")
     self.tree_view = self.builder.get_object("TreeView")
 
+    self.object_radio_button = self.builder.get_object("ObjectRadioButton")
+    self.world_radio_button = self.builder.get_object("WorldRadioButton")
+    self.point_radio_button = self.builder.get_object("PointRadioButton")
+    self.rotate_x = self.builder.get_object("RotateX")
+    self.rotate_y = self.builder.get_object("RotateY")
+
+
     self.text_buffer = self.text_view.get_buffer()
     self.display_file = DisplayFile()
     self.display_file.setBuilder(builder)
@@ -119,15 +126,35 @@ class Handler:
 
   def onMoveObjectRight(self, button):
     self.printToLog("onMoveObjectRight")
+
     transform.move(self.tree_view, 10, 0)
     self.dm.redraw()
 
   def onRotateObjectLeft(self, button):
     self.printToLog("onRotateObjectLeft")
+    
+    if self.object_radio_button.get_active():
+      transform.rotate(self.tree_view, -45, 'center',0,0)
+    elif self.world_radio_button.get_active():
+      transform.rotate(self.tree_view, -45, 'world',0,0)
+    elif self.point_radio_button.get_active():
+      x = float(self.rotate_x.get_text())
+      y = float(self.rotate_y.get_text())
+      transform.rotate(self.tree_view, -45, 'point',x,y)
     self.dm.redraw()
 
   def onRotateObjectRight(self, button):
     self.printToLog("onRotateObjectRight")
+    
+    if self.object_radio_button.get_active():
+      transform.rotate(self.tree_view, 45, 'center',0,0)
+    elif self.world_radio_button.get_active():
+      transform.rotate(self.tree_view, 45, 'world',0,0)
+    elif self.point_radio_button.get_active():
+      x = float(self.rotate_x.get_text())
+      y = float(self.rotate_y.get_text())
+      transform.rotate(self.tree_view, 45, 'point',x,y)
+
     self.dm.redraw()
   
   def onScaleObjectUp(self, button):
