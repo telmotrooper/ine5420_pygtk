@@ -1308,11 +1308,11 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkBox" id="PointRadioButton">
+                                  <object class="GtkBox" id="PointRadioBox">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <child>
-                                      <object class="GtkRadioButton" id="PointRadioButto">
+                                      <object class="GtkRadioButton" id="PointRadioButton">
                                         <property name="label" translatable="yes">Point</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
