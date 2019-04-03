@@ -1259,12 +1259,12 @@
                             <property name="can_focus">False</property>
                             <property name="left_padding">12</property>
                             <child>
-                              <object class="GtkBox">
+                              <object class="GtkBox" id="RotateAroundBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>
-                                  <object class="GtkRadioButton" id="WorldRadioButton">
-                                    <property name="label" translatable="yes">World</property>
+                                  <object class="GtkRadioButton" id="ObjectRadioButton">
+                                    <property name="label" translatable="yes">Object</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
@@ -1278,13 +1278,14 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkRadioButton" id="ObjectRadioButton">
-                                    <property name="label" translatable="yes">Object</property>
+                                  <object class="GtkRadioButton" id="WorldRadioButton">
+                                    <property name="label" translatable="yes">World</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
                                     <property name="active">True</property>
                                     <property name="draw_indicator">True</property>
+                                    <property name="group">ObjectRadioButton</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1304,6 +1305,7 @@
                                         <property name="receives_default">False</property>
                                         <property name="active">True</property>
                                         <property name="draw_indicator">True</property>
+                                        <property name="group">ObjectRadioButton</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
