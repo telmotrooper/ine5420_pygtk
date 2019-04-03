@@ -132,10 +132,13 @@ class Handler:
   
   def onScaleObjectUp(self, button):
     self.printToLog("onScaleObjectUp")
+  
+    transform.zoom(self.tree_view, 2, 2)
     self.dm.redraw()
 
   def onScaleObjectDown(self, button):
     self.printToLog("onScaleObjectDown")
+    transform.zoom(self.tree_view, 0.5, 0.5)
     self.dm.redraw()
 
   def onMoveWindowUp(self, button):
