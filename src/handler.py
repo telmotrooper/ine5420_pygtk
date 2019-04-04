@@ -3,12 +3,13 @@ from shapes.point import Point
 from shapes.line import Line
 from shapes.polygon import Polygon
 from display_file import DisplayFile
-import transformation as transform
+from transform import Transform
 
 class Handler:
   def __init__(self, builder, drawing_manager):
     self.builder = builder
     self.dm = drawing_manager
+    self.transform = Transform()
 
     # References to GTK objects
     self.add_object_window = self.builder.get_object("AddObjectWindow")
@@ -110,62 +111,62 @@ class Handler:
 
   def onMoveObjectUp(self, button):
     self.printToLog("onMoveObjectUp")
-    transform.move(self.tree_view, 0, 10)
+    self.transform.move(self.tree_view, 0, 10)
    
     self.dm.redraw()
 
   def onMoveObjectDown(self, button):
     self.printToLog("onMoveObjectDown")
-    transform.move(self.tree_view, 0, -10)
+    self.transform.move(self.tree_view, 0, -10)
     self.dm.redraw()
 
   def onMoveObjectLeft(self, button):
     self.printToLog("onMoveObjectLeft")
-    transform.move(self.tree_view, -10, 0)
+    self.transform.move(self.tree_view, -10, 0)
     self.dm.redraw()
 
   def onMoveObjectRight(self, button):
     self.printToLog("onMoveObjectRight")
 
-    transform.move(self.tree_view, 10, 0)
+    self.transform.move(self.tree_view, 10, 0)
     self.dm.redraw()
 
   def onRotateObjectLeft(self, button):
     self.printToLog("onRotateObjectLeft")
     
     if self.object_radio_button.get_active():
-      transform.rotate(self.tree_view, -45, 'center',0,0)
+      self.transform.rotate(self.tree_view, -45, 'center',0,0)
     elif self.world_radio_button.get_active():
-      transform.rotate(self.tree_view, -45, 'world',0,0)
+      self.transform.rotate(self.tree_view, -45, 'world',0,0)
     elif self.point_radio_button.get_active():
       x = float(self.rotate_x.get_text())
       y = float(self.rotate_y.get_text())
-      transform.rotate(self.tree_view, -45, 'point',x,y)
+      self.transform.rotate(self.tree_view, -45, 'point',x,y)
     self.dm.redraw()
 
   def onRotateObjectRight(self, button):
     self.printToLog("onRotateObjectRight")
     
     if self.object_radio_button.get_active():
-      transform.rotate(self.tree_view, 45, 'center',0,0)
+      self.transform.rotate(self.tree_view, 45, 'center',0,0)
     elif self.world_radio_button.get_active():
-      transform.rotate(self.tree_view, 45, 'world',0,0)
+      self.transform.rotate(self.tree_view, 45, 'world',0,0)
     elif self.point_radio_button.get_active():
       x = float(self.rotate_x.get_text())
       y = float(self.rotate_y.get_text())
-      transform.rotate(self.tree_view, 45, 'point',x,y)
+      self.transform.rotate(self.tree_view, 45, 'point',x,y)
 
     self.dm.redraw()
   
   def onScaleObjectUp(self, button):
     self.printToLog("onScaleObjectUp")
   
-    transform.zoom(self.tree_view, 2, 2)
+    self.transform.zoom(self.tree_view, 2, 2)
     self.dm.redraw()
 
   def onScaleObjectDown(self, button):
     self.printToLog("onScaleObjectDown")
-    transform.zoom(self.tree_view, 0.5, 0.5)
+    self.transform.zoom(self.tree_view, 0.5, 0.5)
     self.dm.redraw()
 
   def onMoveWindowUp(self, button):
