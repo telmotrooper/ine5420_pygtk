@@ -1266,6 +1266,7 @@
                       <object class="GtkFrame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="margin_bottom">5</property>
                         <property name="label_xalign">0</property>
                         <property name="shadow_type">none</property>
                         <child>
