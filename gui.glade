@@ -901,7 +901,7 @@
                                     <property name="model">ObjectList</property>
                                     <property name="enable_grid_lines">vertical</property>
                                     <child internal-child="selection">
-                                      <object class="GtkTreeSelection" id="treeview-selection1"/>
+                                      <object class="GtkTreeSelection" id="TreeSelection"/>
                                     </child>
                                     <child>
                                       <object class="GtkTreeViewColumn" id="ColumnName">
