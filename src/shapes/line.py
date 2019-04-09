@@ -1,3 +1,5 @@
+import numpy as np
+
 class Line:
   def __init__(self, name):
     self.world_coords = []
@@ -42,3 +44,13 @@ class Line:
     ctx.move_to(point1["x"],point1["y"])
     ctx.line_to(point2["x"], point2["y"])
     ctx.stroke()
+
+  def normalizeCoords(self, normalized_matrix):
+    self.normalized_coords = []
+    for i in self.world_coords:
+      tmp = np.array([i["x"], i["y"], 1])
+      tmp2 = tmp.dot(normalized_matrix)
+      self.normalized_coords.append({"x": tmp2[0], "y": tmp2[1]})
+    print(self.world_coords)
+    print(self.normalized_coords)
+

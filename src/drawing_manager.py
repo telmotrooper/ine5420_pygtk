@@ -24,6 +24,7 @@ class DrawingManager:
     return self.window
 
   def redraw(self):
+    self.window.normalize()
     self.da.queue_draw()
 
   def drawBackground(self, da, ctx):
