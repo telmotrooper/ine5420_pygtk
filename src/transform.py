@@ -41,7 +41,7 @@ class Transform():
     obj_list, index = tree_view.get_selection().get_selected()
     obj_name = obj_list[index][0]
     obj = display_file.getObject(obj_name)
-    coords = obj.getCoords()
+    coords = obj.getWorldCoords()
 
     for i in range(len(coords)):
       new_coords = self.translation(coords[i]["x"], coords[i]["y"], x, y)
@@ -51,7 +51,7 @@ class Transform():
     obj_list, index = tree_view.get_selection().get_selected()
     obj_name = obj_list[index][0]
     obj = display_file.getObject(obj_name)
-    coords = obj.getCoords()
+    coords = obj.getWorldCoords()
     center_point = self.center(coords)
 
     for i in range(len(coords)):
@@ -62,7 +62,7 @@ class Transform():
     obj_list, index = tree_view.get_selection().get_selected()
     obj_name = obj_list[index][0]
     obj = display_file.getObject(obj_name)
-    coords = obj.getCoords()
+    coords = obj.getWorldCoords()
     if(rotation_type == 'center'):
       point = self.center(coords)
     elif(rotation_type == 'world'):

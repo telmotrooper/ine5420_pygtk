@@ -1,15 +1,22 @@
 class Line:
   def __init__(self, name):
-    self.coords = []
+    self.world_coords = []
+    self.normalized_coords = []
     self.name = name
   
   def addCoords(self, x, y):
-    self.coords.append(
+    self.world_coords.append(
+      {"x": x, "y": y}
+    )
+    self.normalized_coords.append(
       {"x": x, "y": y}
     )
 
-  def getCoords(self):
-    return self.coords
+  def getWorldCoords(self):
+    return self.world_coords
+
+  def getNormalizedCoords(self):
+    return self.normalized_coords
 
   def getName(self):
     return self.name
@@ -26,8 +33,8 @@ class Line:
     ctx.stroke()
 
   def drawToViewport(self, ctx, viewport):
-    x, y = self.coords[0]["x"], self.coords[0]["y"]
-    x2, y2 = self.coords[1]["x"], self.coords[1]["y"]
+    x, y = self.world_coords[0]["x"], self.world_coords[0]["y"]
+    x2, y2 = self.world_coords[1]["x"], self.world_coords[1]["y"]
 
     point1 = viewport.transform(x, y)
     point2 = viewport.transform(x2, y2)

@@ -1,15 +1,22 @@
 class Point:
   def __init__(self, name):
-    self.coords = []
+    self.world_coords = []
+    self.normalized_coords = []
     self.name = name
   
   def addCoords(self, x, y):
-    self.coords.append(
+    self.world_coords.append(
+      {"x": x, "y": y}
+    )
+    self.normalized_coords.append(
       {"x": x, "y": y}
     )
 
-  def getCoords(self):
-    return self.coords
+  def getWorldCoords(self):
+    return self.world_coords
+
+  def getNormalizedCoords(self):
+    return self.normalized_coords
 
   def getName(self):
     return self.name
@@ -23,7 +30,7 @@ class Point:
     ctx.stroke()
 
   def drawToViewport(self, ctx, viewport):   
-    x, y = self.coords[0]["x"], self.coords[0]["y"]
+    x, y = self.world_coords[0]["x"], self.world_coords[0]["y"]
 
     point = viewport.transform(x, y)
   
