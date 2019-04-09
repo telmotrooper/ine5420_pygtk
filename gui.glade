@@ -941,6 +941,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="margin_right">5</property>
+                            <signal name="clicked" handler="onImportObj" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -955,6 +956,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="margin_left">5</property>
+                            <signal name="clicked" handler="onExportObj" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
