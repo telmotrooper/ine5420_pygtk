@@ -50,8 +50,8 @@ class Transform():
 
   def move(self, tree_view, x, y):
     obj_list, index = tree_view.get_selection().get_selected()
-    obj_name = obj_list[index][0]
-    obj = display_file.getObject(obj_name)
+    obj_id = obj_list[index][2]
+    obj = display_file.getObject(obj_id)
     coords = obj.getWorldCoords()
 
     for i in range(len(coords)):
@@ -60,8 +60,8 @@ class Transform():
 
   def zoom(self, tree_view, sx, sy):
     obj_list, index = tree_view.get_selection().get_selected()
-    obj_name = obj_list[index][0]
-    obj = display_file.getObject(obj_name)
+    obj_id = obj_list[index][2]
+    obj = display_file.getObject(obj_id)
     coords = obj.getWorldCoords()
     center_point = self.center(coords)
 
@@ -71,8 +71,8 @@ class Transform():
 
   def rotate(self, tree_view, degrees, rotation_type, x, y):
     obj_list, index = tree_view.get_selection().get_selected()
-    obj_name = obj_list[index][0]
-    obj = display_file.getObject(obj_name)
+    obj_id = obj_list[index][2]
+    obj = display_file.getObject(obj_id)
     coords = obj.getWorldCoords()
     if(rotation_type == 'center'):
       point = self.center(coords)

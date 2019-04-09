@@ -5,12 +5,12 @@ class DisplayFile:
   builder = None
   objectList = None
 
-  def addObject(self, object):
+  def addObject(self, obj):
     # Add object to display file
-    self.objects.append(object)
+    self.objects.append(obj)
 
     # Add entry to object list (interface) and store index
-    index = DisplayFile.objectList.append([object.getName(), object.__class__.__name__])
+    index = DisplayFile.objectList.append([obj.getName(), obj.__class__.__name__, obj.getId()])
 
     # Select entry that was just added
     self.builder.get_object("TreeSelection").select_iter(index)
@@ -23,13 +23,13 @@ class DisplayFile:
     DisplayFile.builder = builder
     DisplayFile.objectList = self.builder.get_object("ObjectList")
 
-  def removeObject(self, object_name):
+  def removeObject(self, object_id):
     for i, o in enumerate(DisplayFile.objects):
-      if o.name == object_name:
+      if o.id == object_id:
         del DisplayFile.objects[i]
         break
 
-  def getObject(self, object_name):
+  def getObject(self, object_id):
     for i, o in enumerate(DisplayFile.objects):
-      if o.name == object_name:
+      if o.id == object_id:
         return DisplayFile.objects[i]

@@ -1,10 +1,13 @@
 import numpy as np
+# pylint: disable=no-name-in-module, import-error
+from utils.gen_random_id import generateRandomId
 
 class Line:
   def __init__(self, name):
     self.world_coords = []
     self.normalized_coords = []
     self.name = name
+    self.id = generateRandomId()
   
   def addCoords(self, x, y):
     self.world_coords.append(
@@ -22,6 +25,9 @@ class Line:
 
   def getName(self):
     return self.name
+
+  def getId(self):
+    return self.id
 
   def draw(self, ctx, coords):  # reference: https://pycairo.readthedocs.io/  
     x = coords[0]["xViewPort"]

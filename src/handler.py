@@ -115,7 +115,7 @@ class Handler:
     self.printToLog("onRemoveObjectClicked")
     obj_list, index = self.tree_view.get_selection().get_selected()
     if index != None:
-      self.display_file.removeObject(obj_list[index][0])
+      self.display_file.removeObject(obj_list[index][2])
       obj_list.remove(index)
       self.dm.redraw()
 

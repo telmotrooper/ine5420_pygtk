@@ -832,6 +832,8 @@
       <column type="gchararray"/>
       <!-- column-name Type -->
       <column type="gchararray"/>
+      <!-- column-name ID -->
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkWindow" id="MainWindow">
@@ -927,6 +929,17 @@
                                           <object class="GtkCellRendererText"/>
                                           <attributes>
                                             <attribute name="text">1</attribute>
+                                          </attributes>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkTreeViewColumn" id="ColumnId">
+                                        <property name="title" translatable="yes">Id</property>
+                                        <child>
+                                          <object class="GtkCellRendererText"/>
+                                          <attributes>
+                                            <attribute name="text">2</attribute>
                                           </attributes>
                                         </child>
                                       </object>
