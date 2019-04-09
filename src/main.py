@@ -16,8 +16,11 @@ def main():
   window_object = builder.get_object("MainWindow")
   window_object.show_all()
 
+  # Prevent these dialogs from being destroyed on close (they just hide)
   add_object_window = builder.get_object("AddObjectWindow")
+  obj_file_chooser = builder.get_object("ObjFileChooser")
   add_object_window.connect("delete-event", lambda w, e: w.hide() or True)
+  obj_file_chooser.connect("delete-event", lambda w, e: w.hide() or True)
 
   drawing_area = builder.get_object("DrawingArea")
   dm = DrawingManager(drawing_area)
