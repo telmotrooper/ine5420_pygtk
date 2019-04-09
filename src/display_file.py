@@ -6,8 +6,15 @@ class DisplayFile:
   objectList = None
 
   def addObject(self, object):
+    # Add object to display file
     self.objects.append(object)
-    DisplayFile.objectList.append([object.getName(), object.__class__.__name__])
+
+    # Add entry to object list (interface) and store index
+    index = DisplayFile.objectList.append([object.getName(), object.__class__.__name__])
+
+    # Select entry that was just added
+    self.builder.get_object("TreeSelection").select_iter(index)
+
 
   def getObjects(self):
     return self.objects

@@ -45,8 +45,9 @@ class Handler:
     self.obj_file_chooser.hide()
 
   def onFileClicked(self, button):
-    self.printToLog("onFileClicked")
-    self.obj_handler.importFile(self.obj_file_chooser.get_filename())
+    file_path = self.obj_file_chooser.get_filename()
+    self.printToLog("onFileClicked ({})".format(file_path))
+    self.obj_handler.importFile(file_path)
     self.obj_file_chooser.hide()
 
   def onExportObj(self, button):
