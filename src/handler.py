@@ -16,6 +16,7 @@ class Handler:
     self.text_view = self.builder.get_object("Log")
     self.tree_view = self.builder.get_object("TreeView")
 
+    self.obj_file_chooser = self.builder.get_object("ObjFileChooser")
     self.object_radio_button = self.builder.get_object("ObjectRadioButton")
     self.world_radio_button = self.builder.get_object("WorldRadioButton")
     self.point_radio_button = self.builder.get_object("PointRadioButton")
@@ -35,8 +36,12 @@ class Handler:
 
   def onImportObj(self, button):
     self.printToLog("onImportObj")
-    obj_file_chooser = self.builder.get_object("ObjFileChooser")
-    obj_file_chooser.show_all()
+    self.obj_file_chooser.show_all()
+
+
+  def onCancelFileImport(self, button):
+    self.printToLog("onCancelFileImport")
+    self.obj_file_chooser.hide()
 
   def onExportObj(self, button):
     self.printToLog("onExportObj")
