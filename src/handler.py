@@ -33,6 +33,14 @@ class Handler:
   def onDestroy(self, *args):
     Gtk.main_quit()
 
+  def onImportObj(self, button):
+    self.printToLog("onImportObj")
+    obj_file_chooser = self.builder.get_object("ObjFileChooser")
+    obj_file_chooser.show_all()
+
+  def onExportObj(self, button):
+    self.printToLog("onExportObj")
+
   def onAddObjectClicked(self, button):
     self.printToLog("onAddObjectClicked")
     add_object_window = self.builder.get_object("AddObjectWindow")
