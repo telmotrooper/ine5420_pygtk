@@ -1,9 +1,9 @@
 class ObjHandler:
-  def __init__(self):
-    print("Hey")
+  # def __init__(self):
+    # print("Hey")
 
   def importFile(self, path):
-    print("Work in progress")
+    print("{}".format(path))
   
   def exportFile(self, path):
     print("Work in progress")

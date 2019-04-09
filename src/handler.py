@@ -4,12 +4,14 @@ from shapes.line import Line
 from shapes.polygon import Polygon
 from display_file import DisplayFile
 from transform import Transform
+from obj_handler import ObjHandler
 
 class Handler:
   def __init__(self, builder, drawing_manager):
     self.builder = builder
     self.dm = drawing_manager
     self.transform = Transform()
+    self.obj_handler = ObjHandler()
 
     # References to GTK objects
     self.add_object_window = self.builder.get_object("AddObjectWindow")
@@ -38,9 +40,13 @@ class Handler:
     self.printToLog("onImportObj")
     self.obj_file_chooser.show_all()
 
-
   def onCancelFileImport(self, button):
     self.printToLog("onCancelFileImport")
+    self.obj_file_chooser.hide()
+
+  def onFileClicked(self, button):
+    self.printToLog("onFileClicked")
+    self.obj_handler.importFile(self.obj_file_chooser.get_filename())
     self.obj_file_chooser.hide()
 
   def onExportObj(self, button):
