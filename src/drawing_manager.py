@@ -25,10 +25,11 @@ class DrawingManager:
     self.transform.setWindow(self.window)
     self.viewport.setWindow(self.window)
 
-    # To verify that normalize() works 
+    # To verify that both normalize() and denormalize() work
     # print(self.transform.normalize(0,0))
-    # print(self.transform.normalize(300,300))
     # print(self.transform.normalize(self.window.getWidth(),self.window.getHeight()))
+    # print(self.transform.denormalize(-1,-1))
+    # print(self.transform.denormalize(1,1))
 
 
   def getWindow(self):

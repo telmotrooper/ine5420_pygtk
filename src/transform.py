@@ -21,6 +21,18 @@ class Transform():
 
     return {"x": new_x, "y": new_y}
 
+  def denormalize(self, x, y):
+    # x' = (b-a) * ((x - min) / (max - min)) + a
+    window = Transform.window
+    a_x, b_x = window.getMin()["x"], window.getMax()["x"]
+    a_y, b_y = window.getMin()["y"], window.getMax()["y"]
+    
+    wmin, wmax = -1, 1
+
+    new_x = (b_x-a_x) * ((x - wmin) / (wmax - wmin)) + a_x
+    new_y = (b_y-a_y) * ((y - wmin) / (wmax - wmin)) + a_y
+
+    return {"x": new_x, "y": new_y}
 
   def translation(self, x, y, dx, dy):
     a = np.array([x, y, 1])
