@@ -4,13 +4,28 @@ from display_file import DisplayFile
 display_file = DisplayFile()
 
 class Transform():
+  a,b = -1, 1
+
+  def setWindow(self, window):
+    Transform.window = window
+
+  def normalize(self, x, y):
+    # x' = (b-a) * ((x - min) / (max - min)) + a
+    window = Transform.window
+    a,b = self.a, self.b
+    wmin_x, wmax_x = window.getMin()["x"], window.getMax()["x"]
+    wmin_y, wmax_y = window.getMin()["y"], window.getMax()["y"]
+
+    new_x = (b-a) * ((x - wmin_x) / (wmax_x - wmin_x)) + a
+    new_y = (b-a) * ((y - wmin_y) / (wmax_y - wmin_y)) + a
+
+    return {"x": new_x, "y": new_y}
+
+
   def translation(self, x, y, dx, dy):
     a = np.array([x, y, 1])
     b = np.array([[1,0,0], [0,1,0], [dx, dy, 1]])
     return a.dot(b)
-  
-  def normalize_translation(self, dx, dy):
-    return np.array([[1,0,0], [0,1,0], [dx, dy, 1]])
 
   def scale(self, x, y, sx, sy, cx, cy):
     a = np.array([x, y, 1])
@@ -20,9 +35,6 @@ class Transform():
     
     return a.dot(b).dot(c).dot(d)
 
-  def normalize_scale(self, sx, sy):
-    return np.array([[sx, 0, 0], [0, sy, 0], [0, 0, 1]])
-
   def rotation(self, x, y, dx, dy, degrees):
     sin = np.sin(np.deg2rad(degrees))
     cos = np.cos(np.deg2rad(degrees))
@@ -31,11 +43,6 @@ class Transform():
     c = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
     d = np.array([[1,0,0],[0,1,0],[dx, dy, 1]])
     return a.dot(b).dot(c).dot(d)
-
-  def normalize_rotation(self, degrees):
-    sin = np.sin(np.deg2rad(degrees))
-    cos = np.cos(np.deg2rad(degrees))
-    return np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
 
   def center(self, coords):
     x = 0

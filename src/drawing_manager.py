@@ -3,6 +3,7 @@ from shapes.line import Line
 from shapes.polygon import Polygon
 from display_file import DisplayFile
 from window import Window
+from transform import Transform
 from viewport import Viewport
 
 class DrawingManager:
@@ -18,13 +19,22 @@ class DrawingManager:
     self.window = Window(0, 0, da_width, da_height)
     self.viewport = Viewport(0, 0, da_width, da_height)
 
+    self.transform = Transform()
+
+    # Pass reference to window for Transform and Viewport
+    self.transform.setWindow(self.window)
     self.viewport.setWindow(self.window)
+
+    # To verify that normalize() works 
+    # print(self.transform.normalize(0,0))
+    # print(self.transform.normalize(300,300))
+    # print(self.transform.normalize(self.window.getWidth(),self.window.getHeight()))
+
 
   def getWindow(self):
     return self.window
 
   def redraw(self):
-    self.window.normalize()
     self.da.queue_draw()
 
   def drawBackground(self, da, ctx):
