@@ -21,6 +21,14 @@ class Polygon:
   def getNormalizedCoords(self):
     return self.normalized_coords
 
+  def setWorldCoords(self, i, x, y):
+    self.world_coords[i] = { "x": x, "y": y }
+    self.normalized_coords[i] = self.transform.normalize(x, y)
+
+  def setNormalizedCoords(self, i, x, y):
+    self.world_coords[i] = self.transform.denormalize(x, y)
+    self.normalized_coords[i] = { "x": x, "y": y }
+
   def getName(self):
     return self.name
 

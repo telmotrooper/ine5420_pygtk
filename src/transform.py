@@ -27,6 +27,9 @@ class Transform():
     a_x, b_x = window.getMin()["x"], window.getMax()["x"]
     a_y, b_y = window.getMin()["y"], window.getMax()["y"]
     
+    print("wmin = ({},{})".format(window.getMin()["x"], window.getMin()["y"]))
+    print("wmax = ({},{})\n".format(window.getMax()["x"], window.getMax()["y"]))
+
     wmin, wmax = -1, 1
 
     new_x = (b_x-a_x) * ((x - wmin) / (wmax - wmin)) + a_x
@@ -65,6 +68,8 @@ class Transform():
       y += i["y"]
       count += 1
     
+
+    print("cx: {} cy: {}".format(x/count, y/count))
     return {"cx": x/count, "cy": y/count}
 
   def move(self, tree_view, x, y):
@@ -75,7 +80,7 @@ class Transform():
 
     for i in range(len(coords)):
       new_coords = self.translation(coords[i]["x"], coords[i]["y"], x, y)
-      coords[i] = {"x": new_coords[0], "y": new_coords[1]}
+      obj.setWorldCoords(i, new_coords[0], new_coords[1])
 
   def zoom(self, tree_view, sx, sy):
     obj_list, index = tree_view.get_selection().get_selected()
