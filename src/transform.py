@@ -91,7 +91,7 @@ class Transform():
 
     for i in range(len(coords)):
       new_coords = self.scale(coords[i]["x"], coords[i]["y"], sx, sy, center_point["cx"], center_point["cy"])
-      coords[i] = {"x": new_coords[0], "y": new_coords[1]}
+      obj.setWorldCoords(i, new_coords[0], new_coords[1])
 
   def rotate(self, tree_view, degrees, rotation_type, x, y):
     obj_list, index = tree_view.get_selection().get_selected()
@@ -107,4 +107,4 @@ class Transform():
 
     for i in range(len(coords)):
       new_coords = self.rotation(coords[i]["x"], coords[i]["y"], point["cx"], point["cy"], degrees)
-      coords[i] = {"x": new_coords[0], "y": new_coords[1]}
+      obj.setWorldCoords(i, new_coords[0], new_coords[1])
