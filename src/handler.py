@@ -56,12 +56,12 @@ class Handler:
 
   def onRotateWindowLeft(self, button):
     self.printToLog("onRotateWindowLeft")
-    angle = self.window_rotation_angle.get_text()
+    angle =int(self.window_rotation_angle.get_text())
     self.dm.getWindow().rotate("left", angle)
 
   def onRotateWindowRight(self, button):
     self.printToLog("onRotateWindowRight")
-    angle = self.window_rotation_angle.get_text()
+    angle = int(self.window_rotation_angle.get_text())
     self.dm.getWindow().rotate("right", angle)
 
   def onAddObjectClicked(self, button):

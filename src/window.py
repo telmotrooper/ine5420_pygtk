@@ -78,4 +78,10 @@ class Window:
     # print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
 
   def rotate(self, direction, angle):
-    print("yay")
+    if(direction == "left"):
+      temp = Window.orientation + angle
+    else:
+      temp = Window.orientation - angle
+      
+    Window.orientation = temp % 360
+    print(Window.orientation)
