@@ -24,10 +24,11 @@ class Window:
     return Window.y_max - Window.y_min
 
   def getCenter(self):
+    # print("window from ({},{}) to ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
     width, height = self.getWidth(), self.getHeight()
     return {
-      "x": width / 2,
-      "y": height / 2
+      "x": (width / 2) + Window.x_min,
+      "y": (height / 2) + Window.y_min
     }
 
   def zoom(self, percentage):
