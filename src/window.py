@@ -26,21 +26,29 @@ class Window:
   def getCenter(self):
     # print("window from ({},{}) to ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
     width, height = self.getWidth(), self.getHeight()
+
+    center_x = (width / 2) + Window.x_min
+    center_y = (height / 2) + Window.y_min
+
+    print("center at ({},{})".format(center_x, center_y))
+    
     return {
-      "x": (width / 2) + Window.x_min,
-      "y": (height / 2) + Window.y_min
+      "x": center_x,
+      "y": center_y
     }
 
   def zoom(self, percentage):
+    center = self.getCenter()
+    # print("old height: {} new height: {}".format(self.getHeight(), self.getHeight() / percentage))
     new_height = self.getHeight() / percentage
     new_width =  self.getWidth() / percentage
     
-    new_x_min = (self.getCenter()["x"] - new_width) / 2
-    new_y_min = (self.getCenter()["y"] - new_height) / 2
-    self.setMin(new_x_min, new_y_min)
+    new_x_min = center["x"] - (new_width / 2)
+    new_y_min = center["y"] - (new_height / 2)
+    new_x_max = center["x"] + (new_width / 2)
+    new_y_max = center["y"] + (new_height / 2)
 
-    new_x_max = (self.getCenter()["x"] + new_width) / 2
-    new_y_max = (self.getCenter()["y"] + new_height) / 2
+    self.setMin(new_x_min, new_y_min)
     self.setMax(new_x_max, new_y_max)
 
   def setMin(self, x, y):
