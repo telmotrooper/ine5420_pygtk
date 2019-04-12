@@ -16,6 +16,8 @@ class Transform():
     wmin_x, wmax_x = window.getMin()["x"], window.getMax()["x"]
     wmin_y, wmax_y = window.getMin()["y"], window.getMax()["y"]
 
+    print("(Transform) Window at ({},{}) ({},{})".format(wmin_x, wmin_y, wmax_x, wmax_y))
+
     new_x = (b-a) * ((x - wmin_x) / (wmax_x - wmin_x)) + a
     new_y = (b-a) * ((y - wmin_y) / (wmax_y - wmin_y)) + a
 

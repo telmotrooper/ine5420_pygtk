@@ -24,13 +24,13 @@ class Window:
     return Window.y_max - Window.y_min
 
   def getCenter(self):
-    # print("window from ({},{}) to ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
+    print("window from ({},{}) to ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
     width, height = self.getWidth(), self.getHeight()
 
     center_x = (width / 2) + Window.x_min
     center_y = (height / 2) + Window.y_min
 
-    print("center at ({},{})".format(center_x, center_y))
+    # print("center at ({},{})".format(center_x, center_y))
     
     return {
       "x": center_x,
@@ -39,17 +39,22 @@ class Window:
 
   def zoom(self, percentage):
     center = self.getCenter()
-    # print("old height: {} new height: {}".format(self.getHeight(), self.getHeight() / percentage))
-    new_height = self.getHeight() / percentage
-    new_width =  self.getWidth() / percentage
+    print(self.getHeight())
+    new_height = self.getHeight() * percentage
+    new_width =  self.getWidth() * percentage
+    print("old height: {} new height: {}".format(self.getHeight(), new_height))
     
-    new_x_min = center["x"] - (new_width / 2)
-    new_y_min = center["y"] - (new_height / 2)
-    new_x_max = center["x"] + (new_width / 2)
-    new_y_max = center["y"] + (new_height / 2)
+    new_x_min = center["x"] - (self.getWidth() / 2)
+    new_x_max = center["x"] + (self.getWidth() / 2)
+
+    new_y_min = center["y"] - (self.getHeight() / 2)
+    new_y_max = center["y"] + (self.getHeight() / 2)
 
     self.setMin(new_x_min, new_y_min)
     self.setMax(new_x_max, new_y_max)
+
+    for i in Window.display_file.getObjects():
+      i.normalizeCoords()
 
   def setMin(self, x, y):
     Window.x_min = x
@@ -68,4 +73,4 @@ class Window:
     for i in Window.display_file.getObjects():
       i.normalizeCoords()
 
-    # print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
+    print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
