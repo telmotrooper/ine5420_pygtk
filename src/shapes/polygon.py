@@ -35,16 +35,6 @@ class Polygon:
   def getId(self):
     return self.id
 
-  def draw(self, ctx, coords):  # reference: https://pycairo.readthedocs.io/
-    ctx.move_to(coords[0]["xViewPort"], coords[0]["yViewPort"])
-
-    for entry in coords:  # 1st interation does move_to and line_to to same point
-      x2 = entry["xViewPort"]
-      y2 = entry["yViewPort"]
-      ctx.line_to(x2,y2)
-    ctx.close_path()
-    ctx.stroke()
-
   def drawToViewport(self, ctx, viewport):
     # move context to initial point
     point = viewport.transform(self.normalized_coords[0]["x"], self.normalized_coords[0]["y"])

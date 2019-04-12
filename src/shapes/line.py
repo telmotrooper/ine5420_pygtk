@@ -35,17 +35,6 @@ class Line:
   def getId(self):
     return self.id
 
-  def draw(self, ctx, coords):  # reference: https://pycairo.readthedocs.io/  
-    x = coords[0]["xViewPort"]
-    y = coords[0]["yViewPort"]
-
-    x2 = coords[1]["xViewPort"]
-    y2 = coords[1]["yViewPort"]
-
-    ctx.move_to(x,y)
-    ctx.line_to(x2,y2)
-    ctx.stroke()
-
   def drawToViewport(self, ctx, viewport):
     x, y = self.normalized_coords[0]["x"], self.normalized_coords[0]["y"]
     x2, y2 = self.normalized_coords[1]["x"], self.normalized_coords[1]["y"]

@@ -27,8 +27,8 @@ class Transform():
     a_x, b_x = window.getMin()["x"], window.getMax()["x"]
     a_y, b_y = window.getMin()["y"], window.getMax()["y"]
     
-    print("wmin = ({},{})".format(window.getMin()["x"], window.getMin()["y"]))
-    print("wmax = ({},{})\n".format(window.getMax()["x"], window.getMax()["y"]))
+    # print("wmin = ({},{})".format(window.getMin()["x"], window.getMin()["y"]))
+    # print("wmax = ({},{})\n".format(window.getMax()["x"], window.getMax()["y"]))
 
     wmin, wmax = -1, 1
 

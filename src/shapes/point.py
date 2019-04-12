@@ -36,14 +36,6 @@ class Point:
   def getId(self):
     return self.id
 
-  def draw(self, ctx, coords):  # Reference: https://pycairo.readthedocs.io/    
-    x = coords[0]["xViewPort"]
-    y = coords[0]["yViewPort"]
-  
-    ctx.move_to(x,y)
-    ctx.rel_line_to(1,1)  # equivalent to ctx.line_to(x+1,y+1)
-    ctx.stroke()
-
   def drawToViewport(self, ctx, viewport):   
     x, y = self.normalized_coords[0]["x"], self.normalized_coords[0]["y"]
 
