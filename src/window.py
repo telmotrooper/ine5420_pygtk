@@ -3,6 +3,8 @@ from display_file import DisplayFile
 import numpy as np
 
 class Window:
+  orientation = 90
+
   def __init__(self, x_min, y_min, x_max, y_max):
     Window.x_min = x_min
     Window.y_min = y_min
@@ -24,7 +26,7 @@ class Window:
     return Window.y_max - Window.y_min
 
   def getCenter(self):
-    print("window from ({},{}) to ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
+    # print("window from ({},{}) to ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
     width, height = self.getWidth(), self.getHeight()
 
     center_x = (width / 2) + Window.x_min
@@ -39,10 +41,10 @@ class Window:
 
   def zoom(self, percentage):
     center = self.getCenter()
-    print(self.getHeight())
+    # print(self.getHeight())
     new_height = self.getHeight() * percentage
     new_width =  self.getWidth() * percentage
-    print("old height: {} new height: {}".format(self.getHeight(), new_height))
+    # print("old height: {} new height: {}".format(self.getHeight(), new_height))
     
     new_x_min = center["x"] - (self.getWidth() / 2)
     new_x_max = center["x"] + (self.getWidth() / 2)
@@ -73,4 +75,7 @@ class Window:
     for i in Window.display_file.getObjects():
       i.normalizeCoords()
 
-    print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
+    # print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
+
+  def rotate(self, direction, angle):
+    print("yay")

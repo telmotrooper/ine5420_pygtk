@@ -1111,6 +1111,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="width_chars">3</property>
+                                                <property name="text" translatable="yes">45</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -1171,6 +1172,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">True</property>
+                                                <signal name="clicked" handler="onRotateWindowLeft" swapped="no"/>
                                               </object>
                                               <packing>
                                                 <property name="left_attach">0</property>
@@ -1183,6 +1185,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">True</property>
+                                                <signal name="clicked" handler="onRotateWindowRight" swapped="no"/>
                                               </object>
                                               <packing>
                                                 <property name="left_attach">2</property>

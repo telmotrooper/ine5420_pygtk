@@ -16,7 +16,7 @@ class Transform():
     wmin_x, wmax_x = window.getMin()["x"], window.getMax()["x"]
     wmin_y, wmax_y = window.getMin()["y"], window.getMax()["y"]
 
-    print("(Transform) Window at ({},{}) ({},{})".format(wmin_x, wmin_y, wmax_x, wmax_y))
+    # print("(Transform) Window at ({},{}) ({},{})".format(wmin_x, wmin_y, wmax_x, wmax_y))
 
     new_x = (b-a) * ((x - wmin_x) / (wmax_x - wmin_x)) + a
     new_y = (b-a) * ((y - wmin_y) / (wmax_y - wmin_y)) + a
@@ -71,7 +71,7 @@ class Transform():
       count += 1
     
 
-    print("cx: {} cy: {}".format(x/count, y/count))
+    # print("cx: {} cy: {}".format(x/count, y/count))
     return {"cx": x/count, "cy": y/count}
 
   def move(self, tree_view, x, y):

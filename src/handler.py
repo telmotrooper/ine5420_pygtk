@@ -24,6 +24,7 @@ class Handler:
     self.point_radio_button = self.builder.get_object("PointRadioButton")
     self.rotate_x = self.builder.get_object("RotateX")
     self.rotate_y = self.builder.get_object("RotateY")
+    self.window_rotation_angle = self.builder.get_object("windowRotationAngle")
 
 
     self.text_buffer = self.text_view.get_buffer()
@@ -52,6 +53,16 @@ class Handler:
 
   def onExportObj(self, button):
     self.printToLog("onExportObj")
+
+  def onRotateWindowLeft(self, button):
+    self.printToLog("onRotateWindowLeft")
+    angle = self.window_rotation_angle.get_text()
+    self.dm.getWindow().rotate("left", angle)
+
+  def onRotateWindowRight(self, button):
+    self.printToLog("onRotateWindowRight")
+    angle = self.window_rotation_angle.get_text()
+    self.dm.getWindow().rotate("right", angle)
 
   def onAddObjectClicked(self, button):
     self.printToLog("onAddObjectClicked")
