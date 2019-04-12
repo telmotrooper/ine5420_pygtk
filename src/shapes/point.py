@@ -26,9 +26,10 @@ class Point:
     self.world_coords[i] = { "x": x, "y": y }
     self.normalized_coords[i] = self.transform.normalize(x, y)
 
-  def setNormalizedCoords(self, i, x, y):
-    self.world_coords[i] = self.transform.denormalize(x, y)
-    self.normalized_coords[i] = { "x": x, "y": y }
+  def normalizeCoords(self):
+    for i in range(len(self.world_coords)):
+      x, y = self.world_coords[i]["x"], self.world_coords[i]["y"]
+      self.normalized_coords[i] = self.transform.normalize(x, y)
   
   def getName(self):
     return self.name

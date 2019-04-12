@@ -55,3 +55,8 @@ class Window:
     Window.y_min += y
     Window.x_max += x
     Window.y_max += y
+
+    for i in Window.display_file.getObjects():
+      i.normalizeCoords()
+
+    # print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))

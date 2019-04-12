@@ -49,7 +49,7 @@ class DrawingManager:
     ctx.set_line_width(2)
     
     for i in self.display_file.getObjects():
-      print('Drawing object "{}"'.format(i.getName()))
+      # print('Drawing object "{}"'.format(i.getName()))
       i.drawToViewport(ctx, self.viewport)
 
       self.draw_counter += 1
