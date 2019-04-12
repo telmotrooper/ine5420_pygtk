@@ -1,3 +1,4 @@
+import numpy as np
 # pylint: disable=no-name-in-module, import-error
 from utils.gen_random_id import generateRandomId
 from transform import Transform
@@ -20,6 +21,18 @@ class Polygon:
 
   def getNormalizedCoords(self):
     return self.normalized_coords
+  
+  def rotateNormalizedCoords(self, angle):
+    angle_rad = np.deg2rad(angle)
+    for i in range(len(self.normalized_coords)):
+      coords = self.normalized_coords[i]
+      print(coords)
+
+      x = coords["x"] * np.cos(angle_rad) - coords["y"] * np.sin(angle_rad)
+      y = coords["x"] * np.sin(angle_rad) - coords["y"] * np.cos(angle_rad)
+
+      self.normalized_coords[i] = { "x": x, "y": y}
+      print(self.normalized_coords[i])
 
   def setWorldCoords(self, i, x, y):
     self.world_coords[i] = { "x": x, "y": y }

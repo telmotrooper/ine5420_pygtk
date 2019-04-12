@@ -3,7 +3,7 @@ from display_file import DisplayFile
 import numpy as np
 
 class Window:
-  orientation = 90
+  orientation = 0
 
   def __init__(self, x_min, y_min, x_max, y_max):
     Window.x_min = x_min
@@ -79,9 +79,10 @@ class Window:
 
   def rotate(self, direction, angle):
     if(direction == "left"):
-      temp = Window.orientation + angle
+      for i in self.display_file.getObjects():
+        i.rotateNormalizedCoords(angle)
     else:
-      temp = Window.orientation - angle
+      for i in self.display_file.getObjects():
+        i.rotateNormalizedCoords(-angle)
       
-    Window.orientation = temp % 360
-    print(Window.orientation)
+

@@ -53,4 +53,4 @@ class DrawingManager:
       i.drawToViewport(ctx, self.viewport)
 
       self.draw_counter += 1
-      # print("draw() #{0}".format(self.draw_counter))
+      print("draw() #{0}".format(self.draw_counter))
