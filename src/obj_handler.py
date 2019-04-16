@@ -43,9 +43,15 @@ class ObjHandler:
         
         temp += "o {}\n".format(obj.getName())
         temp += "l {} {}\n".format(vertice_counter-1, vertice_counter)
+      
       elif(obj_type == "Polygon"):
-        output_file.write("o {}\n".format(obj.getName()))
-        print("Polygon behavior here")
+        temp += "o {}\n".format(obj.getName())
+        temp += "l"
+
+        for coord in w_coords:
+          vertice_counter += 1
+          output_file.write("v {} {} 0\n".format(coord["x"], coord["y"]))
+          temp += " {}".format(vertice_counter)
 
     output_file.write("{}\n".format(temp))
     output_file.close()
