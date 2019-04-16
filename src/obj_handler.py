@@ -13,14 +13,26 @@ class ObjHandler:
   
   def exportFile(self, path):
     output_file = open(path, "w+") # write, overwrite and create if needed
+    temp = "" # this variable holds the objects related to the vertices
+    vertice_counter = 0
+
+
+    # Valid objects are:
+    # - vertice (v) (these are always in the beginning of the file)
+    # - point (p)
+    # - line (l)
+    # - object name (o)
+    
 
     for obj in DisplayFile.objects:
       obj_type = obj.__class__.__name__
 
       if(obj_type == "Point"):
+        vertice_counter += 1
         w_coords = obj.getWorldCoords()[0]
-        output_file.write("o {}\n".format(obj.getName()))
-        output_file.write("p {} {} 0\n".format(w_coords["x"], w_coords["y"]))
+        output_file.write("v {} {} 0\n".format(w_coords["x"], w_coords["y"]))
+        temp += "o {}\n".format(obj.getName())
+        temp += "p {}\n".format(vertice_counter)
       
       elif(obj_type == "Line"):
         output_file.write("o {}\n".format(obj.getName()))
@@ -29,5 +41,5 @@ class ObjHandler:
         output_file.write("o {}\n".format(obj.getName()))
         print("Polygon behavior here")
 
-    output_file.write("\n")
+    output_file.write("{}\n".format(temp))
     output_file.close()
