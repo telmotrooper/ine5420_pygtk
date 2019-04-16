@@ -1,3 +1,5 @@
+import re
+
 from display_file import DisplayFile
 
 class ObjHandler:
@@ -6,10 +8,20 @@ class ObjHandler:
 
   def importFile(self, path):
     print("{}".format(path))
+    vertices = dict()
+    vertice_counter = 0
+
     self.file = open(path, "r+")  # read and write
 
     for line in self.file:
-      print(line)
+      if(line[0] == "v"):
+        vertice_counter += 1
+        vertices[vertice_counter] = line
+    
+    print(vertices[1])
+    temp = re.findall(r"\S+", vertices[1])
+    print(temp)
+
   
   def exportFile(self, path):
     output_file = open(path, "w+") # write, overwrite and create if needed
