@@ -10,6 +10,7 @@ class ObjHandler:
     print("{}".format(path))
     vertices = dict()
     vertice_counter = 0
+    name = ""
 
     self.file = open(path, "r+")  # read and write
 
@@ -17,10 +18,19 @@ class ObjHandler:
       if(line[0] == "v"):
         vertice_counter += 1
         vertices[vertice_counter] = line
+      elif(line[0] == "o"):
+        match = re.findall(r"\S+", line)
+        name = match[1]
+      elif(line[0] == "p"): # TODO: FINISH THIS
+        match = re.findall(r"\S+", line)
+        print(name)
+      elif(line[0] == "l"): # TODO: FINISH THIS
+        match = re.findall(r"\S+", line)
+        print(name)
     
-    print(vertices[1])
-    temp = re.findall(r"\S+", vertices[1])
-    print(temp)
+    # print(vertices[1])
+    # temp = re.findall(r"\S+", vertices[1])
+    # print(temp)
 
   
   def exportFile(self, path):
