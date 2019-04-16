@@ -2,6 +2,8 @@ import re
 
 from display_file import DisplayFile
 from shapes.point import Point
+from shapes.line import Line
+from shapes.polygon import Polygon
 
 class ObjHandler:
   def __init__(self):
@@ -29,18 +31,27 @@ class ObjHandler:
         vertice_for_point = vertices[int(match[1])]
         match = re.findall(r"\S+", vertice_for_point)
         coord = { "x": float(match[1]), "y": float(match[2]) }
-        print(coord)
+
         p1 = Point(name)
         p1.addCoords(coord["x"], coord["y"])
         self.display_file.addObject(p1)
-      # elif(line[0] == "l"): # TODO: FINISH THIS
-      #   match = re.findall(r"\S+", line)
-      #   print(name)
-    
-    print(vertices)
-    # temp = re.findall(r"\S+", vertices[1])
-    # print(temp)
+      
+      elif(line[0] == "l"):
+        match = re.findall(r"\S+", line)
+        
+        if(len(match) == 3):  # line
+          l = Line(name)
+        else: # polygon
+          l = Polygon(name)
 
+        for item in match:
+          if(item != "l"):
+            vertice_for_point = vertices[int(item)]
+            match = re.findall(r"\S+", vertice_for_point)
+            coord = { "x": float(match[1]), "y": float(match[2]) }
+            l.addCoords(coord["x"], coord["y"])
+
+        self.display_file.addObject(l)
   
   def exportFile(self, path):
     output_file = open(path, "w+") # write, overwrite and create if needed
