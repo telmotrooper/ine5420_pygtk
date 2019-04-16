@@ -53,6 +53,7 @@ class Handler:
 
   def onExportObj(self, button):
     self.printToLog("onExportObj")
+    self.obj_handler.exportFile("./file.obj")
 
   def onRotateWindowLeft(self, button):
     self.printToLog("onRotateWindowLeft")
