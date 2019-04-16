@@ -19,11 +19,14 @@ class ObjHandler:
 
       if(obj_type == "Point"):
         w_coords = obj.getWorldCoords()[0]
+        output_file.write("o {}\n".format(obj.getName()))
         output_file.write("p {} {} 0\n".format(w_coords["x"], w_coords["y"]))
       
       elif(obj_type == "Line"):
+        output_file.write("o {}\n".format(obj.getName()))
         print("Line behavior here")
       elif(obj_type == "Polygon"):
+        output_file.write("o {}\n".format(obj.getName()))
         print("Polygon behavior here")
 
     output_file.write("\n")
