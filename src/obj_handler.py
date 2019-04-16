@@ -26,17 +26,23 @@ class ObjHandler:
 
     for obj in DisplayFile.objects:
       obj_type = obj.__class__.__name__
+      w_coords = obj.getWorldCoords()
 
       if(obj_type == "Point"):
         vertice_counter += 1
-        w_coords = obj.getWorldCoords()[0]
-        output_file.write("v {} {} 0\n".format(w_coords["x"], w_coords["y"]))
+        output_file.write("v {} {} 0\n".format(w_coords[0]["x"], w_coords[0]["y"]))
+        
         temp += "o {}\n".format(obj.getName())
         temp += "p {}\n".format(vertice_counter)
       
       elif(obj_type == "Line"):
-        output_file.write("o {}\n".format(obj.getName()))
-        print("Line behavior here")
+        vertice_counter += 1
+        output_file.write("v {} {} 0\n".format(w_coords[0]["x"], w_coords[0]["y"]))
+        vertice_counter += 1
+        output_file.write("v {} {} 0\n".format(w_coords[1]["x"], w_coords[1]["y"]))
+        
+        temp += "o {}\n".format(obj.getName())
+        temp += "l {} {}\n".format(vertice_counter-1, vertice_counter)
       elif(obj_type == "Polygon"):
         output_file.write("o {}\n".format(obj.getName()))
         print("Polygon behavior here")
