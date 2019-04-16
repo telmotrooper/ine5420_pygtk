@@ -1,6 +1,7 @@
 import re
 
 from display_file import DisplayFile
+from shapes.point import Point
 
 class ObjHandler:
   def __init__(self):
@@ -29,6 +30,9 @@ class ObjHandler:
         match = re.findall(r"\S+", vertice_for_point)
         coord = { "x": float(match[1]), "y": float(match[2]) }
         print(coord)
+        p1 = Point(name)
+        p1.addCoords(coord["x"], coord["y"])
+        self.display_file.addObject(p1)
       # elif(line[0] == "l"): # TODO: FINISH THIS
       #   match = re.findall(r"\S+", line)
       #   print(name)
