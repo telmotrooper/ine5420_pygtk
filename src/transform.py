@@ -40,9 +40,15 @@ class Transform():
     return {"x": new_x, "y": new_y}
 
   def translation(self, x, y, dx, dy):
-    a = np.array([x, y, 1])
-    b = np.array([[1,0,0], [0,1,0], [dx, dy, 1]])
+    a = np.array([x,  y,  1])
+    b = self.getTranslationMatrix(dx, dy)
+    
     return a.dot(b)
+
+  def getTranslationMatrix(self, dx, dy):
+    return np.array([[1,  0,  0],
+                     [0,  1,  0],
+                     [dx, dy, 1]])
 
   def scale(self, x, y, sx, sy, cx, cy):
     a = np.array([x, y, 1])
