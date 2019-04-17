@@ -52,9 +52,15 @@ class Transform():
 
   def scale(self, x, y, sx, sy, cx, cy):
     a = np.array([x, y, 1])
-    b = np.array([[1,0,0],[0,1,0],[-cx, -cy, 1]])
-    c = np.array([[sx, 0, 0], [0, sy, 0], [0, 0, 1]])
-    d = np.array([[1,0,0],[0,1,0],[cx, cy, 1]])
+    b = np.array([[1  ,  0 , 0],
+                  [0  ,  1 , 0],
+                  [-cx, -cy, 1]])
+    c = np.array([[sx,  0, 0],
+                  [0 , sy, 0],
+                  [0 ,  0, 1]])
+    d = np.array([[1 , 0 , 0],
+                  [0 , 1 , 0],
+                  [cx, cy, 1]])
     
     return a.dot(b).dot(c).dot(d)
 
@@ -62,7 +68,7 @@ class Transform():
     sin = np.sin(np.deg2rad(degrees))
     cos = np.cos(np.deg2rad(degrees))
     a = np.array([x, y, 1])
-    b = np.array([[1,0,0],[0,1,0],[-dx, -dy, 1]])
+    b = self.getTranslationMatrix(-dx, -dy)
     c = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
     d = np.array([[1,0,0],[0,1,0],[dx, dy, 1]])
     return a.dot(b).dot(c).dot(d)
