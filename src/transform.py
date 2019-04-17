@@ -39,8 +39,11 @@ class Transform():
 
     return {"x": new_x, "y": new_y}
 
+  def getPointMatrix(self, x, y):
+    return np.array([x, y, 1])
+
   def translation(self, x, y, dx, dy):
-    a = np.array([x,  y,  1])
+    a = self.getPointMatrix(x,y)
     b = self.getTranslationMatrix(dx, dy)
     
     return a.dot(b)
@@ -51,7 +54,7 @@ class Transform():
                      [dx, dy, 1]])
 
   def scale(self, x, y, sx, sy, cx, cy):
-    a = np.array([x, y, 1])
+    a = self.getPointMatrix(x,y)
     b = self.getTranslationMatrix(-cx, -cy)
     c = np.array([[sx,  0, 0],
                   [0 , sy, 0],
@@ -63,7 +66,7 @@ class Transform():
   def rotation(self, x, y, dx, dy, degrees):
     sin = np.sin(np.deg2rad(degrees))
     cos = np.cos(np.deg2rad(degrees))
-    a = np.array([x, y, 1])
+    a = self.getPointMatrix(x,y)
     b = self.getTranslationMatrix(-dx, -dy)
     c = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
     d = self.getTranslationMatrix(dx, dy)
