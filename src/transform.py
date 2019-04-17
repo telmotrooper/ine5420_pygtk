@@ -68,7 +68,7 @@ class Transform():
     a = np.array([x, y, 1])
     b = self.getTranslationMatrix(-dx, -dy)
     c = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
-    d = np.array([[1,0,0],[0,1,0],[dx, dy, 1]])
+    d = self.getTranslationMatrix(dx, dy)
     return a.dot(b).dot(c).dot(d)
 
   def center(self, coords):
