@@ -52,9 +52,7 @@ class Transform():
 
   def scale(self, x, y, sx, sy, cx, cy):
     a = np.array([x, y, 1])
-    b = np.array([[1  ,  0 , 0],
-                  [0  ,  1 , 0],
-                  [-cx, -cy, 1]])
+    b = self.getTranslationMatrix(-cx, -cy)
     c = np.array([[sx,  0, 0],
                   [0 , sy, 0],
                   [0 ,  0, 1]])
