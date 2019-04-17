@@ -56,9 +56,7 @@ class Transform():
     c = np.array([[sx,  0, 0],
                   [0 , sy, 0],
                   [0 ,  0, 1]])
-    d = np.array([[1 , 0 , 0],
-                  [0 , 1 , 0],
-                  [cx, cy, 1]])
+    d = self.getTranslationMatrix(cx, cy)
     
     return a.dot(b).dot(c).dot(d)
 
