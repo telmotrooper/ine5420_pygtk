@@ -49,7 +49,6 @@ class Window:
       temp = self.current_zoom
 
     for i in self.display_file.getObjects():
-      print(temp)
       i.scaleNormalizedCoords(temp)
 
   def setMin(self, x, y):
@@ -70,16 +69,11 @@ class Window:
       i.normalizeCoords()
 
     self.zoom(self.current_zoom, "move")
+    # self.rotate("left", )
 
-    # print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
-
-  def rotate(self, direction, angle):
+  def rotate(self, angle, caller=None):    
     self.orientation += angle
-    self.orientation = self.orientation % 360
-    
-    if(direction == "left"):
-      for i in self.display_file.getObjects():
-        i.rotateNormalizedCoords(angle)
-    else:
-      for i in self.display_file.getObjects():
-        i.rotateNormalizedCoords(-angle)
+    for i in self.display_file.getObjects():
+      i.rotateNormalizedCoords(angle)
+  
+    # self.orientation = self.orientation % 360
