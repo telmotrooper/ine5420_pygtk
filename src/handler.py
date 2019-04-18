@@ -63,7 +63,7 @@ class Handler:
 
   def onRotateWindowRight(self, button):
     self.printToLog("onRotateWindowRight")
-    angle = int(self.window_rotation_angle.get_text())
+    angle = float(self.window_rotation_angle.get_text())
     self.dm.getWindow().rotate(-angle)
     self.dm.redraw()
 
@@ -93,7 +93,7 @@ class Handler:
     polygon = Polygon(name)
 
     for point in self.temp_polygon:
-      polygon.addCoords(int(point["x"]), int(point["y"]))
+      polygon.addCoords(float(point["x"]), float(point["y"]))
 
     self.display_file.addObject(polygon)
     self.temp_polygon = []
@@ -106,7 +106,7 @@ class Handler:
     y_entry = self.builder.get_object("PointYEntry")
     p1 = Point(name_entry.get_text())
 
-    p1.addCoords(int(x_entry.get_text()), int(y_entry.get_text()))
+    p1.addCoords(float(x_entry.get_text()), float(y_entry.get_text()))
     self.display_file.addObject(p1)
     self.add_object_window.hide()
 
@@ -119,8 +119,8 @@ class Handler:
     y2_entry = self.builder.get_object("EntryY2Line")
 
     l1 = Line(name_entry.get_text())
-    l1.addCoords(int(x1_entry.get_text()), int(y1_entry.get_text()))
-    l1.addCoords(int(x2_entry.get_text()), int(y2_entry.get_text()))
+    l1.addCoords(float(x1_entry.get_text()), float(y1_entry.get_text()))
+    l1.addCoords(float(x2_entry.get_text()), float(y2_entry.get_text()))
 
     self.display_file.addObject(l1)
     self.add_object_window.hide()

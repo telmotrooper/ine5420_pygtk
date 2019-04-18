@@ -28,7 +28,7 @@ class ObjHandler:
       
       elif(line[0] == "p"): # TODO: FINISH THIS
         match = re.findall(r"\S+", line)
-        vertice_for_point = vertices[int(match[1])]
+        vertice_for_point = vertices[float(match[1])]
         match = re.findall(r"\S+", vertice_for_point)
         coord = { "x": float(match[1]), "y": float(match[2]) }
 
@@ -46,7 +46,7 @@ class ObjHandler:
 
         for item in match:
           if(item != "l"):
-            vertice_for_point = vertices[int(item)]
+            vertice_for_point = vertices[float(item)]
             match = re.findall(r"\S+", vertice_for_point)
             coord = { "x": float(match[1]), "y": float(match[2]) }
             l.addCoords(coord["x"], coord["y"])
