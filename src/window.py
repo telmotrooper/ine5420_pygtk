@@ -63,6 +63,9 @@ class Window:
     # print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
 
   def rotate(self, direction, angle):
+    self.orientation += angle
+    self.orientation = self.orientation % 360
+    
     if(direction == "left"):
       for i in self.display_file.getObjects():
         i.rotateNormalizedCoords(angle)
