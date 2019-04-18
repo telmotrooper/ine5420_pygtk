@@ -68,9 +68,9 @@ class Window:
     
     if(direction == "left"):
       for i in self.display_file.getObjects():
+        i.setWindowOrientation(self.orientation)
         i.rotateNormalizedCoords(angle)
     else:
       for i in self.display_file.getObjects():
+        i.setWindowOrientation(self.orientation)
         i.rotateNormalizedCoords(-angle)
-      
-
