@@ -9,3 +9,7 @@ class Shape:
     self.name = name
     self.id = generateRandomId()
     self.transform = Transform()
+
+  def addCoords(self, x, y):
+    self.world_coords.append({"x": x, "y": y})
+    self.normalized_coords.append(self.transform.normalize(x, y))

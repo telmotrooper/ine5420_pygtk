@@ -7,12 +7,6 @@ from shapes.shape import Shape
 class Polygon(Shape):
   def __init__(self, name):
     super().__init__(name)
-  
-  def addCoords(self, x, y):
-    self.world_coords.append(
-      {"x": x, "y": y}
-    )
-    self.normalized_coords.append(self.transform.normalize(x, y))
 
   def getWorldCoords(self):
     return self.world_coords
