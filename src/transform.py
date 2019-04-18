@@ -4,7 +4,7 @@ from matrices import Matrices
 
 display_file = DisplayFile()
 
-class Transform():
+class Transform:
   a,b = -1, 1
 
   def __init__(self):
