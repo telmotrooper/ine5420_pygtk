@@ -69,11 +69,17 @@ class Window:
       i.normalizeCoords()
 
     self.zoom(self.current_zoom, "move")
-    # self.rotate("left", )
+    self.rotate(self.orientation, "move")
 
-  def rotate(self, angle, caller=None):    
-    self.orientation += angle
+  def rotate(self, angle, caller=None):
+    temp = angle
+    
+    if(caller == None):    
+      self.orientation += angle
+    elif(caller == "move"):
+      temp = self.orientation
+    
     for i in self.display_file.getObjects():
-      i.rotateNormalizedCoords(angle)
+      i.rotateNormalizedCoords(temp)
   
     # self.orientation = self.orientation % 360
