@@ -53,9 +53,7 @@ class Transform():
   def scale(self, x, y, sx, sy, cx, cy):
     a = self.m.point(x,y)
     b = self.m.translation(-cx, -cy)
-    c = np.array([[sx,  0, 0],
-                  [0 , sy, 0],
-                  [0 ,  0, 1]])
+    c = self.m.scaling(sx, sy)
     d = self.m.translation(cx, cy)
     
     return a.dot(b).dot(c).dot(d)
