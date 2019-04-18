@@ -1,10 +1,14 @@
 import numpy as np
 from display_file import DisplayFile
+from matrices import Matrices
 
 display_file = DisplayFile()
 
 class Transform():
   a,b = -1, 1
+
+  def __init__(self):
+    self.m = Matrices()
 
   def setWindow(self, window):
     Transform.window = window
@@ -39,37 +43,30 @@ class Transform():
 
     return {"x": new_x, "y": new_y}
 
-  def getPointMatrix(self, x, y):
-    return np.array([x, y, 1])
 
   def translation(self, x, y, dx, dy):
-    a = self.getPointMatrix(x,y)
-    b = self.getTranslationMatrix(dx, dy)
+    a = self.m.point(x,y)
+    b = self.m.translation(dx, dy)
     
     return a.dot(b)
 
-  def getTranslationMatrix(self, dx, dy):
-    return np.array([[1,  0,  0],
-                     [0,  1,  0],
-                     [dx, dy, 1]])
-
   def scale(self, x, y, sx, sy, cx, cy):
-    a = self.getPointMatrix(x,y)
-    b = self.getTranslationMatrix(-cx, -cy)
+    a = self.m.point(x,y)
+    b = self.m.translation(-cx, -cy)
     c = np.array([[sx,  0, 0],
                   [0 , sy, 0],
                   [0 ,  0, 1]])
-    d = self.getTranslationMatrix(cx, cy)
+    d = self.m.translation(cx, cy)
     
     return a.dot(b).dot(c).dot(d)
 
   def rotation(self, x, y, dx, dy, degrees):
     sin = np.sin(np.deg2rad(degrees))
     cos = np.cos(np.deg2rad(degrees))
-    a = self.getPointMatrix(x,y)
-    b = self.getTranslationMatrix(-dx, -dy)
+    a = self.m.point(x,y)
+    b = self.m.translation(-dx, -dy)
     c = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
-    d = self.getTranslationMatrix(dx, dy)
+    d = self.m.translation(dx, dy)
     return a.dot(b).dot(c).dot(d)
 
   def center(self, coords):
