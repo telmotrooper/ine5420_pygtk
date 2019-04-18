@@ -13,3 +13,11 @@ class Matrices:
     return np.array([[sx,  0, 0],
                      [0 , sy, 0],
                      [0 ,  0, 1]])
+
+  def rotation(self, degrees):
+    sin = np.sin(np.deg2rad(degrees))
+    cos = np.cos(np.deg2rad(degrees))
+
+    return np.array([[cos, -sin, 0],
+                     [sin,  cos, 0],
+                     [ 0 ,   0 , 1]])

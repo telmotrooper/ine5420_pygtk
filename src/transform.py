@@ -59,11 +59,9 @@ class Transform():
     return a.dot(b).dot(c).dot(d)
 
   def rotation(self, x, y, dx, dy, degrees):
-    sin = np.sin(np.deg2rad(degrees))
-    cos = np.cos(np.deg2rad(degrees))
     a = self.m.point(x,y)
     b = self.m.translation(-dx, -dy)
-    c = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
+    c = self.m.rotation(degrees)
     d = self.m.translation(dx, dy)
     return a.dot(b).dot(c).dot(d)
 
