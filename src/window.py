@@ -4,6 +4,7 @@ import numpy as np
 
 class Window:
   orientation = 0
+  current_zoom = 1
 
   def __init__(self, x_min, y_min, x_max, y_max):
     Window.x_min = x_min
@@ -39,9 +40,17 @@ class Window:
       "y": center_y
     }
 
-  def zoom(self, percentage):
+  def zoom(self, percentage, caller=None):
+    temp = percentage
+
+    if(caller == None):
+      self.current_zoom *= percentage
+    elif(caller == "move"):
+      temp = self.current_zoom
+
     for i in self.display_file.getObjects():
-      i.scaleNormalizedCoords(percentage)
+      print(temp)
+      i.scaleNormalizedCoords(temp)
 
   def setMin(self, x, y):
     Window.x_min = x
@@ -59,6 +68,8 @@ class Window:
 
     for i in Window.display_file.getObjects():
       i.normalizeCoords()
+
+    self.zoom(self.current_zoom, "move")
 
     # print("Window at ({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
 
