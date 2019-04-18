@@ -22,6 +22,17 @@ class Polygon:
   def getNormalizedCoords(self):
     return self.normalized_coords
   
+  def scaleNormalizedCoords(self, percentage):
+    coords = self.normalized_coords
+
+    for i in range(len(coords)):
+      new_coords = self.transform.scale(
+        coords[i]["x"], coords[i]["y"],
+        percentage, percentage,
+        0, 0
+      )
+      self.normalized_coords[i] = {"x": new_coords[0], "y": new_coords[1]}
+  
   def rotateNormalizedCoords(self, degrees):
     coords = self.normalized_coords
 

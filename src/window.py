@@ -40,23 +40,8 @@ class Window:
     }
 
   def zoom(self, percentage):
-    center = self.getCenter()
-    # print(self.getHeight())
-    new_height = self.getHeight() * percentage
-    new_width =  self.getWidth() * percentage
-    # print("old height: {} new height: {}".format(self.getHeight(), new_height))
-    
-    new_x_min = center["x"] - (self.getWidth() / 2)
-    new_x_max = center["x"] + (self.getWidth() / 2)
-
-    new_y_min = center["y"] - (self.getHeight() / 2)
-    new_y_max = center["y"] + (self.getHeight() / 2)
-
-    self.setMin(new_x_min, new_y_min)
-    self.setMax(new_x_max, new_y_max)
-
-    for i in Window.display_file.getObjects():
-      i.normalizeCoords()
+    for i in self.display_file.getObjects():
+      i.scaleNormalizedCoords(percentage)
 
   def setMin(self, x, y):
     Window.x_min = x
