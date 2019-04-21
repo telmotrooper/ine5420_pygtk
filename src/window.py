@@ -7,6 +7,8 @@ class Window:
   current_zoom = 1
 
   def __init__(self, x_min, y_min, x_max, y_max):
+    print("({},{}) ({},{})".format(x_min, y_min, x_max, y_max))
+
     Window.x_min = x_min
     Window.y_min = y_min
     Window.x_max = x_max
@@ -80,8 +82,8 @@ class Window:
     elif(caller == "move"):
       temp = self.orientation
     
-    print("temp: {}".format(temp))
-    print("orie: {}".format(self.orientation))
+    # print("temp: {}".format(temp))
+    # print("orie: {}".format(self.orientation))
 
     for i in self.display_file.getObjects():
       i.rotateNormalizedCoords(temp)
