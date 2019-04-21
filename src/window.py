@@ -75,7 +75,8 @@ class Window:
     # self.zoom(self.current_zoom, "move")
 
   def rotate(self, angle, caller=None):
-    temp = angle
+    # sum rotation angle, since objects don't hold state for their rotations
+    self.orientation += angle
 
     # if(caller == None):    
     #   self.orientation += angle
@@ -86,6 +87,6 @@ class Window:
     # print("orie: {}".format(self.orientation))
 
     for i in self.display_file.getObjects():
-      i.rotateNormalizedCoords(temp)
+      i.rotateNormalizedCoords(self.orientation)
   
     # self.orientation = self.orientation % 360
