@@ -94,6 +94,7 @@ class ObjHandler:
           vertice_counter += 1
           output_file.write("v {} {} 0\n".format(coord["x"], coord["y"]))
           temp += " {}".format(vertice_counter)
+        temp += "\n"
 
     output_file.write("{}\n".format(temp))
     output_file.close()
