@@ -67,9 +67,6 @@ class Window:
     Window.x_max += x
     Window.y_max += y
 
-    for i in Window.display_file.getObjects():
-      i.normalizeCoords()
-
     self.rotate(0)
     # self.zoom(self.current_zoom, "move")
 
@@ -78,4 +75,4 @@ class Window:
     self.orientation += angle
 
     for i in self.display_file.getObjects():
-      i.rotateNormalizedCoords(self.orientation,)
+      i.rotateNormalizedCoords(self.orientation)
