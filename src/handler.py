@@ -25,6 +25,7 @@ class Handler:
     self.rotate_x = self.builder.get_object("RotateX")
     self.rotate_y = self.builder.get_object("RotateY")
     self.window_rotation_angle = self.builder.get_object("windowRotationAngle")
+    self.object_rotation_angle = self.builder.get_object("objectRotationAngle")
 
 
     self.text_buffer = self.text_view.get_buffer()
@@ -167,28 +168,30 @@ class Handler:
 
   def onRotateObjectLeft(self, button):
     self.printToLog("onRotateObjectLeft")
-    
+    angle =int(self.object_rotation_angle.get_text())
+
     if self.object_radio_button.get_active():
-      self.transform.rotate(self.tree_view, -45, 'center',0,0)
+      self.transform.rotate(self.tree_view, -angle, 'center',0,0)
     elif self.world_radio_button.get_active():
-      self.transform.rotate(self.tree_view, -45, 'world',0,0)
+      self.transform.rotate(self.tree_view, -angle, 'world',0,0)
     elif self.point_radio_button.get_active():
       x = float(self.rotate_x.get_text())
       y = float(self.rotate_y.get_text())
-      self.transform.rotate(self.tree_view, -45, 'point',x,y)
+      self.transform.rotate(self.tree_view, -angle, 'point',x,y)
     self.dm.redraw()
 
   def onRotateObjectRight(self, button):
     self.printToLog("onRotateObjectRight")
+    angle =int(self.object_rotation_angle.get_text())
     
     if self.object_radio_button.get_active():
-      self.transform.rotate(self.tree_view, 45, 'center',0,0)
+      self.transform.rotate(self.tree_view, angle, 'center',0,0)
     elif self.world_radio_button.get_active():
-      self.transform.rotate(self.tree_view, 45, 'world',0,0)
+      self.transform.rotate(self.tree_view, angle, 'world',0,0)
     elif self.point_radio_button.get_active():
       x = float(self.rotate_x.get_text())
       y = float(self.rotate_y.get_text())
-      self.transform.rotate(self.tree_view, 45, 'point',x,y)
+      self.transform.rotate(self.tree_view, angle, 'point',x,y)
 
     self.dm.redraw()
   
