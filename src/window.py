@@ -67,6 +67,8 @@ class Window:
     Window.x_max += x
     Window.y_max += y
 
+    print("({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
+
     self.rotate(0)
     # self.zoom(self.current_zoom, "move")
 
