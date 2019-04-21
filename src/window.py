@@ -67,26 +67,15 @@ class Window:
     Window.x_max += x
     Window.y_max += y
 
-
     for i in Window.display_file.getObjects():
       i.normalizeCoords()
 
-    # self.rotate(0, "move")
+    self.rotate(0)
     # self.zoom(self.current_zoom, "move")
 
-  def rotate(self, angle, caller=None):
+  def rotate(self, angle):    
     # sum rotation angle, since objects don't hold state for their rotations
     self.orientation += angle
 
-    # if(caller == None):    
-    #   self.orientation += angle
-    # elif(caller == "move"):
-    #   temp = self.orientation
-    
-    # print("temp: {}".format(temp))
-    # print("orie: {}".format(self.orientation))
-
     for i in self.display_file.getObjects():
-      i.rotateNormalizedCoords(self.orientation)
-  
-    # self.orientation = self.orientation % 360
+      i.rotateNormalizedCoords(self.orientation,)
