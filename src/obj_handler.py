@@ -10,6 +10,7 @@ class ObjHandler:
     self.display_file = DisplayFile()
 
   def importFile(self, path):
+    self.display_file.wipeOut()
     print("{}".format(path))
     vertices = dict()
     vertice_counter = 0

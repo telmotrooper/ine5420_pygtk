@@ -71,7 +71,7 @@ class Window:
     for i in Window.display_file.getObjects():
       i.normalizeCoords()
 
-    # self.rotate(self.orientation, "move")
+    # self.rotate(0, "move")
     # self.zoom(self.current_zoom, "move")
 
   def rotate(self, angle, caller=None):

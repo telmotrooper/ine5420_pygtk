@@ -29,6 +29,11 @@ class DisplayFile:
         del DisplayFile.objects[i]
         break
 
+  def wipeOut(self):
+    DisplayFile.objectList.clear()
+    for i, o in enumerate(DisplayFile.objects):
+      del DisplayFile.objects[i]
+
   def getObject(self, object_id):
     for i, o in enumerate(DisplayFile.objects):
       if o.id == object_id:
