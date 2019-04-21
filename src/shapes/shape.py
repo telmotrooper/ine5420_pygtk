@@ -32,11 +32,13 @@ class Shape:
       self.normalized_coords[i] = {"x": new_coords[0], "y": new_coords[1]}
   
   def rotateNormalizedCoords(self, degrees):
-    coords = self.normalized_coords
+    center = self.transform.denormalize(0,0)  # get world coordenates for current viewport center
+    coords = self.world_coords
 
     for i in range(len(coords)):
-      new_coords = self.transform.rotation(coords[i]["x"], coords[i]["y"], 0, 0, degrees)
-      self.normalized_coords[i] = {"x": new_coords[0], "y": new_coords[1]}
+      temp = self.transform.rotation(coords[i]["x"], coords[i]["y"], center["x"], center["y"], degrees)
+      new_coords = self.transform.normalize(temp[0], temp[1])
+      self.normalized_coords[i] = {"x": new_coords["x"], "y": new_coords["y"]}
 
   def setWorldCoords(self, i, x, y):
     self.world_coords[i] = { "x": x, "y": y }

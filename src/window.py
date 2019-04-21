@@ -13,7 +13,7 @@ class Window:
     Window.y_min = y_min
     Window.x_max = x_max
     Window.y_max = y_max
-    Window.transformation = Transform()
+    Window.transform = Transform()
     Window.display_file = DisplayFile()
 
   def getMin(self):
@@ -71,16 +71,16 @@ class Window:
     for i in Window.display_file.getObjects():
       i.normalizeCoords()
 
-    self.rotate(self.orientation, "move")
-    self.zoom(self.current_zoom, "move")
+    # self.rotate(self.orientation, "move")
+    # self.zoom(self.current_zoom, "move")
 
   def rotate(self, angle, caller=None):
     temp = angle
-    
-    if(caller == None):    
-      self.orientation += angle
-    elif(caller == "move"):
-      temp = self.orientation
+
+    # if(caller == None):    
+    #   self.orientation += angle
+    # elif(caller == "move"):
+    #   temp = self.orientation
     
     # print("temp: {}".format(temp))
     # print("orie: {}".format(self.orientation))

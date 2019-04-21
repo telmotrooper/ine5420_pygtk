@@ -100,7 +100,6 @@ class Transform:
       obj.setWorldCoords(i, new_coords[0], new_coords[1])
 
   def rotate(self, tree_view, degrees, rotation_type, x, y):
-    print(degrees)
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
