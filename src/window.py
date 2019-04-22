@@ -3,9 +3,6 @@ from display_file import DisplayFile
 import numpy as np
 
 class Window:
-  orientation = 0
-  current_zoom = 1
-
   def __init__(self, x_min, y_min, x_max, y_max):
     print("({},{}) ({},{})".format(x_min, y_min, x_max, y_max))
 
