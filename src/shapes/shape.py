@@ -22,7 +22,9 @@ class Shape:
   
   def scaleNormalizedCoords(self, percentage):
     center = self.transform.denormalize(0,0)  # get world coordenates for current viewport center
-    coords = self.world_coords
+
+    # get real world coordinates from normalized ones
+    coords = self.transform.denormalizeList(self.normalized_coords)
 
     for i in range(len(coords)):
       temp = self.transform.scale(
@@ -35,8 +37,10 @@ class Shape:
   
   def rotateNormalizedCoords(self, degrees):
     center = self.transform.denormalize(0,0)  # get world coordenates for current viewport center
-    coords = self.world_coords
 
+    # get real world coordinates from normalized ones
+    coords = self.transform.denormalizeList(self.normalized_coords)
+    
     for i in range(len(coords)):
       temp = self.transform.rotation(coords[i]["x"], coords[i]["y"], center["x"], center["y"], degrees)
       new_coords = self.transform.normalize(temp[0], temp[1])

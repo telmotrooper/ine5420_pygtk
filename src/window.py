@@ -42,11 +42,8 @@ class Window:
       "y": center_y
     }
 
-  def zoom(self, mode, caller=None):
-    if(mode == "in"):
-      self.current_zoom *= 1.1
-    elif(mode == "out"):
-      self.current_zoom /= 1.1
+  def zoom(self, percentage, caller=None):
+
   
     # temp = percentage
 
@@ -56,7 +53,7 @@ class Window:
     #   temp = self.current_zoom
 
     for i in self.display_file.getObjects():
-      i.scaleNormalizedCoords(self.current_zoom)
+      i.scaleNormalizedCoords(percentage)
 
   def setMin(self, x, y):
     Window.x_min = x
@@ -74,8 +71,8 @@ class Window:
 
     print("({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
 
-    self.rotate(0)
-    self.zoom(self.current_zoom, "move")
+    # self.rotate(0)
+    # self.zoom(self.current_zoom, "move")
 
   def rotate(self, angle):    
     # sum rotation angle, since objects don't hold state for their rotations
@@ -83,3 +80,4 @@ class Window:
 
     for i in self.display_file.getObjects():
       i.rotateNormalizedCoords(self.orientation)
+    
