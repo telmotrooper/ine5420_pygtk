@@ -55,15 +55,25 @@ class Window:
     Window.y_max = y
 
   def move(self, x, y):
+    obj_coords = []
+
+    # get normalized coordenates for all objects and denormalize them
+    for i in Window.display_file.getObjects():
+      norm_coords = i.getNormalizedCoords()
+      obj_coords.append(self.transform.denormalizeList(norm_coords))
+
     Window.x_min += x
     Window.y_min += y
     Window.x_max += x
     Window.y_max += y
 
-    print("({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
+    objects = Window.display_file.getObjects()
 
-    # self.rotate(0)
-    # self.zoom(self.current_zoom, "move")
+    # renormalize all coords after the window has been resized
+    for i in range(len(objects)):
+      objects[i].normalized_coords = self.transform.normalizeList(obj_coords[i])
+
+    print("({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
 
   def rotate(self, angle):    
     for i in self.display_file.getObjects():

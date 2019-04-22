@@ -49,6 +49,12 @@ class Transform:
       coords.append(self.denormalize(normalized_coords[i]["x"], normalized_coords[i]["y"]))
     return coords
 
+  def normalizeList(self, denormalized_coords):
+    coords = []
+    for i in range(len(denormalized_coords)):
+      coords.append(self.normalize(denormalized_coords[i]["x"], denormalized_coords[i]["y"]))
+    return coords
+
   def translation(self, x, y, dx, dy):
     a = self.m.point(x,y)
     b = self.m.translation(dx, dy)
