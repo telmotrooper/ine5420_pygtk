@@ -93,10 +93,12 @@ class Transform:
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
-    coords = obj.getWorldCoords()
+    #coords = obj.getWorldCoords()
+    coords = obj.getNormalizedCoords()
+    coords_denorm = self.denormalizeList(coords)
 
     for i in range(len(coords)):
-      new_coords = self.translation(coords[i]["x"], coords[i]["y"], x, y)
+      new_coords = self.translation(coords_denorm[i]["x"], coords_denorm[i]["y"], x, y)
       obj.setWorldCoords(i, new_coords[0], new_coords[1])
 
   def zoom(self, tree_view, sx, sy):
