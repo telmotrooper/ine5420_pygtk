@@ -42,16 +42,21 @@ class Window:
       "y": center_y
     }
 
-  def zoom(self, percentage, caller=None):
-    temp = percentage
+  def zoom(self, mode, caller=None):
+    if(mode == "in"):
+      self.current_zoom *= 1.1
+    elif(mode == "out"):
+      self.current_zoom /= 1.1
+  
+    # temp = percentage
 
-    if(caller == None):
-      self.current_zoom *= percentage
-    elif(caller == "move"):
-      temp = self.current_zoom
+    # if(caller == None):
+    #   self.current_zoom *= percentage
+    # elif(caller == "move"):
+    #   temp = self.current_zoom
 
     for i in self.display_file.getObjects():
-      i.scaleNormalizedCoords(temp)
+      i.scaleNormalizedCoords(self.current_zoom)
 
   def setMin(self, x, y):
     Window.x_min = x
