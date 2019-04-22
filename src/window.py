@@ -75,7 +75,7 @@ class Window:
     print("({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
 
     self.rotate(0)
-    # self.zoom(self.current_zoom, "move")
+    self.zoom(self.current_zoom, "move")
 
   def rotate(self, angle):    
     # sum rotation angle, since objects don't hold state for their rotations
