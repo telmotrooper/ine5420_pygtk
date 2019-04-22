@@ -43,15 +43,6 @@ class Window:
     }
 
   def zoom(self, percentage, caller=None):
-
-  
-    # temp = percentage
-
-    # if(caller == None):
-    #   self.current_zoom *= percentage
-    # elif(caller == "move"):
-    #   temp = self.current_zoom
-
     for i in self.display_file.getObjects():
       i.scaleNormalizedCoords(percentage)
 
@@ -75,9 +66,5 @@ class Window:
     # self.zoom(self.current_zoom, "move")
 
   def rotate(self, angle):    
-    # sum rotation angle, since objects don't hold state for their rotations
-    self.orientation += angle
-
     for i in self.display_file.getObjects():
-      i.rotateNormalizedCoords(self.orientation)
-    
+      i.rotateNormalizedCoords(angle)
