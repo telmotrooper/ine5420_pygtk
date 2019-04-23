@@ -93,7 +93,7 @@ class Transform:
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
-    #coords = obj.getWorldCoords()
+
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
 
@@ -105,7 +105,7 @@ class Transform:
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
-    #coords = obj.getWorldCoords()
+
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
     center_point = self.center(coords_denorm)
@@ -118,7 +118,7 @@ class Transform:
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
-    #coords = obj.getWorldCoords()
+
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
     if(rotation_type == 'center'):
