@@ -105,25 +105,29 @@ class Transform:
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
-    coords = obj.getWorldCoords()
-    center_point = self.center(coords)
+    #coords = obj.getWorldCoords()
+    coords = obj.getNormalizedCoords()
+    coords_denorm = self.denormalizeList(coords)
+    center_point = self.center(coords_denorm)
 
     for i in range(len(coords)):
-      new_coords = self.scale(coords[i]["x"], coords[i]["y"], sx, sy, center_point["cx"], center_point["cy"])
+      new_coords = self.scale(coords_denorm[i]["x"], coords_denorm[i]["y"], sx, sy, center_point["cx"], center_point["cy"])
       obj.setWorldCoords(i, new_coords[0], new_coords[1])
 
   def rotate(self, tree_view, degrees, rotation_type, x, y):
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
-    coords = obj.getWorldCoords()
+    #coords = obj.getWorldCoords()
+    coords = obj.getNormalizedCoords()
+    coords_denorm = self.denormalizeList(coords)
     if(rotation_type == 'center'):
-      point = self.center(coords)
+      point = self.center(coords_denorm)
     elif(rotation_type == 'world'):
       point = {"cx": 0, "cy": 0}
     else:
       point = {"cx": x, "cy": y}
 
     for i in range(len(coords)):
-      new_coords = self.rotation(coords[i]["x"], coords[i]["y"], point["cx"], point["cy"], degrees)
+      new_coords = self.rotation(coords_denorm[i]["x"], coords_denorm[i]["y"], point["cx"], point["cy"], degrees)
       obj.setWorldCoords(i, new_coords[0], new_coords[1])
