@@ -44,9 +44,18 @@ class DrawingManager:
 
   def draw(self, da, ctx):
     self.drawBackground(da, ctx)
+    ctx.set_line_width(1)
 
-    ctx.set_source_rgb(0, 0, 0)  # color black
+    ctx.set_source_rgb(255, 0, 0) # color red
+    ctx.move_to(10, 10)
+    ctx.line_to(self.window.getWidth()-10, 10)
+    ctx.line_to(self.window.getWidth()-10, self.window.getHeight()-10)
+    ctx.line_to(10, self.window.getHeight()-10)
+    ctx.close_path()
+    ctx.stroke()
+
     ctx.set_line_width(2)
+    ctx.set_source_rgb(0, 0, 0)  # color black
     
     for i in self.display_file.getObjects():
       # print('Drawing object "{}"'.format(i.getName()))
