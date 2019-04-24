@@ -5,7 +5,7 @@ from display_file import DisplayFile
 from window import Window
 from transform import Transform
 from viewport import Viewport
-from variables import clipping_border_size
+from variables import clipping_border_size as cbz
 
 class DrawingManager:
   def __init__(self, da):
@@ -47,11 +47,11 @@ class DrawingManager:
     ctx.set_line_width(1)
     ctx.set_source_rgb(255, 0, 0) # color red
 
-    ctx.move_to(clipping_border_size, clipping_border_size)
-    ctx.line_to(self.window.getWidth() - clipping_border_size, clipping_border_size)
-    ctx.line_to(self.window.getWidth() - clipping_border_size, self.window.getHeight() - clipping_border_size)
-    ctx.line_to(clipping_border_size, self.window.getHeight() - clipping_border_size)
-    
+    ctx.move_to(cbz, cbz)
+    ctx.line_to(self.window.getWidth() - cbz, cbz)
+    ctx.line_to(self.window.getWidth() - cbz, self.window.getHeight() - cbz)
+    ctx.line_to(cbz, self.window.getHeight() - cbz)
+
     ctx.close_path()
     ctx.stroke()
 

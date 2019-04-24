@@ -1,6 +1,7 @@
 import numpy as np
 from display_file import DisplayFile
 from matrices import Matrices
+from variables import clipping_border_size as cbz
 
 display_file = DisplayFile()
 
@@ -17,8 +18,8 @@ class Transform:
     # x' = (b-a) * ((x - min) / (max - min)) + a
     window = Transform.window
     a,b = self.a, self.b
-    wmin_x, wmax_x = window.getMin()["x"] + 10, window.getMax()["x"] - 10
-    wmin_y, wmax_y = window.getMin()["y"] + 10, window.getMax()["y"] - 10
+    wmin_x, wmax_x = window.getMin()["x"] + cbz, window.getMax()["x"] - cbz
+    wmin_y, wmax_y = window.getMin()["y"] + cbz, window.getMax()["y"] - cbz
 
     # print("(Transform) Window at ({},{}) ({},{})".format(wmin_x, wmin_y, wmax_x, wmax_y))
 
@@ -30,8 +31,8 @@ class Transform:
   def denormalize(self, x, y):
     # x' = (b-a) * ((x - min) / (max - min)) + a
     window = Transform.window
-    a_x, b_x = window.getMin()["x"] + 10, window.getMax()["x"] - 10
-    a_y, b_y = window.getMin()["y"] + 10, window.getMax()["y"] - 10
+    a_x, b_x = window.getMin()["x"] + cbz, window.getMax()["x"] - cbz
+    a_y, b_y = window.getMin()["y"] + cbz, window.getMax()["y"] - cbz
     
     # print("wmin = ({},{})".format(window.getMin()["x"], window.getMin()["y"]))
     # print("wmax = ({},{})\n".format(window.getMax()["x"], window.getMax()["y"]))
