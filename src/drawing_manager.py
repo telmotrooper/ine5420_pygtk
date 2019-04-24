@@ -54,3 +54,13 @@ class DrawingManager:
 
       self.draw_counter += 1
       # print("draw() #{0}".format(self.draw_counter))
+    
+    ctx.set_source_rgb(255, 0, 0)  # color black
+    ctx.set_line_width(2)
+
+    ctx.move_to(10,10)
+    ctx.line_to(self.window.getWidth() - 10,10)
+    ctx.line_to(self.window.getWidth() - 10,self.window.getHeight() - 10)
+    ctx.line_to(10, self.window.getHeight() - 10)
+    ctx.close_path()
+    ctx.stroke()
