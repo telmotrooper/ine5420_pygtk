@@ -146,24 +146,24 @@ class Handler:
 
   def onMoveObjectUp(self, button):
     self.printToLog("onMoveObjectUp")
-    self.transform.move(self.tree_view, 0, 10)
+    self.transform.move(self.tree_view, 0, 5)
    
     self.dm.redraw()
 
   def onMoveObjectDown(self, button):
     self.printToLog("onMoveObjectDown")
-    self.transform.move(self.tree_view, 0, -10)
+    self.transform.move(self.tree_view, 0, -5)
     self.dm.redraw()
 
   def onMoveObjectLeft(self, button):
     self.printToLog("onMoveObjectLeft")
-    self.transform.move(self.tree_view, -10, 0)
+    self.transform.move(self.tree_view, -5, 0)
     self.dm.redraw()
 
   def onMoveObjectRight(self, button):
     self.printToLog("onMoveObjectRight")
 
-    self.transform.move(self.tree_view, 10, 0)
+    self.transform.move(self.tree_view, 5, 0)
     self.dm.redraw()
 
   def onRotateObjectLeft(self, button):
