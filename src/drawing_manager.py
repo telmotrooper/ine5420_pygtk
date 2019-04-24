@@ -5,6 +5,7 @@ from display_file import DisplayFile
 from window import Window
 from transform import Transform
 from viewport import Viewport
+from variables import clipping_border_size
 
 class DrawingManager:
   def __init__(self, da):
@@ -42,6 +43,18 @@ class DrawingManager:
     ctx.set_source_rgb(255, 255, 255)  # color white
     ctx.paint()
 
+  def drawClippingBorder(self, da, ctx):
+    ctx.set_line_width(1)
+    ctx.set_source_rgb(255, 0, 0) # color red
+
+    ctx.move_to(clipping_border_size, clipping_border_size)
+    ctx.line_to(self.window.getWidth() - clipping_border_size, clipping_border_size)
+    ctx.line_to(self.window.getWidth() - clipping_border_size, self.window.getHeight() - clipping_border_size)
+    ctx.line_to(clipping_border_size, self.window.getHeight() - clipping_border_size)
+    
+    ctx.close_path()
+    ctx.stroke()
+
   def draw(self, da, ctx):
     self.drawBackground(da, ctx)
 
@@ -54,12 +67,5 @@ class DrawingManager:
 
       self.draw_counter += 1
       # print("draw() #{0}".format(self.draw_counter))
-    
-    ctx.set_line_width(1)
-    ctx.set_source_rgb(255, 0, 0) # color red
-    ctx.move_to(10, 10)
-    ctx.line_to(self.window.getWidth()-10, 10)
-    ctx.line_to(self.window.getWidth()-10, self.window.getHeight()-10)
-    ctx.line_to(10, self.window.getHeight()-10)
-    ctx.close_path()
-    ctx.stroke()
+
+    self.drawClippingBorder(da, ctx)
