@@ -16,9 +16,9 @@ class DrawingManager:
     da_width = da.get_allocation().width
     da_height = da.get_allocation().height
 
-    # Window and viewport start with the same size as the drawing area
-    self.window = Window(0, 0, da_width, da_height)
-    self.viewport = Viewport(0, 0, da_width, da_height)
+    # Window and viewport start with the same size as the drawing area, but compensating for the clipping border size
+    self.window = Window(-cbz, -cbz, da_width - cbz, da_height - cbz)
+    self.viewport = Viewport(-cbz, -cbz, da_width - cbz, da_height - cbz)
 
     self.transform = Transform()
 
