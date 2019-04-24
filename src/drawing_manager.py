@@ -16,7 +16,9 @@ class DrawingManager:
     da_width = da.get_allocation().width
     da_height = da.get_allocation().height
 
-    # Window and viewport start with the same size as the drawing area, but compensating for the clipping border size
+    # Window and viewport start with the same size as the drawing area,
+    # but compensating for the clipping border size (otherwise you 
+    # wouldn't see by default a point drawn at 0,0).
     self.window = Window(-cbz, -cbz, da_width - cbz, da_height - cbz)
     self.viewport = Viewport(-cbz, -cbz, da_width - cbz, da_height - cbz)
 
