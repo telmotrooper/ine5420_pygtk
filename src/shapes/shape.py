@@ -67,11 +67,20 @@ class Shape:
     ctx.move_to(point["x"],point["y"])
 
     if(self.__class__.__name__ == "Point"):
-      if(self.normalized_coords[0]["x"] >= -1 and self.normalized_coords[0]["x"] <= 1 and self.normalized_coords[0]["y"] >= -1 and self.normalized_coords[0]["y"] <= 1):
+      # print("{},{}".format(self.normalized_coords[0]["x"], self.normalized_coords[0]["y"]))
+
+      if (self.normalized_coords[0]["x"] >= -1 and self.normalized_coords[0]["x"] <= 1
+          and self.normalized_coords[0]["y"] >= -1 and self.normalized_coords[0]["y"] <= 1):
         ctx.rel_line_to(1,1)  # equivalent to ctx.line_to(x+1,y+1)
         ctx.stroke()
     else:
       for entry in self.normalized_coords:  # 1st interation does move_to and line_to to same point
+        inicial = self.transform.regionCode(self.normalized_coords[0]["x"], self.normalized_coords[0]["y"])
+        final = self.transform.regionCode(self.normalized_coords[1]["x"], self.normalized_coords[1]["y"])
+        print(inicial)
+        print(final)
+
+        
         x2, y2 = entry["x"], entry["y"]
         point2 = viewport.transform(x2, y2)
         ctx.line_to(point2["x"],point2["y"])

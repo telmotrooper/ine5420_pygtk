@@ -5,6 +5,7 @@ from display_file import DisplayFile
 from window import Window
 from transform import Transform
 from viewport import Viewport
+from variables import clipping_border_size as cbz
 
 class DrawingManager:
   def __init__(self, da):
@@ -15,9 +16,11 @@ class DrawingManager:
     da_width = da.get_allocation().width
     da_height = da.get_allocation().height
 
-    # Window and viewport start with the same size as the drawing area
-    self.window = Window(0, 0, da_width, da_height)
-    self.viewport = Viewport(0, 0, da_width, da_height)
+    # Window and viewport start with the same size as the drawing area,
+    # but compensating for the clipping border size (otherwise you 
+    # wouldn't see by default a point drawn at 0,0).
+    self.window = Window(-cbz, -cbz, da_width - cbz, da_height - cbz)
+    self.viewport = Viewport(-cbz, -cbz, da_width - cbz, da_height - cbz)
 
     self.transform = Transform()
 
@@ -42,11 +45,23 @@ class DrawingManager:
     ctx.set_source_rgb(255, 255, 255)  # color white
     ctx.paint()
 
+  def drawClippingBorder(self, da, ctx):
+    ctx.set_line_width(1)
+    ctx.set_source_rgb(255, 0, 0) # color red
+
+    ctx.move_to(cbz, cbz)
+    ctx.line_to(self.window.getWidth() - cbz, cbz)
+    ctx.line_to(self.window.getWidth() - cbz, self.window.getHeight() - cbz)
+    ctx.line_to(cbz, self.window.getHeight() - cbz)
+
+    ctx.close_path()
+    ctx.stroke()
+
   def draw(self, da, ctx):
     self.drawBackground(da, ctx)
 
-    ctx.set_source_rgb(0, 0, 0)  # color black
     ctx.set_line_width(2)
+    ctx.set_source_rgb(0, 0, 0)  # color black
     
     for i in self.display_file.getObjects():
       # print('Drawing object "{}"'.format(i.getName()))
@@ -54,13 +69,6 @@ class DrawingManager:
 
       self.draw_counter += 1
       # print("draw() #{0}".format(self.draw_counter))
-    
-    ctx.set_source_rgb(255, 0, 0)  # color black
-    ctx.set_line_width(2)
 
-    ctx.move_to(10,10)
-    ctx.line_to(self.window.getWidth() - 10,10)
-    ctx.line_to(self.window.getWidth() - 10,self.window.getHeight() - 10)
-    ctx.line_to(10, self.window.getHeight() - 10)
-    ctx.close_path()
-    ctx.stroke()
+    self.drawClippingBorder(da, ctx)
+

@@ -133,6 +133,8 @@ class Handler:
       self.display_file.removeObject(obj_list[index][2])
       obj_list.remove(index)
       self.dm.redraw()
+    else:
+      self.printToLog("No object selected")
 
   def onZoomOut(self, button):
     self.printToLog("onZoomOut")  
@@ -229,7 +231,7 @@ class Handler:
     self.dm.redraw()
 
 
-  def printToLog(self, text):
+  def printToLog(self, text, end = "\n"):
     buffer, view = self.text_buffer, self.text_view
-    buffer.insert_at_cursor(text + "\n")
+    buffer.insert_at_cursor(text + end)
     view.scroll_to_mark(buffer.get_insert(), 0, 0, 0, 0)

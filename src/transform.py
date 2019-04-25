@@ -1,6 +1,7 @@
 import numpy as np
 from display_file import DisplayFile
 from matrices import Matrices
+from variables import clipping_border_size as cbz
 
 display_file = DisplayFile()
 
@@ -17,8 +18,8 @@ class Transform:
     # x' = (b-a) * ((x - min) / (max - min)) + a
     window = Transform.window
     a,b = self.a, self.b
-    wmin_x, wmax_x = window.getMin()["x"], window.getMax()["x"]
-    wmin_y, wmax_y = window.getMin()["y"], window.getMax()["y"]
+    wmin_x, wmax_x = window.getMin()["x"] + cbz, window.getMax()["x"] - cbz
+    wmin_y, wmax_y = window.getMin()["y"] + cbz, window.getMax()["y"] - cbz
 
     # print("(Transform) Window at ({},{}) ({},{})".format(wmin_x, wmin_y, wmax_x, wmax_y))
 
@@ -30,8 +31,8 @@ class Transform:
   def denormalize(self, x, y):
     # x' = (b-a) * ((x - min) / (max - min)) + a
     window = Transform.window
-    a_x, b_x = window.getMin()["x"], window.getMax()["x"]
-    a_y, b_y = window.getMin()["y"], window.getMax()["y"]
+    a_x, b_x = window.getMin()["x"] + cbz, window.getMax()["x"] - cbz
+    a_y, b_y = window.getMin()["y"] + cbz, window.getMax()["y"] - cbz
     
     # print("wmin = ({},{})".format(window.getMin()["x"], window.getMin()["y"]))
     # print("wmax = ({},{})\n".format(window.getMax()["x"], window.getMax()["y"]))
@@ -131,3 +132,15 @@ class Transform:
     for i in range(len(coords)):
       new_coords = self.rotation(coords_denorm[i]["x"], coords_denorm[i]["y"], point["cx"], point["cy"], degrees)
       obj.setWorldCoords(i, new_coords[0], new_coords[1])
+
+  def regionCode(self, x, y):
+    window = Transform.window
+    xw_min, xw_max = -1, 1
+    yw_min, yw_max = -1, 1
+    rc = np.array([0,0,0,0])
+    rc[3] = 1 if (x < xw_min) else 0 
+    rc[2] = 1 if (x > xw_max) else 0
+    rc[1] = 1 if (y < yw_min) else 0
+    rc[0] = 1 if (y > yw_max) else 0
+
+    print(rc)
