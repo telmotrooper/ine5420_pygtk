@@ -21,4 +21,4 @@ class Viewport(Window):
     xvp = ((denormalized_point["x"] - xw_min)/(xw_max - xw_min)) * (xvp_max - xvp_min)
     yvp = (1 - (denormalized_point["y"] - yw_min)/(yw_max - yw_min)) * (yvp_max - yvp_min)
     print(xvp, yvp)
-    return { "x": xvp + 10, "y": yvp - 10 }
+    return { "x": xvp, "y": yvp }
