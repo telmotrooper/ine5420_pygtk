@@ -1,6 +1,8 @@
 # pylint: disable=no-name-in-module, import-error
 from utils.gen_random_id import generateRandomId
 from transform import Transform
+from clipping import Clipping
+import copy
 
 class Shape:
   def __init__(self, name):
@@ -63,6 +65,7 @@ class Shape:
 
   def drawToViewport(self, ctx, viewport):
     # move context to initial point
+    clipping = Clipping()
     point = viewport.transform(self.normalized_coords[0]["x"], self.normalized_coords[0]["y"])
     ctx.move_to(point["x"],point["y"])
 
@@ -74,13 +77,18 @@ class Shape:
         ctx.rel_line_to(1,1)  # equivalent to ctx.line_to(x+1,y+1)
         ctx.stroke()
     else:
-      for entry in self.normalized_coords:  # 1st interation does move_to and line_to to same point
-        inicial = self.transform.regionCode(self.normalized_coords[0]["x"], self.normalized_coords[0]["y"])
-        final = self.transform.regionCode(self.normalized_coords[1]["x"], self.normalized_coords[1]["y"])
-        print(inicial)
-        print(final)
+      initial = clipping.regionCode(self.normalized_coords[0]["x"], self.normalized_coords[0]["y"])
+      final = clipping.regionCode(self.normalized_coords[1]["x"], self.normalized_coords[1]["y"])
+      visibility = clipping.visibility(initial, final)
+      
+      if(visibility == 'partial'):
+        new_coords = clipping.decide(initial, final, self.normalized_coords)
+        point = viewport.transform(new_coords[0]["x"], new_coords[0]["y"])
+        ctx.move_to(point["x"],point["y"])
+      else:
+        new_coords = self.normalized_coords
 
-        
+      for entry in new_coords:  # 1st interation does move_to and line_to to same point
         x2, y2 = entry["x"], entry["y"]
         point2 = viewport.transform(x2, y2)
         ctx.line_to(point2["x"],point2["y"])

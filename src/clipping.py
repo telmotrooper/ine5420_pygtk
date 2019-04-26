@@ -1,0 +1,45 @@
+import numpy as np
+import operator
+from functools import reduce
+import copy
+
+class Clipping:
+  def regionCode(self, x, y):
+    xw_min, xw_max = -1, 1
+    yw_min, yw_max = -1, 1
+    rc = np.array([0,0,0,0])
+    rc[3] = 1 if (x < xw_min) else 0 
+    rc[2] = 1 if (x > xw_max) else 0
+    rc[1] = 1 if (y < yw_min) else 0
+    rc[0] = 1 if (y > yw_max) else 0
+
+    return rc
+  
+  def visibility(self, initial, final):
+    initial_all_zeros = np.all(initial==0)
+    final_all_zeros = np.all(final==0)
+    equal = (initial==final).all()
+    logical = reduce(operator.and_, [initial, final])
+    
+    if(initial_all_zeros and final_all_zeros and equal):
+      return 'inside'
+    if(not np.all(logical==0)):
+      return 'out'
+    if(np.all(logical==0) and not equal):
+      return 'partial'
+
+  def coef_angular(self, normalized_coords):
+    return (normalized_coords[1]["y"] - normalized_coords[0]["y"])/(normalized_coords[1]["x"] - normalized_coords[0]["x"])
+
+  def decide(self, initial, final, copy_coords):
+    copy_coords = copy.deepcopy(copy_coords)
+    m = self.coef_angular(copy_coords)
+    if(np.array_equal(initial, [0, 0, 0, 1])):
+      y = m * (-1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
+      if(y > -1 and y < 1):
+        copy_coords[0]["x"] = -1
+        copy_coords[0]["y"] = y
+        return copy_coords
+    
+    return copy_coords
+      
