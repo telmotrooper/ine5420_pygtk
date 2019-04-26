@@ -77,18 +77,11 @@ class Shape:
         ctx.rel_line_to(1,1)  # equivalent to ctx.line_to(x+1,y+1)
         ctx.stroke()
     else:
-      initial = clipping.regionCode(self.normalized_coords[0]["x"], self.normalized_coords[0]["y"])
-      final = clipping.regionCode(self.normalized_coords[1]["x"], self.normalized_coords[1]["y"])
-      visibility = clipping.visibility(initial, final)
-      
-      if(visibility == 'partial'):
-        new_coords = clipping.decide(initial, final, self.normalized_coords)
-        point = viewport.transform(new_coords[0]["x"], new_coords[0]["y"])
-        ctx.move_to(point["x"],point["y"])
-      else:
-        new_coords = self.normalized_coords
+      clipped_coords = clipping.cohenSutherland(self.normalized_coords)
+      point = viewport.transform(clipped_coords[0]["x"], clipped_coords[0]["y"])
+      ctx.move_to(point["x"],point["y"])
 
-      for entry in new_coords:  # 1st interation does move_to and line_to to same point
+      for entry in clipped_coords:  # 1st interation does move_to and line_to to same point
         x2, y2 = entry["x"], entry["y"]
         point2 = viewport.transform(x2, y2)
         ctx.line_to(point2["x"],point2["y"])

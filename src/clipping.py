@@ -31,36 +31,42 @@ class Clipping:
   def coef_angular(self, normalized_coords):
     return (normalized_coords[1]["y"] - normalized_coords[0]["y"])/(normalized_coords[1]["x"] - normalized_coords[0]["x"])
 
-  def decide(self, initial, final, copy_coords):
+  def cohenSutherland(self, copy_coords):
     copy_coords = copy.deepcopy(copy_coords)
-    m = self.coef_angular(copy_coords)
-    if(np.array_equal(initial, [0, 0, 0, 1])): # a esquerda
-      y = m * (-1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
-      if(y > -1 and y < 1):
-        copy_coords[0]["x"] = -1
-        copy_coords[0]["y"] = y
-        return copy_coords
-    
-    if(np.array_equal(final, [0, 0, 1, 0])): # a direita
-      y = m * (1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
-      if(y > -1 and y < 1):
-        copy_coords[1]["x"] = 1
-        copy_coords[1]["y"] = y
-        return copy_coords
-    
-    if(np.array_equal(final, [1, 0, 0, 0])): # topo
-      x = copy_coords[0]["x"] + 1/m * (1 - copy_coords[0]["y"])
-      if(x > -1 and x < 1):
-        copy_coords[1]["x"] = x
-        copy_coords[1]["y"] = 1
-        return copy_coords
 
-    if(np.array_equal(initial, [0, 1, 0, 0])): # embaixo
-      x = copy_coords[0]["x"] + 1/m * (-1 - copy_coords[0]["y"])
-      if(x > -1 and x < 1):
-        copy_coords[0]["x"] = x
-        copy_coords[0]["y"] = -1
-        return copy_coords
+    initial = self.regionCode(copy_coords[0]["x"], copy_coords[0]["y"])
+    final = self.regionCode(copy_coords[1]["x"], copy_coords[1]["y"])
+    visibility = self.visibility(initial, final)
+    if(visibility == 'partial'):
+      m = self.coef_angular(copy_coords)
+
+      if(np.array_equal(initial, [0, 0, 0, 1])): # a esquerda
+        y = m * (-1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
+        if(y > -1 and y < 1):
+          copy_coords[0]["x"] = -1
+          copy_coords[0]["y"] = y
+          return copy_coords
+      
+      if(np.array_equal(final, [0, 0, 1, 0])): # a direita
+        y = m * (1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
+        if(y > -1 and y < 1):
+          copy_coords[1]["x"] = 1
+          copy_coords[1]["y"] = y
+          return copy_coords
+      
+      if(np.array_equal(final, [1, 0, 0, 0])): # topo
+        x = copy_coords[0]["x"] + 1/m * (1 - copy_coords[0]["y"])
+        if(x > -1 and x < 1):
+          copy_coords[1]["x"] = x
+          copy_coords[1]["y"] = 1
+          return copy_coords
+
+      if(np.array_equal(initial, [0, 1, 0, 0])): # embaixo
+        x = copy_coords[0]["x"] + 1/m * (-1 - copy_coords[0]["y"])
+        if(x > -1 and x < 1):
+          copy_coords[0]["x"] = x
+          copy_coords[0]["y"] = -1
+          return copy_coords
 
     return copy_coords
       
