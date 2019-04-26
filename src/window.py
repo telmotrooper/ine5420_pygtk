@@ -4,7 +4,7 @@ import numpy as np
 
 class Window:
   def __init__(self, x_min, y_min, x_max, y_max):
-    print("({},{}) ({},{})".format(x_min, y_min, x_max, y_max))
+    #print("({},{}) ({},{})".format(x_min, y_min, x_max, y_max))
 
     Window.x_min = x_min
     Window.y_min = y_min
@@ -70,7 +70,7 @@ class Window:
     for i in range(len(objects)):
       objects[i].normalized_coords = self.transform.normalizeList(obj_coords[i])
 
-    print("({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
+    #print("({},{}) ({},{})".format(Window.x_min, Window.y_min, Window.x_max, Window.y_max))
 
   def rotate(self, angle):    
     for i in self.display_file.getObjects():
