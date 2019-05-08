@@ -37,6 +37,8 @@ class Clipping:
     initial = self.regionCode(copy_coords[0]["x"], copy_coords[0]["y"])
     final = self.regionCode(copy_coords[1]["x"], copy_coords[1]["y"])
     visibility = self.visibility(initial, final)
+    print(initial)
+    print(final)
     if(visibility == 'partial'):
       m = self.coef_angular(copy_coords)
 
@@ -63,6 +65,50 @@ class Clipping:
         if(x > -1 and x < 1):
           copy_coords[0]["x"] = x
           copy_coords[0]["y"] = -1
+      
+      if(np.array_equal(initial, [0, 1, 0, 1])): # esquerda embaixo
+        y = m * (-1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
+        if(y > -1 and y < 1):
+          copy_coords[0]["x"] = -1
+          copy_coords[0]["y"] = y
+        
+        x = copy_coords[0]["x"] + 1/m * (-1 - copy_coords[0]["y"])
+        if(x > -1 and x < 1):
+          copy_coords[0]["x"] = x
+          copy_coords[0]["y"] = -1
 
+      if(np.array_equal(initial, [1, 0, 0, 1])): # a esquerda
+        y = m * (-1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
+        if(y > -1 and y < 1):
+          copy_coords[0]["x"] = -1
+          copy_coords[0]["y"] = y
+        
+        x = copy_coords[0]["x"] + 1/m * (1 - copy_coords[0]["y"])
+        if(x > -1 and x < 1):
+          copy_coords[1]["x"] = x
+          copy_coords[1]["y"] = 1
+      
+      if(np.array_equal(final, [0, 0, 1, 0])): # a direita topo
+        y = m * (1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
+        if(y > -1 and y < 1):
+          copy_coords[1]["x"] = 1
+          copy_coords[1]["y"] = y
+        
+        x = copy_coords[0]["x"] + 1/m * (1 - copy_coords[0]["y"])
+        if(x > -1 and x < 1):
+          copy_coords[1]["x"] = x
+          copy_coords[1]["y"] = 1
+      
+      if(np.array_equal(final, [0, 0, 1, 0])): # a direita embaixo
+        y = m * (1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
+        if(y > -1 and y < 1):
+          copy_coords[1]["x"] = 1
+          copy_coords[1]["y"] = y
+        
+        x = copy_coords[0]["x"] + 1/m * (-1 - copy_coords[0]["y"])
+        if(x > -1 and x < 1):
+          copy_coords[0]["x"] = x
+          copy_coords[0]["y"] = -1
+          
     return copy_coords
       
