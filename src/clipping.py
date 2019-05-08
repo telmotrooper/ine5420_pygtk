@@ -109,6 +109,56 @@ class Clipping:
         if(x > -1 and x < 1):
           copy_coords[0]["x"] = x
           copy_coords[0]["y"] = -1
-          
+
     return copy_coords
       
+  def liangBarsky(self, copy_coords):
+    
+    copy_coords = copy.deepcopy(copy_coords)
+    p1 = -(copy_coords[1]["x"] - copy_coords[0]["x"]) # esquerda
+    p2 = (copy_coords[1]["x"] - copy_coords[0]["x"]) # direita
+    p3 = -(copy_coords[1]["y"] - copy_coords[0]["y"]) # baixo
+    p4 = (copy_coords[1]["y"] - copy_coords[0]["y"]) # topo
+    q1 = copy_coords[0]["x"] - (-1)
+    q2 = 1 - copy_coords[0]["x"]
+    q3 = copy_coords[0]["y"] - (-1)
+    q4 = 1 - copy_coords[0]["y"]
+    
+    if(p1 < 0 and p3 < 0): #fora pra dentro
+      r1 = q1/p1
+      r3 = q3/p3
+      symbol1 = max(0, r1, r3)
+      if(symbol1 > 0):
+        copy_coords[0]["x"] = copy_coords[0]["x"] + symbol1 * p2
+        copy_coords[0]["y"] = copy_coords[0]["y"] + symbol1 * p4
+    
+    if(p2 > 0 and p4 > 0): # dentro pra fora
+      r2 = q2/p2
+      r4 = q4/p4
+      symbol2 = min(1, r2, r4)
+
+    
+  
+    '''
+    p1 = -(copy_coords[0]["x"] - copy_coords[1]["x"])
+    p2 = (copy_coords[0]["x"] - copy_coords[1]["x"])
+    p3 = -(copy_coords[0]["y"] - copy_coords[1]["y"])
+    p4 = (copy_coords[0]["y"] - copy_coords[1]["y"])
+    q1 = copy_coords[1]["x"] - (-1)
+    q2 = 1 - copy_coords[1]["x"]
+    q3 = copy_coords[1]["y"] - (-1)
+    q4 = 1 - copy_coords[1]["y"]
+    
+    if(p2 < 0 and p4 < 0):
+      r2 = q2/p2
+      r4 = q4/p4
+      symbol1 = max(0, r1, r3)
+    
+    if(p1 > 0 and p3 > 0):
+      r1 = q1/p1
+      r3 = q3/p3
+      symbol1 = min(1, r1, r3)
+      copy_coords[0]["x"] = copy_coords[1]["x"] + symbol1 * p2
+      copy_coords[0]["y"] = copy_coords[1]["y"] + symbol1 * p4
+    '''
+    return copy_coords
