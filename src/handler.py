@@ -26,6 +26,7 @@ class Handler:
     self.rotate_y = self.builder.get_object("RotateY")
     self.window_rotation_angle = self.builder.get_object("windowRotationAngle")
     self.object_rotation_angle = self.builder.get_object("objectRotationAngle")
+    self.object_units_for_moving = self.builder.get_object("objectUnitsForMoving")
 
 
     self.text_buffer = self.text_view.get_buffer()
@@ -147,25 +148,28 @@ class Handler:
     self.dm.redraw()
 
   def onMoveObjectUp(self, button):
+    units = float(self.object_units_for_moving.get_text())
     self.printToLog("onMoveObjectUp")
-    self.transform.move(self.tree_view, 0, 1)
+    self.transform.move(self.tree_view, 0, units)
    
     self.dm.redraw()
 
   def onMoveObjectDown(self, button):
+    units = float(self.object_units_for_moving.get_text())
     self.printToLog("onMoveObjectDown")
-    self.transform.move(self.tree_view, 0, -1)
+    self.transform.move(self.tree_view, 0, -units)
     self.dm.redraw()
 
   def onMoveObjectLeft(self, button):
+    units = float(self.object_units_for_moving.get_text())
     self.printToLog("onMoveObjectLeft")
-    self.transform.move(self.tree_view, -1, 0)
+    self.transform.move(self.tree_view, -units, 0)
     self.dm.redraw()
 
   def onMoveObjectRight(self, button):
+    units = float(self.object_units_for_moving.get_text())
     self.printToLog("onMoveObjectRight")
-
-    self.transform.move(self.tree_view, 1, 0)
+    self.transform.move(self.tree_view, units, 0)
     self.dm.redraw()
 
   def onRotateObjectLeft(self, button):
