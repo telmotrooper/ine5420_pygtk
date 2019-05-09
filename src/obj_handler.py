@@ -11,7 +11,7 @@ class ObjHandler:
 
   def importFile(self, path):
     self.display_file.wipeOut()
-    print("{}".format(path))
+    #print("{}".format(path))
     vertices = dict()
     vertice_counter = 0
     name = ""

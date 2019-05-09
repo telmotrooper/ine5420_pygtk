@@ -115,31 +115,31 @@ class Clipping:
   def liangBarsky(self, copy_coords):
     
     copy_coords = copy.deepcopy(copy_coords)
-    p1 = -(copy_coords[1]["x"] - copy_coords[0]["x"]) # esquerda
-    p2 = (copy_coords[1]["x"] - copy_coords[0]["x"]) # direita
-    p3 = -(copy_coords[1]["y"] - copy_coords[0]["y"]) # baixo
-    p4 = (copy_coords[1]["y"] - copy_coords[0]["y"]) # topo
+    p1 = -(copy_coords[1]["x"] - copy_coords[0]["x"]) 
+    p2 = (copy_coords[1]["x"] - copy_coords[0]["x"]) 
+    p3 = -(copy_coords[1]["y"] - copy_coords[0]["y"]) 
+    p4 = (copy_coords[1]["y"] - copy_coords[0]["y"]) 
     q1 = copy_coords[0]["x"] - (-1)
     q2 = 1 - copy_coords[0]["x"]
     q3 = copy_coords[0]["y"] - (-1)
     q4 = 1 - copy_coords[0]["y"]
     
     if(p1 < 0 and p3 < 0): #fora pra dentro
-      r1 = q1/p1
-      r3 = q3/p3
+      r1 = q1/p1 # esquerda
+      r3 = q3/p3 # baixo
       symbol1 = max(0, r1, r3)
       if(symbol1 > 0):
         copy_coords[0]["x"] = copy_coords[0]["x"] + symbol1 * p2
         copy_coords[0]["y"] = copy_coords[0]["y"] + symbol1 * p4
     
     if(p2 > 0 and p4 > 0): # dentro pra fora
-      r2 = q2/p2
-      r4 = q4/p4
+      r2 = q2/p2 # direita
+      r4 = q4/p4 # topo
       symbol2 = min(1, r2, r4)
-
-    
-  
-    '''
+      if(symbol2 < 1):
+        copy_coords[1]["x"] = copy_coords[0]["x"] + symbol2 * p2
+        copy_coords[1]["y"] = copy_coords[0]["y"] + symbol2 * p4
+      
     p1 = -(copy_coords[0]["x"] - copy_coords[1]["x"])
     p2 = (copy_coords[0]["x"] - copy_coords[1]["x"])
     p3 = -(copy_coords[0]["y"] - copy_coords[1]["y"])
@@ -152,13 +152,74 @@ class Clipping:
     if(p2 < 0 and p4 < 0):
       r2 = q2/p2
       r4 = q4/p4
-      symbol1 = max(0, r1, r3)
+      symbol1 = max(0, r2, r4)
+      if(symbol1 > 0):
+        copy_coords[1]["x"] = copy_coords[1]["x"] + symbol1 * p2
+        copy_coords[1]["y"] = copy_coords[1]["y"] + symbol1 * p4
     
     if(p1 > 0 and p3 > 0):
       r1 = q1/p1
       r3 = q3/p3
-      symbol1 = min(1, r1, r3)
-      copy_coords[0]["x"] = copy_coords[1]["x"] + symbol1 * p2
-      copy_coords[0]["y"] = copy_coords[1]["y"] + symbol1 * p4
-    '''
+      symbol2 = min(1, r1, r3)
+      if(symbol2 < 1):
+        copy_coords[0]["x"] = copy_coords[1]["x"] + symbol2 * p2
+        copy_coords[0]["y"] = copy_coords[1]["y"] + symbol2 * p4
+  
+    return copy_coords
+
+  
+  def liangBarskyTest(self, copy_coords):
+    
+    xwmin, ywmin, xwmax, ywmax = -1, -1, 1, 1
+    copy_coords = copy.deepcopy(copy_coords)
+    dx = copy_coords[1]["x"] - copy_coords[0]["x"]
+    dy = copy_coords[1]["y"] - copy_coords[0]["y"]
+    
+    p = []
+    q = []
+    p.append(-dx)
+    p.append(dx)
+    p.append(-dy)
+    p.append(dy)
+    q.append(copy_coords[0]["x"] - xwmin)
+    q.append(xwmax - copy_coords[0]["x"])
+    q.append(copy_coords[0]["y"] - ywmin)
+    q.append(ywmax - copy_coords[0]["y"])
+    
+    for i, j in enumerate(p):
+      if(j == 0):
+        print('paralela')
+        if(q[i] >= 0):
+          if(i < 2):
+            if(copy_coords[0]["y"] < ywmin):
+              copy_coords[0]["y"] = ywmin
+            if(copy_coords[1]["y"] > ywmax):
+              copy_coords[1]["y"] = ywmax
+            return copy_coords
+          
+          if(i > 1):
+            if(copy_coords[0]["x"] < xwmin):
+              copy_coords[0]["x"] = xwmin
+            if(copy_coords[1]["x"] > xwmax):
+              copy_coords[1]["x"] = xwmax
+            return copy_coords
+    t1 = 0
+    t2 = 1
+
+    for k, l in enumerate(p):
+      temp = q[i]/l
+      if(l < 0):
+        if(t1 <= temp):
+          t1 = temp
+      else:
+        if(t2 > temp):
+          t2 = temp
+
+
+    if(t1 > 0):
+      copy_coords[0]["x"] = copy_coords[0]["x"] + t1*p[1]
+      copy_coords[0]["y"] = copy_coords[0]["y"] + t1*p[3]
+    if(t2 < 1):
+      copy_coords[1]["x"] = copy_coords[0]["x"] + t2*p[1]
+      copy_coords[1]["y"] = copy_coords[0]["y"] + t2*p[3]
     return copy_coords
