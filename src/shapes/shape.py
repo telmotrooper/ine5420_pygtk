@@ -77,8 +77,12 @@ class Shape:
         ctx.rel_line_to(1,1)  # equivalent to ctx.line_to(x+1,y+1)
         ctx.stroke()
     else:
-      #clipped_coords = clipping.cohenSutherland(self.normalized_coords)
-      clipped_coords = clipping.liangBarsky(self.normalized_coords)
+      if(self.__class__.__name__ == "Line"):
+        clipped_coords = clipping.liangBarsky(self.normalized_coords)
+        #clipped_coords = clipping.cohenSutherland(self.normalized_coords)
+      else: # Polygon
+        clipped_coords = self.normalized_coords
+      
       point = viewport.transform(clipped_coords[0]["x"], clipped_coords[0]["y"])
       ctx.move_to(point["x"],point["y"])
 
