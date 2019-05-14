@@ -4,165 +4,148 @@ from functools import reduce
 import copy
 
 class Clipping:
-  def regionCode(self, x, y):
+  def __init__(self):
+    self.INSIDE = 0
+    self.LEFT = 1
+    self.RIGHT = 2
+    self.BOTTOM = 4
+    self.TOP = 8
+
+  def region_code(self, x, y):
     xw_min, xw_max = -1, 1
     yw_min, yw_max = -1, 1
-    rc = np.array([0,0,0,0])
-    rc[3] = 1 if (x < xw_min) else 0 
-    rc[2] = 1 if (x > xw_max) else 0
-    rc[1] = 1 if (y < yw_min) else 0
-    rc[0] = 1 if (y > yw_max) else 0
-
-    return rc
-  
-  def visibility(self, initial, final):
-    initial_all_zeros = np.all(initial==0)
-    final_all_zeros = np.all(final==0)
-    equal = (initial==final).all()
-    logical = reduce(operator.and_, [initial, final])
+    code = self.INSIDE
+    if x < xw_min:
+      code |= self.LEFT
+    if x > xw_max:
+      code |= self.RIGHT
+    if y < yw_min:
+      code |= self.BOTTOM
+    if y > yw_max:
+      code |= self.TOP
     
-    if(initial_all_zeros and final_all_zeros and equal):
-      return 'inside'
-    if(not np.all(logical==0)):
-      return 'out'
-    if(np.all(logical==0) and not equal):
-      return 'partial'
-
-  def coef_angular(self, normalized_coords):
-    return (normalized_coords[1]["y"] - normalized_coords[0]["y"])/(normalized_coords[1]["x"] - normalized_coords[0]["x"])
+    return code
+  
 
   def cohenSutherland(self, copy_coords):
     copy_coords = copy.deepcopy(copy_coords)
+    xw_min, xw_max = -1, 1
+    yw_min, yw_max = -1, 1
 
-    initial = self.regionCode(copy_coords[0]["x"], copy_coords[0]["y"])
-    final = self.regionCode(copy_coords[1]["x"], copy_coords[1]["y"])
-    visibility = self.visibility(initial, final)
-    print(initial)
-    print(final)
-    if(visibility == 'partial'):
-      m = self.coef_angular(copy_coords)
+    code_0 = self.region_code(copy_coords[0]["x"], copy_coords[0]["y"])
+    code_1 = self.region_code(copy_coords[1]["x"], copy_coords[1]["y"])
 
-      if(np.array_equal(initial, [0, 0, 0, 1])): # a esquerda
-        y = m * (-1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
-        if(y > -1 and y < 1):
-          copy_coords[0]["x"] = -1
-          copy_coords[0]["y"] = y
+    aceita = False
+
+    while True:
+      if not(code_0 | code_1):
+        aceita = True
+        break
       
-      if(np.array_equal(final, [0, 0, 1, 0])): # a direita
-        y = m * (1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
-        if(y > -1 and y < 1):
-          copy_coords[1]["x"] = 1
-          copy_coords[1]["y"] = y
+      if code_0 & code_1:
+        break
       
-      if(np.array_equal(final, [1, 0, 0, 0])): # topo
-        x = copy_coords[0]["x"] + 1/m * (1 - copy_coords[0]["y"])
-        if(x > -1 and x < 1):
-          copy_coords[1]["x"] = x
-          copy_coords[1]["y"] = 1
+      else:
+        x = 0
+        y = 0
+        _code = None
 
-      if(np.array_equal(initial, [0, 1, 0, 0])): # embaixo
-        x = copy_coords[0]["x"] + 1/m * (-1 - copy_coords[0]["y"])
-        if(x > -1 and x < 1):
+        if code_0:
+          _code = code_0
+        else:
+          _code = code_1
+        
+        if _code & self.TOP:
+          x = copy_coords[0]["x"] + (copy_coords[1]["x"] - copy_coords[0]["x"]) * (yw_max - copy_coords[0]["y"]) / (copy_coords[1]["y"] - copy_coords[0]["y"])
+          y = yw_max
+        
+        if _code & self.BOTTOM:
+          x = copy_coords[0]["x"] + (copy_coords[1]["x"] - copy_coords[0]["x"]) * (yw_min - copy_coords[0]["y"]) / (copy_coords[1]["y"] - copy_coords[0]["y"])
+          y = yw_min
+        
+        if _code & self.RIGHT:
+          y = copy_coords[0]["y"] + (copy_coords[1]["y"] - copy_coords[0]["y"]) * (xw_max - copy_coords[0]["x"]) / (copy_coords[1]["x"] - copy_coords[0]["x"])
+          x = xw_max
+        
+        if _code & self.LEFT:
+          y = copy_coords[0]["y"] + (copy_coords[1]["y"] - copy_coords[0]["y"]) * (xw_min - copy_coords[0]["x"]) / (copy_coords[1]["x"] - copy_coords[0]["x"])
+          x = xw_min
+        
+        if _code == code_0:
           copy_coords[0]["x"] = x
-          copy_coords[0]["y"] = -1
-      
-      if(np.array_equal(initial, [0, 1, 0, 1])): # esquerda embaixo
-        y = m * (-1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
-        if(y > -1 and y < 1):
-          copy_coords[0]["x"] = -1
           copy_coords[0]["y"] = y
-        
-        x = copy_coords[0]["x"] + 1/m * (-1 - copy_coords[0]["y"])
-        if(x > -1 and x < 1):
-          copy_coords[0]["x"] = x
-          copy_coords[0]["y"] = -1
 
-      if(np.array_equal(initial, [1, 0, 0, 1])): # a esquerda
-        y = m * (-1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
-        if(y > -1 and y < 1):
-          copy_coords[0]["x"] = -1
-          copy_coords[0]["y"] = y
+          code_0 = self.region_code(copy_coords[0]["x"], copy_coords[0]["y"])
         
-        x = copy_coords[0]["x"] + 1/m * (1 - copy_coords[0]["y"])
-        if(x > -1 and x < 1):
+        else:
           copy_coords[1]["x"] = x
-          copy_coords[1]["y"] = 1
-      
-      if(np.array_equal(final, [0, 0, 1, 0])): # a direita topo
-        y = m * (1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
-        if(y > -1 and y < 1):
-          copy_coords[1]["x"] = 1
           copy_coords[1]["y"] = y
-        
-        x = copy_coords[0]["x"] + 1/m * (1 - copy_coords[0]["y"])
-        if(x > -1 and x < 1):
-          copy_coords[1]["x"] = x
-          copy_coords[1]["y"] = 1
-      
-      if(np.array_equal(final, [0, 0, 1, 0])): # a direita embaixo
-        y = m * (1 - copy_coords[0]["x"]) + copy_coords[0]["y"]
-        if(y > -1 and y < 1):
-          copy_coords[1]["x"] = 1
-          copy_coords[1]["y"] = y
-        
-        x = copy_coords[0]["x"] + 1/m * (-1 - copy_coords[0]["y"])
-        if(x > -1 and x < 1):
-          copy_coords[0]["x"] = x
-          copy_coords[0]["y"] = -1
 
+          code_1 = self.region_code(copy_coords[1]["x"], copy_coords[1]["y"])
+    
     return copy_coords
       
-  def liangBarsky(self, copy_coords):
-    
-    copy_coords = copy.deepcopy(copy_coords)
-    p1 = -(copy_coords[1]["x"] - copy_coords[0]["x"]) 
-    p2 = (copy_coords[1]["x"] - copy_coords[0]["x"]) 
-    p3 = -(copy_coords[1]["y"] - copy_coords[0]["y"]) 
-    p4 = (copy_coords[1]["y"] - copy_coords[0]["y"]) 
-    q1 = copy_coords[0]["x"] - (-1)
-    q2 = 1 - copy_coords[0]["x"]
-    q3 = copy_coords[0]["y"] - (-1)
-    q4 = 1 - copy_coords[0]["y"]
-    
-    if(p1 < 0 and p3 < 0): #fora pra dentro
-      r1 = q1/p1 # esquerda
-      r3 = q3/p3 # baixo
-      symbol1 = max(0, r1, r3)
-      if(symbol1 > 0):
-        copy_coords[0]["x"] = copy_coords[0]["x"] + symbol1 * p2
-        copy_coords[0]["y"] = copy_coords[0]["y"] + symbol1 * p4
-    
-    if(p2 > 0 and p4 > 0): # dentro pra fora
-      r2 = q2/p2 # direita
-      r4 = q4/p4 # topo
-      symbol2 = min(1, r2, r4)
-      if(symbol2 < 1):
-        copy_coords[1]["x"] = copy_coords[0]["x"] + symbol2 * p2
-        copy_coords[1]["y"] = copy_coords[0]["y"] + symbol2 * p4
-      
-    p1 = -(copy_coords[0]["x"] - copy_coords[1]["x"])
-    p2 = (copy_coords[0]["x"] - copy_coords[1]["x"])
-    p3 = -(copy_coords[0]["y"] - copy_coords[1]["y"])
-    p4 = (copy_coords[0]["y"] - copy_coords[1]["y"])
-    q1 = copy_coords[1]["x"] - (-1)
-    q2 = 1 - copy_coords[1]["x"]
-    q3 = copy_coords[1]["y"] - (-1)
-    q4 = 1 - copy_coords[1]["y"]
-    
-    if(p2 < 0 and p4 < 0):
-      r2 = q2/p2
-      r4 = q4/p4
-      symbol1 = max(0, r2, r4)
-      if(symbol1 > 0):
-        copy_coords[1]["x"] = copy_coords[1]["x"] + symbol1 * p2
-        copy_coords[1]["y"] = copy_coords[1]["y"] + symbol1 * p4
-    
-    if(p1 > 0 and p3 > 0):
-      r1 = q1/p1
-      r3 = q3/p3
-      symbol2 = min(1, r1, r3)
-      if(symbol2 < 1):
-        copy_coords[0]["x"] = copy_coords[1]["x"] + symbol2 * p2
-        copy_coords[0]["y"] = copy_coords[1]["y"] + symbol2 * p4
+
+
   
+
+  def liangBarsky(self, copy_coords):
+    copy_coords = copy.deepcopy(copy_coords)
+    xw_min, xw_max = -1, 1
+    yw_min, yw_max = -1, 1
+
+    u1 = 0.0
+    u2 = 1.0
+    dx = copy_coords[1]["x"] - copy_coords[0]["x"]
+    dy = copy_coords[1]["y"] - copy_coords[0]["y"]
+    p = 0.0
+    q = 0.0
+    r = 0.0
+    draw = True
+
+    edge = 0
+    while edge < 4:
+      if edge == 0:
+          p = -dx
+          q = copy_coords[0]["x"] - xw_min
+
+      if edge == 1:
+          p = dx
+          q = xw_max - copy_coords[0]["x"]
+
+      if edge == 2:
+          p = -dy
+          q = copy_coords[0]["y"] - yw_min
+
+      if edge == 3:
+          p = dy
+          q = yw_max - copy_coords[0]["y"]
+
+      if p == 0:
+          p = 1
+
+      r = q / p
+
+      if p == 0 and q < 0:
+          draw = False
+
+      if p < 0:
+          if r > u2:
+              draw = False
+          if r > u1:
+              u1 = r
+
+      if p > 0:
+          if r < u1:
+              draw = False
+          if r < u2:
+              u2 = r
+      edge += 1
+
+    if draw:
+      copy_coords[0]["x"] = copy_coords[0]["x"] + u1 * dx
+      copy_coords[0]["y"] = copy_coords[0]["y"] + u1 * dy
+      copy_coords[1]["x"] = copy_coords[0]["x"] + u2 * dx
+      copy_coords[1]["y"] = copy_coords[0]["y"] + u2 * dy
+
     return copy_coords

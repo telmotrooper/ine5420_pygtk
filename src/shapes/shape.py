@@ -79,8 +79,10 @@ class Shape:
     else:
       #clipped_coords = clipping.cohenSutherland(self.normalized_coords)
       clipped_coords = clipping.liangBarsky(self.normalized_coords)
-      point = viewport.transform(clipped_coords[0]["x"], clipped_coords[0]["y"])
-      ctx.move_to(point["x"],point["y"])
+      if(self.__class__.__name__ == "Line"):
+
+        point = viewport.transform(clipped_coords[0]["x"], clipped_coords[0]["y"])
+        ctx.move_to(point["x"],point["y"])
 
       for entry in clipped_coords:  # 1st interation does move_to and line_to to same point
         x2, y2 = entry["x"], entry["y"]
