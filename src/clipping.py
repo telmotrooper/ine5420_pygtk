@@ -149,3 +149,182 @@ class Clipping:
       copy_coords[1]["y"] = copy_coords[0]["y"] + u2 * dy
 
     return copy_coords
+
+
+  def sutherland_hodgman_clipping(self, objeto):
+    pontos = copy.deepcopy(objeto)
+
+    if str(objeto) == 'Curva':
+        pontos = copy.deepcopy(objeto.pontos_curva)
+
+    _left = self.clip_left(pontos)
+    _right = self.clip_right(_left)
+    _top = self.clip_top(_right)
+    _bottom = self.clip_bottom(_top)
+
+    return _bottom
+
+  def clip_left(self, pontos):
+    clip_x = -1
+    output = []
+
+    if len(pontos) == 0:
+        return []
+
+    pontos.append(pontos[0])
+    sz = len(pontos) - 1
+    i = 0
+    while i < sz:
+      c_0 = pontos[i]
+      c_1 = pontos[i+1]
+
+      if c_0['x'] < clip_x and c_1['x'] < clip_x:
+          pass
+
+      if c_0["x"] >= clip_x and c_1["x"] >= clip_x:
+          output.append(c_1)
+
+      x = clip_x
+      try:
+          m = (c_1["y"] - c_0["y"])/(c_1["x"] - c_0["x"])
+      except:
+          m = 1
+
+      y = m * (x - c_0["x"]) + c_0["y"]
+
+      if c_0["x"] >= clip_x and c_1["x"] < clip_x:
+          p = {"x": x, "y": y}
+          output.append(p)
+
+      if c_0["x"] < clip_x and c_1["x"] >= clip_x:
+          p = {"x": x, "y": y}
+          output.append(p)
+          output.append(c_1)
+
+      i += 1
+
+    return output
+
+  def clip_right(self, pontos):
+    clip_x = 1
+    output = []
+
+    if len(pontos) == 0:
+        return []
+
+    pontos.append(pontos[0])
+    sz = len(pontos) - 1
+    i = 0
+    while i < sz:
+      c_0 = pontos[i]
+      c_1 = pontos[i+1]
+
+      if c_0["x"] >= clip_x and c_1["x"] >= clip_x:
+          pass
+
+      if c_0["x"] < clip_x and c_1["x"] < clip_x:
+          output.append(c_1)
+
+      x = clip_x
+
+      try:
+          m = (c_1["y"] - c_0["y"])/(c_1["x"] - c_0["x"])
+      except:
+          m = 1
+
+      y = m * (x - c_0["x"]) + c_0["y"]
+
+      if c_0["x"] < clip_x and c_1["x"] >= clip_x:
+          p = {"x": x, "y": y}
+          output.append(p)
+
+      if c_0["x"] >= clip_x and c_1["x"] < clip_x:
+          p = {"x": x, "y": y}
+          output.append(p)
+          output.append(c_1)
+
+      i += 1
+
+    return output
+
+  def clip_top(self, pontos):
+    clip_y = 1
+
+    if len(pontos) == 0:
+        return []
+
+    output = []
+    pontos.append(pontos[0])
+    sz = len(pontos) - 1
+    i = 0
+    while i < sz:
+      c_0 = pontos[i]
+      c_1 = pontos[i+1]
+
+      if c_0["y"] > clip_y and c_1["y"] > clip_y:
+          pass
+
+      if c_0["y"] <= clip_y and c_1["y"] <= clip_y:
+          output.append(c_1)
+
+      y = clip_y
+      try:
+          m = (c_1["x"] - c_0["x"])/(c_1["y"] - c_0["y"])
+      except:
+          m=1
+
+      x = m * (y - c_0["y"]) + c_0["x"]
+
+      if c_0["y"] <= clip_y and c_1["y"] > clip_y:
+          p = {"x": x, "y": y}
+          output.append(p)
+
+      if c_0["y"] > clip_y and c_1["y"] <= clip_y:
+          p = {"x": x, "y": y}
+          output.append(p)
+          output.append(c_1)
+
+      i += 1
+
+    return output
+
+  def clip_bottom(self, pontos):
+    clip_y = -1
+    output = []
+
+    if len(pontos) == 0:
+        return []
+
+    pontos.append(pontos[0])
+    sz = len(pontos) - 1
+    i = 0
+    while i < sz:
+      c_0 = pontos[i]
+      c_1 = pontos[i+1]
+
+      if c_0["y"] < clip_y and c_1["y"] < clip_y:
+          pass
+
+      if c_0["y"] >= clip_y and c_1["y"] >= clip_y:
+          output.append(c_1)
+
+      y = clip_y
+      try:
+          m = (c_1["x"] - c_0["x"])/(c_1["y"] - c_0["y"])
+      except:
+          m=1
+
+      x = m * (y - c_0["y"]) + c_0["x"]
+
+      if c_0["y"] >= clip_y and c_1["y"] < clip_y:
+          p = {"x": x, "y": y}
+          output.append(p)
+
+      if c_0["y"] < clip_y and c_1["y"] >= clip_y:
+          p = {"x": x, "y": y}
+          output.append(p)
+          output.append(c_1)
+
+      i += 1
+
+    return output
