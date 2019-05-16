@@ -59,7 +59,7 @@ class Clipping:
         break
       
       if code_0 & code_1:
-        break
+        return []
       
       else:
         x = 0
