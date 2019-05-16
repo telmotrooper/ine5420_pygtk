@@ -23,7 +23,13 @@ class Clipping:
       return self.cohenSutherland(copy_coords)
 
     elif(Clipping.lineClippingAlg == "lb"):
-      return self.liangBarsky(copy_coords)
+      coords_inv = self.liangBarsky(copy_coords)
+      if(coords_inv):
+        coords_inv = copy.deepcopy(coords_inv)
+        t = coords_inv[0]
+        coords_inv[0] = coords_inv[1]
+        coords_inv[1] = t
+        return self.liangBarsky(coords_inv)
 
   def region_code(self, x, y):
     xw_min, xw_max = -1, 1
@@ -114,55 +120,59 @@ class Clipping:
     p = 0.0
     q = 0.0
     r = 0.0
-    draw = True
 
     edge = 0
     while edge < 4:
       if edge == 0:
-          p = -dx
-          q = copy_coords[0]["x"] - xw_min
+        p = -dx
+        q = copy_coords[0]["x"] - xw_min
 
       if edge == 1:
-          p = dx
-          q = xw_max - copy_coords[0]["x"]
+        p = dx
+        q = xw_max - copy_coords[0]["x"]
 
       if edge == 2:
-          p = -dy
-          q = copy_coords[0]["y"] - yw_min
+        p = -dy
+        q = copy_coords[0]["y"] - yw_min
 
       if edge == 3:
-          p = dy
-          q = yw_max - copy_coords[0]["y"]
-
-      if p == 0:
-          p = 1
-
-      r = q / p
+        p = dy
+        q = yw_max - copy_coords[0]["y"]
 
       if p == 0 and q < 0:
-          draw = False
+        edge += 1
+        continue
+      
+      if p == 0 and q >= 0:
+        edge += 1
+        continue
+
+      r = q / p
+      if(r > 1):
+        edge += 1
+        continue
 
       if p < 0:
-          if r > u2:
-              draw = False
-          if r > u1:
-              u1 = r
+        if r > u1:
+          u1 = r
 
       if p > 0:
-          if r < u1:
-              draw = False
-          if r < u2:
-              u2 = r
+        if r < u2:
+          u2 = r
       edge += 1
 
-    if draw:
-      copy_coords[0]["x"] = copy_coords[0]["x"] + u1 * dx
-      copy_coords[0]["y"] = copy_coords[0]["y"] + u1 * dy
-      copy_coords[1]["x"] = copy_coords[0]["x"] + u2 * dx
-      copy_coords[1]["y"] = copy_coords[0]["y"] + u2 * dy
-      return copy_coords
-    else:
+    if u1 > u2:
       return []
+    if u2 > u1:
+      if(u1 > 0):
+        copy_coords[0]["x"] = copy_coords[0]["x"] + u1 * dx
+        copy_coords[0]["y"] = copy_coords[0]["y"] + u1 * dy
+      if(u2 < 1):
+        copy_coords[1]["x"] = copy_coords[0]["x"] + u2 * dx
+        copy_coords[1]["y"] = copy_coords[0]["y"] + u2 * dy
+      print(copy_coords)
+      return copy_coords
+
 
   def sutherland_hodgman_clipping(self, objeto):
     pontos = copy.deepcopy(objeto)
