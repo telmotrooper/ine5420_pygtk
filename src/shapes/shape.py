@@ -79,8 +79,7 @@ class Shape:
     else:
       
       if(self.__class__.__name__ == "Line"):
-        #clipped_coords = clipping.cohenSutherland(self.normalized_coords)
-        clipped_coords = clipping.liangBarsky(self.normalized_coords)
+        clipped_coords = clipping.clipLine(self.normalized_coords)
       else:
         clipped_coords = clipping.sutherland_hodgman_clipping(self.normalized_coords)
       

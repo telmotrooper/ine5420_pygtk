@@ -10,6 +10,23 @@ class Clipping:
     self.RIGHT = 2
     self.BOTTOM = 4
     self.TOP = 8
+    self.lineClippingAlg = "cs"
+
+  def setlineClippingAlgorithm(self, algorithm):
+    if(algorithm == "cs" or algorithm == "lb"):
+      self.lineClippingAlg = algorithm
+
+    if(algorithm == "cs"):
+      print("Using Cohen-Sutherland")
+    elif(algorithm == "lb"):
+      print("Using Liang-Barsky")
+
+  def clipLine(self, copy_coords):
+    if(self.lineClippingAlg == "cs"):
+      return self.cohenSutherland(copy_coords)
+
+    elif(self.lineClippingAlg == "lb"):
+      return self.liangBarsky(copy_coords)
 
   def region_code(self, x, y):
     xw_min, xw_max = -1, 1
@@ -26,7 +43,6 @@ class Clipping:
     
     return code
   
-
   def cohenSutherland(self, copy_coords):
     copy_coords = copy.deepcopy(copy_coords)
     xw_min, xw_max = -1, 1
@@ -85,10 +101,6 @@ class Clipping:
     
     return copy_coords
       
-
-
-  
-
   def liangBarsky(self, copy_coords):
     copy_coords = copy.deepcopy(copy_coords)
     xw_min, xw_max = -1, 1
@@ -149,7 +161,6 @@ class Clipping:
       copy_coords[1]["y"] = copy_coords[0]["y"] + u2 * dy
 
     return copy_coords
-
 
   def sutherland_hodgman_clipping(self, objeto):
     pontos = copy.deepcopy(objeto)
