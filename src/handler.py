@@ -1,4 +1,5 @@
 from gi.repository import Gtk
+from shapes.curve import Curve
 from shapes.point import Point
 from shapes.line import Line
 from shapes.polygon import Polygon
@@ -36,8 +37,9 @@ class Handler:
     self.display_file = DisplayFile()
     self.display_file.setBuilder(builder)
 
-    # Used to keep state of polygon when points are added
+    # Used to keep state of polygons and curves when points are added
     self.temp_polygon = []
+    self.temp_curve = []
 
   def onDestroy(self, *args):
     Gtk.main_quit()
@@ -77,11 +79,25 @@ class Handler:
     add_object_window = self.builder.get_object("AddObjectWindow")
     add_object_window.show_all()
 
+  def onAddCurvePoint(self, button):
+    x_entry = self.builder.get_object("EntryXCurve").get_text()
+    y_entry = self.builder.get_object("EntryYCurve").get_text()
+    self.temp_curve.append({"x": x_entry, "y": y_entry})
+    self.printToLog("onAddCurvePoint ({},{})".format(x_entry, y_entry))
+
   def onAddPolygonPoint(self, button):
     x_entry = self.builder.get_object("EntryXPolygon").get_text()
     y_entry = self.builder.get_object("EntryYPolygon").get_text()
     self.temp_polygon.append({"x": x_entry, "y": y_entry})
     self.printToLog("onAddPolygonPoint ({},{})".format(x_entry, y_entry))
+
+  def onRemoveCurvePoint(self, button):
+    if(len(self.temp_curve) > 0):
+      self.temp_curve.pop()
+    else:
+      self.printToLog("No point to remove")
+    
+    self.printToLog("onRemoveCurvePoint")
 
   def onRemovePolygonPoint(self, button):
     if(len(self.temp_polygon) > 0):
@@ -90,6 +106,19 @@ class Handler:
       self.printToLog("No point to remove")
     
     self.printToLog("onRemovePolygonPoint")
+
+  def onAddCurve(self, button):
+    self.printToLog("onAddCurve")
+
+    name = self.builder.get_object("CurveName").get_text()
+    curve = Curve(name)
+
+    for point in self.temp_curve:
+      curve.addCoords(float(point["x"]), float(point["y"]))
+
+    self.display_file.addObject(curve)
+    self.temp_curve = []
+    self.add_object_window.hide()
 
   def onAddPolygon(self, button):
     self.printToLog("onAddPolygon")
