@@ -5,6 +5,7 @@ from shapes.polygon import Polygon
 from display_file import DisplayFile
 from transform import Transform
 from obj_handler import ObjHandler
+from clipping import Clipping
 
 class Handler:
   def __init__(self, builder, drawing_manager):
@@ -12,6 +13,7 @@ class Handler:
     self.dm = drawing_manager
     self.transform = Transform()
     self.obj_handler = ObjHandler()
+    self.clipping = Clipping()
 
     # References to GTK objects
     self.add_object_window = self.builder.get_object("AddObjectWindow")
@@ -27,7 +29,8 @@ class Handler:
     self.window_rotation_angle = self.builder.get_object("windowRotationAngle")
     self.object_rotation_angle = self.builder.get_object("objectRotationAngle")
     self.object_units_for_moving = self.builder.get_object("objectUnitsForMoving")
-
+    self.line_clipping_cs = self.builder.get_object("LineClippingCS")
+    self.line_clipping_lb = self.builder.get_object("LineClippingLB")
 
     self.text_buffer = self.text_view.get_buffer()
     self.display_file = DisplayFile()
@@ -171,6 +174,14 @@ class Handler:
     self.printToLog("onMoveObjectRight")
     self.transform.move(self.tree_view, units, 0)
     self.dm.redraw()
+
+  def onLineClippingChanged(self, button):
+    if self.line_clipping_cs.get_active():
+      self.printToLog("Line clipping algorithm set to Cohen-Sutherland.")
+      self.clipping.setlineClippingAlgorithm("cs")
+    elif self.line_clipping_lb.get_active():
+      self.printToLog("Line clipping algorithm set to Liang-Barsky.")
+      self.clipping.setlineClippingAlgorithm("lb")
 
   def onRotateObjectLeft(self, button):
     self.printToLog("onRotateObjectLeft")

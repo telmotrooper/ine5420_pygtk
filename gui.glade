@@ -1479,7 +1479,7 @@
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="width_chars">3</property>
-                                                    <property name="text" translatable="yes">1</property>
+                                                    <property name="text" translatable="yes">10</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">False</property>
@@ -1682,6 +1682,7 @@
                                                 <property name="receives_default">False</property>
                                                 <property name="active">True</property>
                                                 <property name="draw_indicator">True</property>
+                                                <signal name="toggled" handler="onLineClippingChanged" swapped="no"/>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>

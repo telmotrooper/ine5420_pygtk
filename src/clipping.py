@@ -4,28 +4,25 @@ from functools import reduce
 import copy
 
 class Clipping:
+  lineClippingAlg = "cs"
+
   def __init__(self):
     self.INSIDE = 0
     self.LEFT = 1
     self.RIGHT = 2
     self.BOTTOM = 4
     self.TOP = 8
-    self.lineClippingAlg = "cs"
 
   def setlineClippingAlgorithm(self, algorithm):
+    print("setlineClippingAlgorithm {}".format(algorithm))
     if(algorithm == "cs" or algorithm == "lb"):
-      self.lineClippingAlg = algorithm
-
-    if(algorithm == "cs"):
-      print("Using Cohen-Sutherland")
-    elif(algorithm == "lb"):
-      print("Using Liang-Barsky")
+      Clipping.lineClippingAlg = algorithm
 
   def clipLine(self, copy_coords):
-    if(self.lineClippingAlg == "cs"):
+    if(Clipping.lineClippingAlg == "cs"):
       return self.cohenSutherland(copy_coords)
 
-    elif(self.lineClippingAlg == "lb"):
+    elif(Clipping.lineClippingAlg == "lb"):
       return self.liangBarsky(copy_coords)
 
   def region_code(self, x, y):
@@ -44,6 +41,7 @@ class Clipping:
     return code
   
   def cohenSutherland(self, copy_coords):
+    print("Clipping with Cohen-Sutherland")
     copy_coords = copy.deepcopy(copy_coords)
     xw_min, xw_max = -1, 1
     yw_min, yw_max = -1, 1
@@ -102,6 +100,7 @@ class Clipping:
     return copy_coords
       
   def liangBarsky(self, copy_coords):
+    print("Clipping with Liang-Barsky")
     copy_coords = copy.deepcopy(copy_coords)
     xw_min, xw_max = -1, 1
     yw_min, yw_max = -1, 1
