@@ -82,13 +82,13 @@ class Shape:
         clipped_coords = clipping.clipLine(self.normalized_coords)
       else:
         clipped_coords = clipping.sutherland_hodgman_clipping(self.normalized_coords)
-      
-      point = viewport.transform(clipped_coords[0]["x"], clipped_coords[0]["y"])
-      ctx.move_to(point["x"],point["y"])
-      
-      for entry in clipped_coords:  # 1st interation does move_to and line_to to same point
-        x2, y2 = entry["x"], entry["y"]
-        point2 = viewport.transform(x2, y2)
-        ctx.line_to(point2["x"],point2["y"])
-      ctx.close_path()
-      ctx.stroke()
+      if(clipped_coords):
+        point = viewport.transform(clipped_coords[0]["x"], clipped_coords[0]["y"])
+        ctx.move_to(point["x"],point["y"])
+        
+        for entry in clipped_coords:  # 1st interation does move_to and line_to to same point
+          x2, y2 = entry["x"], entry["y"]
+          point2 = viewport.transform(x2, y2)
+          ctx.line_to(point2["x"],point2["y"])
+        ctx.close_path()
+        ctx.stroke()
