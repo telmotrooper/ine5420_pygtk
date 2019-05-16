@@ -50,7 +50,9 @@ class Clipping:
     code_1 = self.region_code(copy_coords[1]["x"], copy_coords[1]["y"])
 
     aceita = False
-
+    if(code_0 & code_1):
+      return []
+    
     while True:
       if not(code_0 | code_1):
         aceita = True
