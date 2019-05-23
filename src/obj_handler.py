@@ -83,19 +83,19 @@ class ObjHandler:
         output_file.write("v {} {} 0\n".format(w_coords[0]["x"], w_coords[0]["y"]))
         vertice_counter += 1
         output_file.write("v {} {} 0\n".format(w_coords[1]["x"], w_coords[1]["y"]))
-        
         temp += "o {}\n".format(obj.getName())
+        
         temp += "l {} {}\n".format(vertice_counter-1, vertice_counter)
       
       elif(obj_type == "Polygon"):
         temp += "o {}\n".format(obj.getName())
         temp += "l"
-
+        initial = vertice_counter + 1
         for coord in w_coords:
           vertice_counter += 1
           output_file.write("v {} {} 0\n".format(coord["x"], coord["y"]))
           temp += " {}".format(vertice_counter)
-        temp += "\n"
+        temp += " {}\n".format(initial)
 
     output_file.write("{}\n".format(temp))
     output_file.close()
