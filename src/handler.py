@@ -27,11 +27,12 @@ class Handler:
     self.point_radio_button = self.builder.get_object("PointRadioButton")
     self.rotate_x = self.builder.get_object("RotateX")
     self.rotate_y = self.builder.get_object("RotateY")
-    self.window_rotation_angle = self.builder.get_object("windowRotationAngle")
     self.object_rotation_angle = self.builder.get_object("objectRotationAngle")
     self.object_units_for_moving = self.builder.get_object("objectUnitsForMoving")
     self.line_clipping_cs = self.builder.get_object("LineClippingCS")
     self.line_clipping_lb = self.builder.get_object("LineClippingLB")
+    self.window_selected = self.builder.get_object("WindowSelected")
+    self.object_selected = self.builder.get_object("ObjectSelected")
 
     self.text_buffer = self.text_view.get_buffer()
     self.display_file = DisplayFile()
@@ -64,13 +65,13 @@ class Handler:
 
   def onRotateWindowLeft(self, button):
     self.printToLog("onRotateWindowLeft")
-    angle =int(self.window_rotation_angle.get_text())
+    angle =int(self.object_rotation_angle.get_text())
     self.dm.getWindow().rotate(angle)
     self.dm.redraw()
 
   def onRotateWindowRight(self, button):
     self.printToLog("onRotateWindowRight")
-    angle = float(self.window_rotation_angle.get_text())
+    angle = float(self.object_rotation_angle.get_text())
     self.dm.getWindow().rotate(-angle)
     self.dm.redraw()
 
@@ -180,6 +181,9 @@ class Handler:
     self.dm.redraw()
 
   def onMoveObjectUp(self, button):
+    if self.window_selected.get_active():
+      return self.onMoveWindowUp(button)
+    
     units = float(self.object_units_for_moving.get_text())
     self.printToLog("onMoveObjectUp")
     self.transform.move(self.tree_view, 0, units)
@@ -187,18 +191,27 @@ class Handler:
     self.dm.redraw()
 
   def onMoveObjectDown(self, button):
+    if self.window_selected.get_active():
+      return self.onMoveWindowDown(button)
+
     units = float(self.object_units_for_moving.get_text())
     self.printToLog("onMoveObjectDown")
     self.transform.move(self.tree_view, 0, -units)
     self.dm.redraw()
 
   def onMoveObjectLeft(self, button):
+    if self.window_selected.get_active():
+      return self.onMoveWindowLeft(button)
+
     units = float(self.object_units_for_moving.get_text())
     self.printToLog("onMoveObjectLeft")
     self.transform.move(self.tree_view, -units, 0)
     self.dm.redraw()
 
   def onMoveObjectRight(self, button):
+    if self.window_selected.get_active():
+      return self.onMoveWindowRight(button)
+    
     units = float(self.object_units_for_moving.get_text())
     self.printToLog("onMoveObjectRight")
     self.transform.move(self.tree_view, units, 0)
@@ -213,6 +226,9 @@ class Handler:
       self.clipping.setlineClippingAlgorithm("lb")
 
   def onRotateObjectLeft(self, button):
+    if self.window_selected.get_active():
+      return self.onRotateWindowLeft(button)
+
     self.printToLog("onRotateObjectLeft")
     angle =int(self.object_rotation_angle.get_text())
 
@@ -227,6 +243,9 @@ class Handler:
     self.dm.redraw()
 
   def onRotateObjectRight(self, button):
+    if self.window_selected.get_active():
+      return self.onRotateWindowRight(button)
+
     self.printToLog("onRotateObjectRight")
     angle =int(self.object_rotation_angle.get_text())
     
@@ -242,36 +261,46 @@ class Handler:
     self.dm.redraw()
   
   def onScaleObjectUp(self, button):
+    if self.window_selected.get_active():
+      return self.onZoomIn(button)
+    
     self.printToLog("onScaleObjectUp")
   
     self.transform.zoom(self.tree_view, 2, 2)
     self.dm.redraw()
 
   def onScaleObjectDown(self, button):
+    if self.window_selected.get_active():
+      return self.onZoomOut(button)
+    
     self.printToLog("onScaleObjectDown")
     self.transform.zoom(self.tree_view, 0.5, 0.5)
     self.dm.redraw()
 
   def onMoveWindowUp(self, button):
     self.printToLog("onMoveWindowUp")
-    self.dm.getWindow().move(0, 100)
+    units = float(self.object_units_for_moving.get_text())
+    self.dm.getWindow().move(0, units)
     self.dm.redraw()
 
   def onMoveWindowDown(self, button):
     self.printToLog("onMoveWindowDown")
-    self.dm.getWindow().move(0, -100)
+    units = float(self.object_units_for_moving.get_text())
+    self.dm.getWindow().move(0, -units)
     self.dm.redraw()
 
   
   def onMoveWindowLeft(self, button):
     self.printToLog("onMoveWindowLeft")
-    self.dm.getWindow().move(-100, 0)
+    units = float(self.object_units_for_moving.get_text())
+    self.dm.getWindow().move(-units, 0)
     self.dm.redraw()
 
   
   def onMoveWindowRight(self, button):
     self.printToLog("onMoveWindowRight")
-    self.dm.getWindow().move(100, 0)
+    units = float(self.object_units_for_moving.get_text())
+    self.dm.getWindow().move(units, 0)
     self.dm.redraw()
 
 
