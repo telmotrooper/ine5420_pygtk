@@ -1058,9 +1058,15 @@
       </object>
     </child>
   </object>
+  <object class="GtkFileFilter" id="AllowedFiles">
+    <patterns>
+      <pattern>**.obj</pattern>
+    </patterns>
+  </object>
   <object class="GtkFileChooserDialog" id="ObjFileChooser">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
+    <property name="filter">AllowedFiles</property>
     <child>
       <placeholder/>
     </child>
