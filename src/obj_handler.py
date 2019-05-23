@@ -4,6 +4,7 @@ from display_file import DisplayFile
 from shapes.point import Point
 from shapes.line import Line
 from shapes.polygon import Polygon
+from shapes.curve import Curve
 
 class ObjHandler:
   def __init__(self):
@@ -43,15 +44,23 @@ class ObjHandler:
         if(len(match) == 3):  # line
           l = Line(name)
         else: # polygon
-          l = Polygon(name)
+          l = None
+          
+          if(match[1] == match[-1]):
+            l = Polygon(name)
+          else:
+            l = Curve(name)
 
         for item in match:
-          if(item != "l"):
+          if(item != "l"):  # ignore the first character, only compute coordinates
             vertice_for_point = vertices[float(item)]
-            match = re.findall(r"\S+", vertice_for_point)
-            coord = { "x": float(match[1]), "y": float(match[2]) }
+            match_vertice = re.findall(r"\S+", vertice_for_point)
+            coord = { "x": float(match_vertice[1]), "y": float(match_vertice[2]) }
             l.addCoords(coord["x"], coord["y"])
 
+        if(match[1] == match[-1]):  # if polygon (last coords == first coords)
+          l.popCoords()             # remove repeated coords
+        
         self.display_file.addObject(l)
   
   def exportFile(self, path):
@@ -96,6 +105,15 @@ class ObjHandler:
           output_file.write("v {} {} 0\n".format(coord["x"], coord["y"]))
           temp += " {}".format(vertice_counter)
         temp += " {}\n".format(initial)
+      
+      elif(obj_type == "Curve"):
+        temp += "o {}\n".format(obj.getName())
+        temp += "l"
+        for coord in w_coords:
+          vertice_counter += 1
+          output_file.write("v {} {} 0\n".format(coord["x"], coord["y"]))
+          temp += " {}".format(vertice_counter)
+        temp += "\n"
 
     output_file.write("{}\n".format(temp))
     output_file.close()

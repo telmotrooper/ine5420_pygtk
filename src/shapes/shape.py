@@ -16,6 +16,10 @@ class Shape:
     self.world_coords.append({"x": x, "y": y})
     self.normalized_coords.append(self.transform.normalize(x, y))
 
+  def popCoords(self):
+    self.world_coords.pop()
+    self.normalized_coords.pop()
+
   def getWorldCoords(self):
     return self.world_coords
 
