@@ -1699,7 +1699,7 @@
                                           <object class="GtkLabel">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Rotate around (only applies to objects)</property>
+                                            <property name="label" translatable="yes">Rotate around (only applied to objects)</property>
                                           </object>
                                         </child>
                                       </object>
