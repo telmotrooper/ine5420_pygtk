@@ -279,24 +279,28 @@ class Handler:
 
   def onMoveWindowUp(self, button):
     self.printToLog("onMoveWindowUp")
-    self.dm.getWindow().move(0, 100)
+    units = float(self.object_units_for_moving.get_text())
+    self.dm.getWindow().move(0, units)
     self.dm.redraw()
 
   def onMoveWindowDown(self, button):
     self.printToLog("onMoveWindowDown")
-    self.dm.getWindow().move(0, -100)
+    units = float(self.object_units_for_moving.get_text())
+    self.dm.getWindow().move(0, -units)
     self.dm.redraw()
 
   
   def onMoveWindowLeft(self, button):
     self.printToLog("onMoveWindowLeft")
-    self.dm.getWindow().move(-100, 0)
+    units = float(self.object_units_for_moving.get_text())
+    self.dm.getWindow().move(-units, 0)
     self.dm.redraw()
 
   
   def onMoveWindowRight(self, button):
     self.printToLog("onMoveWindowRight")
-    self.dm.getWindow().move(100, 0)
+    units = float(self.object_units_for_moving.get_text())
+    self.dm.getWindow().move(units, 0)
     self.dm.redraw()
 
 
