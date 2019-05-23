@@ -177,9 +177,6 @@ class Clipping:
   def sutherland_hodgman_clipping(self, objeto):
     pontos = copy.deepcopy(objeto)
 
-    if str(objeto) == 'Curva':
-        pontos = copy.deepcopy(objeto.pontos_curva)
-
     _left = self.clip_left(pontos)
     _right = self.clip_right(_left)
     _top = self.clip_top(_right)

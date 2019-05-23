@@ -132,3 +132,28 @@ class Transform:
     for i in range(len(coords)):
       new_coords = self.rotation(coords_denorm[i]["x"], coords_denorm[i]["y"], point["cx"], point["cy"], degrees)
       obj.setWorldCoords(i, new_coords[0], new_coords[1])
+
+  def calculatePointsBezier(self, coords):
+        converted_points = []
+
+        t = 0
+        i = 0
+        while i < len(coords):
+            while t < 1:
+                _x = (pow(1 - t, 3) * coords[i + 0]["x"]) + \
+                     (3 * t * pow(1 - t, 2) * coords[i + 1]["x"]) + \
+                     (3 * pow(t, 2) * (1 - t) * coords[i + 2]["x"]) + \
+                     (pow(t, 3) * coords[i + 3]["x"])
+
+                _y = (pow(1 - t, 3) * coords[i + 0]["y"]) + \
+                     (3 * t * pow(1 - t, 2) * coords[i + 1]["y"]) + \
+                     (3 * pow(t, 2) * (1 - t) * coords[i + 2]["y"]) + \
+                     (pow(t, 3) * coords[i + 3]["y"])
+
+                p = {"x": _x, "y": _y}
+                converted_points.append(p)
+
+                t += 0.05
+            i = i + 4
+
+        return converted_points

@@ -80,8 +80,20 @@ class Shape:
       
       if(self.__class__.__name__ == "Line"):
         clipped_coords = clipping.clipLine(self.normalized_coords)
-      else:
+      elif(self.__class__.__name__ == "Polygon"):
         clipped_coords = clipping.sutherland_hodgman_clipping(self.normalized_coords)
+      else:
+        coords = self.transform.calculatePointsBezier(self.normalized_coords)
+        clipped_coords = []
+        temp_coords = []
+        for i in range(0,len(coords)-1):
+          temp_coords = []
+          temp_coords.append(coords[i])
+          temp_coords.append(coords[i+1])
+          clipped = clipping.clipLine(temp_coords)
+          if(clipped):
+            clipped_coords.append(clipped[0])
+            clipped_coords.append(clipped[1])
       if(clipped_coords):
         point = viewport.transform(clipped_coords[0]["x"], clipped_coords[0]["y"])
         ctx.move_to(point["x"],point["y"])
@@ -90,5 +102,6 @@ class Shape:
           x2, y2 = entry["x"], entry["y"]
           point2 = viewport.transform(x2, y2)
           ctx.line_to(point2["x"],point2["y"])
-        ctx.close_path()
+        if(self.__class__.__name__ is not "Curve"):
+          ctx.close_path()
         ctx.stroke()
