@@ -136,20 +136,23 @@ class Transform:
   def calculatePointsBezier(self, coords):
         converted_points = []
 
+        mb = np.array([[-1, 3, -3, 1], [3, -6, 3, 0], [-3, 3, 0, 0], [1, 0, 0, 0]])
+        
         t = 0
         i = 0
         while i < len(coords):
+            c1x, c2x, c3x, c4x = coords[i + 0]["x"], coords[i + 1]["x"], coords[i + 2]["x"], coords[i + 3]["x"]
+            c1y, c2y, c3y, c4y = coords[i + 0]["y"], coords[i + 1]["y"], coords[i + 2]["y"], coords[i + 3]["y"]
+            gbx = np.array([[c1x], [c2x], [c3x], [c4x]])
+            gby = np.array([[c1y], [c2y], [c3y], [c4y]])
+            
             while t < 1:
-                _x = (pow(1 - t, 3) * coords[i + 0]["x"]) + \
-                     (3 * t * pow(1 - t, 2) * coords[i + 1]["x"]) + \
-                     (3 * pow(t, 2) * (1 - t) * coords[i + 2]["x"]) + \
-                     (pow(t, 3) * coords[i + 3]["x"])
-
-                _y = (pow(1 - t, 3) * coords[i + 0]["y"]) + \
-                     (3 * t * pow(1 - t, 2) * coords[i + 1]["y"]) + \
-                     (3 * pow(t, 2) * (1 - t) * coords[i + 2]["y"]) + \
-                     (pow(t, 3) * coords[i + 3]["y"])
-
+                xt = np.array([pow(t, 3), pow(t, 2), t, 1])
+                temp = xt.dot(mb)
+                
+                _x = temp.dot(gbx)
+                _y = temp.dot(gby)
+                
                 p = {"x": _x, "y": _y}
                 converted_points.append(p)
 
@@ -157,3 +160,4 @@ class Transform:
             i = i + 4
 
         return converted_points
+
