@@ -134,30 +134,68 @@ class Transform:
       obj.setWorldCoords(i, new_coords[0], new_coords[1])
 
   def calculatePointsBezier(self, coords):
-        converted_points = []
+    converted_points = []
 
-        mb = np.array([[-1, 3, -3, 1], [3, -6, 3, 0], [-3, 3, 0, 0], [1, 0, 0, 0]])
+    mb = np.array([[-1, 3, -3, 1], [3, -6, 3, 0], [-3, 3, 0, 0], [1, 0, 0, 0]])
+    
+    t = 0
+    i = 0
+    while i < len(coords):
+        c1x, c2x, c3x, c4x = coords[i + 0]["x"], coords[i + 1]["x"], coords[i + 2]["x"], coords[i + 3]["x"]
+        c1y, c2y, c3y, c4y = coords[i + 0]["y"], coords[i + 1]["y"], coords[i + 2]["y"], coords[i + 3]["y"]
+        gbx = np.array([[c1x], [c2x], [c3x], [c4x]])
+        gby = np.array([[c1y], [c2y], [c3y], [c4y]])
         
-        t = 0
-        i = 0
-        while i < len(coords):
-            c1x, c2x, c3x, c4x = coords[i + 0]["x"], coords[i + 1]["x"], coords[i + 2]["x"], coords[i + 3]["x"]
-            c1y, c2y, c3y, c4y = coords[i + 0]["y"], coords[i + 1]["y"], coords[i + 2]["y"], coords[i + 3]["y"]
-            gbx = np.array([[c1x], [c2x], [c3x], [c4x]])
-            gby = np.array([[c1y], [c2y], [c3y], [c4y]])
+        while t < 1:
+            xt = np.array([pow(t, 3), pow(t, 2), t, 1])
+            temp = xt.dot(mb)
             
-            while t < 1:
-                xt = np.array([pow(t, 3), pow(t, 2), t, 1])
-                temp = xt.dot(mb)
-                
-                _x = temp.dot(gbx)
-                _y = temp.dot(gby)
-                
-                p = {"x": _x, "y": _y}
-                converted_points.append(p)
+            _x = temp.dot(gbx)
+            _y = temp.dot(gby)
+            
+            p = {"x": _x, "y": _y}
+            converted_points.append(p)
 
-                t += 0.05
-            i = i + 4
+            t += 0.05
+        i = i + 4
 
-        return converted_points
+    return converted_points
 
+  def calculateBSpline(self, coords):
+    converted_points = []
+    n_points = 20
+    bspline = np.array([[-1, 3, -3, 1], [3, -6, 3, 0], [-3, 0, 3, 0], [1, 4, 1, 0]])
+    bspline_matrix = np.true_divide(bspline, 6)
+    proj_x = np.array([v["x"] for v in coords], dtype=float)
+    proj_y = np.array([v["y"] for v in coords], dtype=float)
+    for i in range(0, len(coords) - 3):
+      Gbs_x = proj_x[i:i + 4]
+      Gbs_y = proj_y[i:i + 4]
+
+      Cx = bspline_matrix.dot(Gbs_x)
+      Cy = bspline_matrix.dot(Gbs_y)
+
+      Dx = self.fd_matrix(1.0 / n_points).dot(Cx)
+      Dy = self.fd_matrix(1.0 / n_points).dot(Cy)
+      
+      for k in range(n_points + 1):
+        x = Dx[0]
+        y = Dy[0]
+        print(x)
+        print(y)
+        Dx = Dx + np.append(Dx[1:], 0)
+        Dy = Dy + np.append(Dy[1:], 0)
+
+        converted_points.append({"x": x, "y": y})
+    print(converted_points)
+    return converted_points
+
+  def fd_matrix(self, delta):
+    return np.array(
+        [
+            [0, 0, 0, 1],
+            [delta**3, delta**2, delta, 0],
+            [6 * delta**3, 2 * delta**2, 0, 0],
+            [6 * delta**3, 0, 0, 0]
+        ]
+    )

@@ -88,6 +88,7 @@ class Shape:
         clipped_coords = clipping.sutherland_hodgman_clipping(self.normalized_coords)
       else:
         coords = self.transform.calculatePointsBezier(self.normalized_coords)
+        #coords = self.transform.calculateBSpline(self.normalized_coords)
         clipped_coords = []
         temp_coords = []
         for i in range(0,len(coords)-1):
