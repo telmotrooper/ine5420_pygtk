@@ -108,7 +108,15 @@ class Transform:
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
-
+    
+    if(obj.__class__.__name__ == "Objeto3D"):
+      lista_pontos_3d = []
+      x, y, z = obj.get_centro_gravidade()
+      for segmento in obj.segmentos:
+        lista_pontos_3d.append(segmento[0])
+        lista_pontos_3d.append(segmento[1])
+      return self.escalonamento3d(lista_pontos_3d, 2, x, y, z)
+    
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
     center_point = self.center(coords_denorm)
