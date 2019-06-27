@@ -2,6 +2,8 @@ import numpy as np
 from display_file import DisplayFile
 from matrices import Matrices
 from variables import clipping_border_size as cbz
+from numpy.matlib import identity
+from math import sin, cos, pi
 
 display_file = DisplayFile()
 
@@ -119,6 +121,14 @@ class Transform:
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
+    if(obj.__class__.__name__ == "Objeto3D"):
+      lista_pontos_3d = []
+      x, y, z = obj.get_centro_gravidade()
+      for segmento in obj.segmentos:
+        lista_pontos_3d.append(segmento[0])
+        lista_pontos_3d.append(segmento[1])
+      self.rotacao3d(lista_pontos_3d, 'u',x,y,z)
+      return self.rotacao3d(lista_pontos_3d, 'r',x,y,z)
 
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
@@ -199,3 +209,93 @@ class Transform:
             [6 * delta**3, 0, 0, 0]
         ]
     )
+  
+  def escalonamento3d(self, pontos, mult, tx, ty, tz):
+    matriz_escala = np.array([[mult, 0, 0, 0], [0, mult, 0, 0], [0, 0, mult, 0], [0, 0, 0, 1]])
+    matriz_centro = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [-tx, -ty, -tz, 1]])
+    matriz_centro_objeto = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [tx, ty, tz, 1]])
+    matriz_transformacao = np.dot(np.dot(matriz_centro, matriz_escala), matriz_centro_objeto)
+
+    self.transformacao3d(pontos, matriz_transformacao)
+
+
+  def rotacao3d(self, pontos, direcao, tx, ty, tz):
+      if direcao == 'l':
+          theta = 10 * pi / 180
+          eixo = 'y'
+      if direcao == 'r':
+          theta = - 10 * pi / 180
+          eixo = 'y'
+      if direcao == 'u':
+          theta = 10 * pi / 180
+          eixo = 'x'
+      if direcao == 'd':
+          theta = - 10 * pi / 180
+          eixo = 'x'
+
+      identidade = identity(4, dtype=int)
+      matriz_rotacao_x = identidade
+      matriz_rotacao_y = identidade
+      matriz_rotacao_z = identidade
+
+      matriz_centro = np.array([[1, 0, 0, 0],
+                                [0, 1, 0, 0],
+                                [0, 0, 1, 0],
+                                [-tx, -ty, -tz, 1]])
+
+      matriz_centro_objeto = np.array([[1, 0, 0, 0],
+                                      [0, 1, 0, 0],
+                                      [0, 0, 1, 0],
+                                      [tx, ty, tz, 1]])
+
+      if eixo == 'y':
+          matriz_rotacao_x = np.array([[1, 0,  0, 0],
+                                    [0, cos(0), sin(0), 0],
+                                    [0, sin(0), cos(0), 0],
+                                    [0, 0, 0, 1]])
+
+          matriz_rotacao_y = np.array([[cos(theta), 0, -sin(theta), 0],
+                                      [0, 1, 0, 0],
+                                      [sin(theta), 0, cos(theta), 0],
+                                      [0, 0, 0, 1]])
+
+          matriz_rotacao_z = np.array([[cos(0),-sin(0), 0, 0],
+                                      [sin(0), cos(0), 0, 0],
+                                      [0, 0, 1, 0],
+                                      [0, 0, 0, 1]])
+
+
+      if eixo == 'x':
+
+          matriz_rotacao_z = np.array([[cos(theta),-sin(theta), 0, 0],
+                                      [sin(theta), cos(theta), 0, 0],
+                                      [0, 0, 1, 0],
+                                      [0, 0, 0, 1]])
+
+      matriz_transformacao = matriz_centro @ matriz_rotacao_x @ matriz_rotacao_y @ matriz_rotacao_z @ matriz_centro_objeto
+
+      self.transformacao3d(pontos, matriz_transformacao)
+
+
+  def transformacao3d(self, pontos3d, matriz_transformacao):
+      for ponto in pontos3d:
+          m = np.array([ponto.x, ponto.y, ponto.z, 1])
+          new_point = np.dot(m, matriz_transformacao)
+          ponto.x = new_point.flat[0]
+          ponto.y = new_point.flat[1]
+          ponto.z = new_point.flat[2]
+
+
+  def perspectiva(self, pontos3d, d):
+      M = np.array([[1, 0, 0, 0],
+                    [0, 1, 0, 0],
+                    [0, 0, 1, 0],
+                  [0, 0, d, 1]])
+
+      for ponto in pontos3d:
+          m = np.array([ponto.x, ponto.y, ponto.z, 1])
+          p = m @ M
+
+          ponto.x = p.flat[0] * d / p.flat[2]
+          ponto.y = p.flat[1] * d / p.flat[2]
+          ponto.z = d

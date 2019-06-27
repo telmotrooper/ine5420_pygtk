@@ -12,8 +12,8 @@ class Shape:
     self.id = generateRandomId()
     self.transform = Transform()
 
-  def addCoords(self, x, y):
-    self.world_coords.append({"x": x, "y": y})
+  def addCoords(self, x, y, z = 1):
+    self.world_coords.append({"x": x, "y": y, "z": z})
     self.normalized_coords.append(self.transform.normalize(x, y))
 
   def popCoords(self):

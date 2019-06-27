@@ -1,6 +1,8 @@
 from shapes.point import Point
 from shapes.line import Line
 from shapes.polygon import Polygon
+from shapes.point3d import Point3D
+from shapes.object3d import Objeto3D
 from display_file import DisplayFile
 from window import Window
 from transform import Transform
@@ -33,6 +35,7 @@ class DrawingManager:
     # print(self.transform.normalize(self.window.getWidth(),self.window.getHeight()))
     # print(self.transform.denormalize(-1,-1))
     # print(self.transform.denormalize(1,1))
+    
 
 
   def getWindow(self):
@@ -69,6 +72,16 @@ class DrawingManager:
 
       self.draw_counter += 1
       # print("draw() #{0}".format(self.draw_counter))
+    
+    for i in self.display_file.getObjects3d():
+      for s in i.segmentos:
+        coords0 = self.viewport.transformadaViewPortCoordenada(s[0].x, s[0].y)
+        coords1 = self.viewport.transformadaViewPortCoordenada(s[1].x, s[1].y)
+        ctx.move_to(coords0['x'], coords0['y'])
+        ctx.line_to(coords1['x'], coords1['y'])
+
+    ctx.stroke()
+    
 
     self.drawClippingBorder(da, ctx)
 
