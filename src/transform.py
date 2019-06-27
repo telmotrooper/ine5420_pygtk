@@ -97,6 +97,15 @@ class Transform:
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
 
+    if(obj.__class__.__name__ == "Objeto3D"):
+      lista_pontos_3d = []
+      x, y, z = obj.get_centro_gravidade()
+      for segmento in obj.segmentos:
+        lista_pontos_3d.append(segmento[0])
+        lista_pontos_3d.append(segmento[1])
+      return self.translacao3d(lista_pontos_3d, 5, 0, 0)
+
+
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
 
@@ -218,6 +227,14 @@ class Transform:
         ]
     )
   
+  def translacao3d(self, pontos3d, tx, ty, tz):
+    matriz_transformacao = np.array([[1, 0, 0, 0],
+                                     [0, 1, 0, 0],
+                                     [0, 0, 1, 0],
+                                     [tx, ty, tz, 1]])
+
+    self.transformacao3d(pontos3d, matriz_transformacao)
+
   def escalonamento3d(self, pontos, mult, tx, ty, tz):
     matriz_escala = np.array([[mult, 0, 0, 0], [0, mult, 0, 0], [0, 0, mult, 0], [0, 0, 0, 1]])
     matriz_centro = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [-tx, -ty, -tz, 1]])
