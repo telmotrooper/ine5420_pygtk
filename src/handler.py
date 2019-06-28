@@ -282,6 +282,12 @@ class Handler:
 
     self.dm.redraw()
   
+  def OnRotateObjectUp(self, button):
+    self.printToLog("OnRotateObjectUp")
+
+  def OnRotateObjectDown(self, button):
+    self.printToLog("OnRotateObjectDown")
+
   def onScaleObjectUp(self, button):
     if self.window_selected.get_active():
       return self.onZoomIn(button)
