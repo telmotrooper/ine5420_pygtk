@@ -4,7 +4,7 @@ from shapes.point import Point
 from shapes.line import Line
 from shapes.polygon import Polygon
 from shapes.point3d import Point3D
-from shapes.object3d import Objeto3D
+from shapes.object3d import Object3D
 from display_file import DisplayFile
 from transform import Transform
 from obj_handler import ObjHandler
@@ -125,7 +125,7 @@ class Handler:
 
   def onAddPolygon(self, button):
     self.printToLog("onAddPolygon")
-    '''
+
     name = self.builder.get_object("PolygonName").get_text()
     polygon = Polygon(name)
 
@@ -134,24 +134,24 @@ class Handler:
 
     self.display_file.addObject(polygon)
     self.temp_polygon = []
-    '''
-
-    segmentosobj = [[Point3D(50, 50, 0), Point3D(50, 100, 0)],
-                        [Point3D(50, 100, 0), Point3D(150, 100, 0)],
-                        [Point3D(150, 100, 0), Point3D(150, 50, 0)],
-                        [Point3D(150, 50, 0), Point3D(50, 50, 0)],
-                        [Point3D(50, 50, 50), Point3D(50, 100, 50)],
-                        [Point3D(50, 100, 50), Point3D(150, 100, 50)],
-                        [Point3D(150, 100, 50), Point3D(150, 50, 50)],
-                        [Point3D(150, 50, 50), Point3D(50, 50, 50)],
-                        [Point3D(50, 50, 0), Point3D(50, 50, 50)],
-                        [Point3D(50, 100, 0), Point3D(50, 100, 50)],
-                        [Point3D(150, 100, 0), Point3D(150, 100, 50)],
-                        [Point3D(150, 50, 0), Point3D(150, 50, 50)]]
-
-    objeto3d = Objeto3D(segmentosobj, 'primeiro obj 3d')
-    self.display_file.addObject3d(objeto3d)
     self.add_object_window.hide()
+
+  def onAddCube(self, button):
+    segmentosobj = [[Point3D(50, 50, 0), Point3D(50, 100, 0)],
+                    [Point3D(50, 100, 0), Point3D(150, 100, 0)],
+                    [Point3D(150, 100, 0), Point3D(150, 50, 0)],
+                    [Point3D(150, 50, 0), Point3D(50, 50, 0)],
+                    [Point3D(50, 50, 50), Point3D(50, 100, 50)],
+                    [Point3D(50, 100, 50), Point3D(150, 100, 50)],
+                    [Point3D(150, 100, 50), Point3D(150, 50, 50)],
+                    [Point3D(150, 50, 50), Point3D(50, 50, 50)],
+                    [Point3D(50, 50, 0), Point3D(50, 50, 50)],
+                    [Point3D(50, 100, 0), Point3D(50, 100, 50)],
+                    [Point3D(150, 100, 0), Point3D(150, 100, 50)],
+                    [Point3D(150, 50, 0), Point3D(150, 50, 50)]]
+
+    obj3d = Object3D(segmentosobj, 'primeiro obj 3d')
+    self.display_file.addObject3d(obj3d)
 
   def onAddPoint(self, button):
     self.printToLog("onAddPoint")

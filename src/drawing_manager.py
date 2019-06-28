@@ -2,7 +2,7 @@ from shapes.point import Point
 from shapes.line import Line
 from shapes.polygon import Polygon
 from shapes.point3d import Point3D
-from shapes.object3d import Objeto3D
+from shapes.object3d import Object3D
 from display_file import DisplayFile
 from window import Window
 from transform import Transform

@@ -97,7 +97,7 @@ class Transform:
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
 
-    if(obj.__class__.__name__ == "Objeto3D"):
+    if(obj.__class__.__name__ == "Object3D"):
       lista_pontos_3d = []
       x, y, z = obj.get_centro_gravidade()
       for segmento in obj.segmentos:
@@ -118,7 +118,7 @@ class Transform:
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
     
-    if(obj.__class__.__name__ == "Objeto3D"):
+    if(obj.__class__.__name__ == "Object3D"):
       lista_pontos_3d = []
       x, y, z = obj.get_centro_gravidade()
       for segmento in obj.segmentos:
@@ -138,7 +138,7 @@ class Transform:
     obj_list, index = tree_view.get_selection().get_selected()
     obj_id = obj_list[index][2]
     obj = display_file.getObject(obj_id)
-    if(obj.__class__.__name__ == "Objeto3D"):
+    if(obj.__class__.__name__ == "Object3D"):
       lista_pontos_3d = []
       x, y, z = obj.get_centro_gravidade()
       for segmento in obj.segmentos:

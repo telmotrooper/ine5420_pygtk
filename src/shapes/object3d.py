@@ -2,7 +2,7 @@ from shapes.point3d import Point3D
 from numpy import array, append
 from utils.gen_random_id import generateRandomId
 
-class Objeto3D:
+class Object3D:
     def __init__(self, _segmentos: [[Point3D, Point3D]], _name: str = None):
         self.segmentos = _segmentos
         self.name = _name
@@ -13,8 +13,8 @@ class Objeto3D:
 
     def __str__(self):
         if len(self.segmentos) == 1:
-            return 'Reta3D'
-        return 'Objeto3D'
+            return 'Rect3D'
+        return 'Object3D'
 
     def at(self, index: int):
         return self.segmentos[index]
