@@ -137,20 +137,22 @@ class Handler:
     self.add_object_window.hide()
 
   def onAddCube(self, button):
-    segmentosobj = [[Point3D(50, 50, 0), Point3D(50, 100, 0)],
-                    [Point3D(50, 100, 0), Point3D(150, 100, 0)],
-                    [Point3D(150, 100, 0), Point3D(150, 50, 0)],
-                    [Point3D(150, 50, 0), Point3D(50, 50, 0)],
-                    [Point3D(50, 50, 50), Point3D(50, 100, 50)],
-                    [Point3D(50, 100, 50), Point3D(150, 100, 50)],
-                    [Point3D(150, 100, 50), Point3D(150, 50, 50)],
-                    [Point3D(150, 50, 50), Point3D(50, 50, 50)],
-                    [Point3D(50, 50, 0), Point3D(50, 50, 50)],
-                    [Point3D(50, 100, 0), Point3D(50, 100, 50)],
-                    [Point3D(150, 100, 0), Point3D(150, 100, 50)],
-                    [Point3D(150, 50, 0), Point3D(150, 50, 50)]]
+    name = self.builder.get_object("3DName").get_text()
 
-    obj3d = Object3D(segmentosobj, 'primeiro obj 3d')
+    segments = [[Point3D(50, 50, 0), Point3D(50, 100, 0)],
+                [Point3D(50, 100, 0), Point3D(150, 100, 0)],
+                [Point3D(150, 100, 0), Point3D(150, 50, 0)],
+                [Point3D(150, 50, 0), Point3D(50, 50, 0)],
+                [Point3D(50, 50, 50), Point3D(50, 100, 50)],
+                [Point3D(50, 100, 50), Point3D(150, 100, 50)],
+                [Point3D(150, 100, 50), Point3D(150, 50, 50)],
+                [Point3D(150, 50, 50), Point3D(50, 50, 50)],
+                [Point3D(50, 50, 0), Point3D(50, 50, 50)],
+                [Point3D(50, 100, 0), Point3D(50, 100, 50)],
+                [Point3D(150, 100, 0), Point3D(150, 100, 50)],
+                [Point3D(150, 50, 0), Point3D(150, 50, 50)]]
+
+    obj3d = Object3D(segments, name)
     self.display_file.addObject3d(obj3d)
 
   def onAddPoint(self, button):

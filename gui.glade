@@ -1080,7 +1080,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="PolygonName1">
+                  <object class="GtkEntry" id="3DName">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="input_purpose">alpha</property>
