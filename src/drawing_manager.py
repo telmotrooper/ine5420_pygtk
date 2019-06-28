@@ -74,7 +74,7 @@ class DrawingManager:
       # print("draw() #{0}".format(self.draw_counter))
     
     for i in self.display_file.getObjects3d():
-      for s in i.segmentos:
+      for s in i.segments:
         coords0 = self.viewport.transformadaViewPortCoordenada(s[0].x, s[0].y)
         coords1 = self.viewport.transformadaViewPortCoordenada(s[1].x, s[1].y)
         ctx.move_to(coords0['x'], coords0['y'])

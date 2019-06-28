@@ -99,8 +99,8 @@ class Transform:
 
     if(obj.__class__.__name__ == "Object3D"):
       lista_pontos_3d = []
-      x, y, z = obj.get_centro_gravidade()
-      for segmento in obj.segmentos:
+      x, y, z = obj.get_gravity_center()
+      for segmento in obj.segments:
         lista_pontos_3d.append(segmento[0])
         lista_pontos_3d.append(segmento[1])
       return self.translacao3d(lista_pontos_3d, 5, 0, 0)
@@ -120,8 +120,8 @@ class Transform:
     
     if(obj.__class__.__name__ == "Object3D"):
       lista_pontos_3d = []
-      x, y, z = obj.get_centro_gravidade()
-      for segmento in obj.segmentos:
+      x, y, z = obj.get_gravity_center()
+      for segmento in obj.segments:
         lista_pontos_3d.append(segmento[0])
         lista_pontos_3d.append(segmento[1])
       return self.escalonamento3d(lista_pontos_3d, 2, x, y, z)
@@ -140,8 +140,8 @@ class Transform:
     obj = display_file.getObject(obj_id)
     if(obj.__class__.__name__ == "Object3D"):
       lista_pontos_3d = []
-      x, y, z = obj.get_centro_gravidade()
-      for segmento in obj.segmentos:
+      x, y, z = obj.get_gravity_center()
+      for segmento in obj.segments:
         lista_pontos_3d.append(segmento[0])
         lista_pontos_3d.append(segmento[1])
       self.rotacao3d(lista_pontos_3d, 'u',x,y,z)
