@@ -23,10 +23,10 @@ class Object3D:
         x = 0
         y = 0
         z = 0
-        for segmento in self.segments:
-            x += (segmento[0].x + segmento[1].x)/2
-            y += (segmento[0].y + segmento[1].y)/2
-            z += (segmento[0].z + segmento[1].z)/2
+        for segment in self.segments:
+            x += (segment[0].x + segment[1].x)/2
+            y += (segment[0].y + segment[1].y)/2
+            z += (segment[0].z + segment[1].z)/2
 
         return x / len(self.segments), y / len(self.segments), z / len(self.segments)
 

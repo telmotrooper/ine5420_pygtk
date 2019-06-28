@@ -154,6 +154,7 @@ class Handler:
 
     obj3d = Object3D(segments, name)
     self.display_file.addObject3d(obj3d)
+    self.add_object_window.hide()
 
   def onAddPoint(self, button):
     self.printToLog("onAddPoint")
