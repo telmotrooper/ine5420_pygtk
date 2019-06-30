@@ -1106,7 +1106,7 @@
                 <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkButton">
-                    <property name="label" translatable="yes">Draw a cube</property>
+                    <property name="label" translatable="yes">Draw a box</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -1156,6 +1156,9 @@
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
     <property name="filter">AllowedFiles</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can_focus">False</property>
@@ -1670,7 +1673,7 @@
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
-                                                        <property name="margin_bottom">2</property>
+                                                        <property name="margin_right">1</property>
                                                         <signal name="clicked" handler="OnRotateObjectUp" swapped="no"/>
                                                       </object>
                                                       <packing>
@@ -1685,7 +1688,7 @@
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
-                                                        <property name="margin_top">2</property>
+                                                        <property name="margin_left">1</property>
                                                         <signal name="clicked" handler="OnRotateObjectDown" swapped="no"/>
                                                       </object>
                                                       <packing>
