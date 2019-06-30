@@ -285,8 +285,34 @@ class Handler:
   def OnRotateObjectUp(self, button):
     self.printToLog("OnRotateObjectUp")
 
+    angle =int(self.object_rotation_angle.get_text())
+    
+    if self.object_radio_button.get_active():
+      self.transform.rotate3d(self.tree_view, angle, 'center',0,0)
+    elif self.world_radio_button.get_active():
+      self.transform.rotate3d(self.tree_view, angle, 'world',0,0)
+    elif self.point_radio_button.get_active():
+      x = float(self.rotate_x.get_text())
+      y = float(self.rotate_y.get_text())
+      self.transform.rotate3d(self.tree_view, angle, 'point',x,y)
+
+    self.dm.redraw()
+
   def OnRotateObjectDown(self, button):
     self.printToLog("OnRotateObjectDown")
+
+    angle =int(self.object_rotation_angle.get_text())
+    
+    if self.object_radio_button.get_active():
+      self.transform.rotate3d(self.tree_view, -angle, 'center',0,0)
+    elif self.world_radio_button.get_active():
+      self.transform.rotate3d(self.tree_view, -angle, 'world',0,0)
+    elif self.point_radio_button.get_active():
+      x = float(self.rotate_x.get_text())
+      y = float(self.rotate_y.get_text())
+      self.transform.rotate3d(self.tree_view, -angle, 'point',x,y)
+
+    self.dm.redraw()
 
   def onScaleObjectUp(self, button):
     if self.window_selected.get_active():

@@ -141,12 +141,23 @@ class Transform:
     obj = display_file.getObject(obj_id)
     if(obj.__class__.__name__ == "Object3D"):
       lista_pontos_3d = []
-      x, y, z = obj.get_gravity_center()
+      
       for segment in obj.segments:
         lista_pontos_3d.append(segment[0])
         lista_pontos_3d.append(segment[1])
-      self.rotacao3d(lista_pontos_3d, 'u',x,y,z)
-      return self.rotacao3d(lista_pontos_3d, 'r',x,y,z)
+      
+      if(rotation_type == 'center'):
+        x, y, z = obj.get_gravity_center()
+
+      elif(rotation_type == 'world'):
+        x, y, z = 0, 0, 0
+      else:
+        x,y,z = x,y,0
+
+      if(degrees < 0):
+        return self.rotacao3d(lista_pontos_3d, 'l',x,y,z)
+      else:
+        return self.rotacao3d(lista_pontos_3d, 'r',x,y,z)      
 
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
@@ -161,6 +172,30 @@ class Transform:
       new_coords = self.rotation(coords_denorm[i]["x"], coords_denorm[i]["y"], point["cx"], point["cy"], degrees)
       obj.setWorldCoords(i, new_coords[0], new_coords[1])
 
+  def rotate3d(self, tree_view, degrees, rotation_type, x, y):
+    obj_list, index = tree_view.get_selection().get_selected()
+    obj_id = obj_list[index][2]
+    obj = display_file.getObject(obj_id)
+    if(obj.__class__.__name__ == "Object3D"):
+      lista_pontos_3d = []
+      
+      for segment in obj.segments:
+        lista_pontos_3d.append(segment[0])
+        lista_pontos_3d.append(segment[1])
+      
+      if(rotation_type == 'center'):
+        x, y, z = obj.get_gravity_center()
+
+      elif(rotation_type == 'world'):
+        x, y, z = 0, 0, 0
+      else:
+        x,y,z = x,y,0
+
+      if(degrees < 0):
+        return self.rotacao3d(lista_pontos_3d, 'd',x,y,z)
+      else:
+        return self.rotacao3d(lista_pontos_3d, 'u',x,y,z)     
+  
   def calculatePointsBezier(self, coords):
     converted_points = []
 

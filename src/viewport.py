@@ -31,6 +31,6 @@ class Viewport(Window):
     xvp_max, yvp_max = self.x_max, self.y_max
 
     xvp = ((x - xw_min)/(xw_max - xw_min)) * (xvp_max - xvp_min)
-    yvp = ((y - yw_min)/(yw_max - yw_min)) * (yvp_max - yvp_min)
+    yvp = (1 - (y - yw_min)/(yw_max - yw_min)) * (yvp_max - yvp_min)
 
     return { "x": xvp, "y": yvp }
