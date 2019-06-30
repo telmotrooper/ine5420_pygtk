@@ -125,7 +125,7 @@ class Transform:
       for segment in obj.segments:
         lista_pontos_3d.append(segment[0])
         lista_pontos_3d.append(segment[1])
-      return self.escalonamento3d(lista_pontos_3d, 2, x, y, z)
+      return self.escalonamento3d(lista_pontos_3d, sx, x, y, z)
     
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
