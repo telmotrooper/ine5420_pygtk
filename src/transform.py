@@ -155,9 +155,9 @@ class Transform:
         x,y,z = x,y,0
 
       if(degrees < 0):
-        return self.rotacao3d(lista_pontos_3d, 'l',x,y,z)
+        return self.rotacao3d(lista_pontos_3d, 'd',x,y,z)
       else:
-        return self.rotacao3d(lista_pontos_3d, 'r',x,y,z)      
+        return self.rotacao3d(lista_pontos_3d, 'u',x,y,z)      
 
     coords = obj.getNormalizedCoords()
     coords_denorm = self.denormalizeList(coords)
@@ -192,9 +192,9 @@ class Transform:
         x,y,z = x,y,0
 
       if(degrees < 0):
-        return self.rotacao3d(lista_pontos_3d, 'd',x,y,z)
+        return self.rotacao3d(lista_pontos_3d, 'l',x,y,z)
       else:
-        return self.rotacao3d(lista_pontos_3d, 'u',x,y,z)     
+        return self.rotacao3d(lista_pontos_3d, 'r',x,y,z)     
   
   def calculatePointsBezier(self, coords):
     converted_points = []
