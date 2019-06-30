@@ -99,11 +99,12 @@ class Transform:
 
     if(obj.__class__.__name__ == "Object3D"):
       lista_pontos_3d = []
-      x, y, z = obj.get_gravity_center()
+
       for segment in obj.segments:
         lista_pontos_3d.append(segment[0])
         lista_pontos_3d.append(segment[1])
-      return self.translacao3d(lista_pontos_3d, 5, 0, 0)
+
+      return self.translacao3d(lista_pontos_3d, x, -y, 0)
 
 
     coords = obj.getNormalizedCoords()
