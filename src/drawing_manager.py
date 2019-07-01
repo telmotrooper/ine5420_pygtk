@@ -9,6 +9,7 @@ from transform import Transform
 from viewport import Viewport
 from variables import clipping_border_size as cbz
 from clipping import Clipping
+import copy
 
 class DrawingManager:
   def __init__(self, da):
@@ -75,6 +76,25 @@ class DrawingManager:
       # print("draw() #{0}".format(self.draw_counter))
     
     for i in self.display_file.getObjects3d():
+      obj_perspectiva = copy.deepcopy(i)
+      lista_pontos_3d = []
+      for segmento in obj_perspectiva.segments:
+        lista_pontos_3d.append(segmento[0])
+        lista_pontos_3d.append(segmento[1])
+
+      self.transform.perspectiva(lista_pontos_3d, 100)
+
+      for s in obj_perspectiva.segments:
+          print(s[0].x, s[0].y)
+          print(s[1].x, s[1].y)
+
+
+          coords0 = self.viewport.transformadaViewPortCoordenada(s[0].x, s[0].y)
+          coords1 = self.viewport.transformadaViewPortCoordenada(s[1].x, s[1].y)
+          ctx.move_to(coords0['x'], coords0['y'])
+          ctx.line_to(coords1['x'], coords1['y'])
+
+      '''
       for s in i.segments:
         reta = [{"x": s[0].x, "y": s[0].y},{"x": s[1].x, "y": s[1].y}]
         clipping = Clipping()
@@ -84,7 +104,7 @@ class DrawingManager:
           coords1 = self.viewport.transformadaViewPortCoordenada(coords[1]['x'], coords[1]['y'])
           ctx.move_to(coords0['x'], coords0['y'])
           ctx.line_to(coords1['x'], coords1['y'])
-
+'''
     ctx.stroke()
     
 
