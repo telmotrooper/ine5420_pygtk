@@ -8,6 +8,7 @@ from window import Window
 from transform import Transform
 from viewport import Viewport
 from variables import clipping_border_size as cbz
+from clipping import Clipping
 
 class DrawingManager:
   def __init__(self, da):
@@ -75,10 +76,14 @@ class DrawingManager:
     
     for i in self.display_file.getObjects3d():
       for s in i.segments:
-        coords0 = self.viewport.transformadaViewPortCoordenada(s[0].x, s[0].y)
-        coords1 = self.viewport.transformadaViewPortCoordenada(s[1].x, s[1].y)
-        ctx.move_to(coords0['x'], coords0['y'])
-        ctx.line_to(coords1['x'], coords1['y'])
+        reta = [{"x": s[0].x, "y": s[0].y},{"x": s[1].x, "y": s[1].y}]
+        clipping = Clipping()
+        coords = clipping.cohenSutherland(reta, self.window)
+        if(coords):
+          coords0 = self.viewport.transformadaViewPortCoordenada(coords[0]['x'], coords[0]['y'])
+          coords1 = self.viewport.transformadaViewPortCoordenada(coords[1]['x'], coords[1]['y'])
+          ctx.move_to(coords0['x'], coords0['y'])
+          ctx.line_to(coords1['x'], coords1['y'])
 
     ctx.stroke()
     

@@ -31,9 +31,13 @@ class Clipping:
         coords_inv[1] = t
         return self.liangBarsky(coords_inv)
 
-  def region_code(self, x, y):
-    xw_min, xw_max = -1, 1
-    yw_min, yw_max = -1, 1
+  def region_code(self, x, y, window):
+    if(not window):
+      xw_min, xw_max = -1, 1
+      yw_min, yw_max = -1, 1
+    else:
+      xw_min, yw_min = window.getMin()["x"] + 10, window.getMin()["y"] + 10
+      xw_max, yw_max = window.getMax()["x"] + 10, window.getMax()["y"] + 10
     code = self.INSIDE
     if x < xw_min:
       code |= self.LEFT
@@ -46,14 +50,18 @@ class Clipping:
     
     return code
   
-  def cohenSutherland(self, copy_coords):
+  def cohenSutherland(self, copy_coords, window = False):
     print("Clipping with Cohen-Sutherland")
     copy_coords = copy.deepcopy(copy_coords)
-    xw_min, xw_max = -1, 1
-    yw_min, yw_max = -1, 1
+    if(not window):
+      xw_min, xw_max = -1, 1
+      yw_min, yw_max = -1, 1
+    else:
+      xw_min, yw_min = window.getMin()["x"] + 10, window.getMin()["y"] + 10
+      xw_max, yw_max = window.getMax()["x"] + 10, window.getMax()["y"] + 10
 
-    code_0 = self.region_code(copy_coords[0]["x"], copy_coords[0]["y"])
-    code_1 = self.region_code(copy_coords[1]["x"], copy_coords[1]["y"])
+    code_0 = self.region_code(copy_coords[0]["x"], copy_coords[0]["y"], window)
+    code_1 = self.region_code(copy_coords[1]["x"], copy_coords[1]["y"], window)
 
     aceita = False
     if(code_0 & code_1):
@@ -97,13 +105,13 @@ class Clipping:
           copy_coords[0]["x"] = x
           copy_coords[0]["y"] = y
 
-          code_0 = self.region_code(copy_coords[0]["x"], copy_coords[0]["y"])
+          code_0 = self.region_code(copy_coords[0]["x"], copy_coords[0]["y"], window)
         
         else:
           copy_coords[1]["x"] = x
           copy_coords[1]["y"] = y
 
-          code_1 = self.region_code(copy_coords[1]["x"], copy_coords[1]["y"])
+          code_1 = self.region_code(copy_coords[1]["x"], copy_coords[1]["y"], window)
     
     return copy_coords
       
