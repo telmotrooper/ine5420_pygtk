@@ -42,6 +42,10 @@ class Window:
   def zoom(self, percentage, caller=None):
     for i in self.display_file.getObjects():
       i.scaleNormalizedCoords(percentage)
+    
+    for j in self.display_file.getObjects3d():
+      j.scale(percentage)
+
 
   def setMin(self, x, y):
     Window.x_min = x

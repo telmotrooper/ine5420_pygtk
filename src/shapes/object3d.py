@@ -1,12 +1,14 @@
 from shapes.point3d import Point3D
 from numpy import array, append
 from utils.gen_random_id import generateRandomId
+from transform import Transform
 
 class Object3D:
     def __init__(self, _segments: [[Point3D, Point3D]], _name: str = None):
         self.segments = _segments
         self.name = _name
         self.id = generateRandomId()
+        self.transform = Transform()
 
     def get_attributes(self):
         return str(self), self.name
@@ -41,3 +43,11 @@ class Object3D:
 
     def getId(self):
       return self.id
+
+    def scale(self, percentage):
+        x, y, z = self.get_gravity_center()
+        lista_pontos_3d = []
+        for segment in self.segments:
+            lista_pontos_3d.append(segment[0])
+            lista_pontos_3d.append(segment[1])
+        return self.transform.escalonamento3d(lista_pontos_3d, percentage, x, y, z)
