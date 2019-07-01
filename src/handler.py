@@ -36,6 +36,9 @@ class Handler:
     self.window_selected = self.builder.get_object("WindowSelected")
     self.object_selected = self.builder.get_object("ObjectSelected")
 
+    self.parallel_projection = self.builder.get_object("ParallelProjectionRadioButton")
+    self.perspective_projection = self.builder.get_object("PerspectiveProjectionRadioButton")
+
     self.text_buffer = self.text_view.get_buffer()
     self.display_file = DisplayFile()
     self.display_file.setBuilder(builder)
