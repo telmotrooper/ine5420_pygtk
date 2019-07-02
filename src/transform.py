@@ -244,13 +244,13 @@ class Transform:
       for k in range(n_points + 1):
         x = Dx[0]
         y = Dy[0]
-        print(x)
-        print(y)
+        #print(x)
+        #print(y)
         Dx = Dx + np.append(Dx[1:], 0)
         Dy = Dy + np.append(Dy[1:], 0)
 
         converted_points.append({"x": x, "y": y})
-    print(converted_points)
+    #print(converted_points)
     return converted_points
 
   def fd_matrix(self, delta):

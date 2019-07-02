@@ -38,8 +38,13 @@ class DrawingManager:
     # print(self.transform.denormalize(-1,-1))
     # print(self.transform.denormalize(1,1))
     
+    self.projection = 'parallel'
 
 
+  def setProjection(self, name):
+    self.projection = name
+
+  
   def getWindow(self):
     return self.window
 
@@ -74,37 +79,39 @@ class DrawingManager:
 
       self.draw_counter += 1
       # print("draw() #{0}".format(self.draw_counter))
+
+    if(self.projection == 'perspective'):
+      for i in self.display_file.getObjects3d():
+        obj_perspectiva = copy.deepcopy(i)
+        lista_pontos_3d = []
+        for segmento in obj_perspectiva.segments:
+          lista_pontos_3d.append(segmento[0])
+          lista_pontos_3d.append(segmento[1])
+
+        self.transform.perspectiva(lista_pontos_3d, 100)
+
+        for s in obj_perspectiva.segments:
+            #print(s[0].x, s[0].y)
+            #print(s[1].x, s[1].y)
+
+
+            coords0 = self.viewport.transformadaViewPortCoordenada(s[0].x, s[0].y)
+            coords1 = self.viewport.transformadaViewPortCoordenada(s[1].x, s[1].y)
+            ctx.move_to(coords0['x'], coords0['y'])
+            ctx.line_to(coords1['x'], coords1['y'])
     
-    for i in self.display_file.getObjects3d():
-      obj_perspectiva = copy.deepcopy(i)
-      lista_pontos_3d = []
-      for segmento in obj_perspectiva.segments:
-        lista_pontos_3d.append(segmento[0])
-        lista_pontos_3d.append(segmento[1])
+    else:
+      for i in self.display_file.getObjects3d():
+        for s in i.segments:
+          reta = [{"x": s[0].x, "y": s[0].y},{"x": s[1].x, "y": s[1].y}]
+          clipping = Clipping()
+          coords = clipping.cohenSutherland(reta, self.window)
+          if(coords):
+            coords0 = self.viewport.transformadaViewPortCoordenada(coords[0]['x'], coords[0]['y'])
+            coords1 = self.viewport.transformadaViewPortCoordenada(coords[1]['x'], coords[1]['y'])
+            ctx.move_to(coords0['x'], coords0['y'])
+            ctx.line_to(coords1['x'], coords1['y'])
 
-      self.transform.perspectiva(lista_pontos_3d, 100)
-
-      for s in obj_perspectiva.segments:
-          print(s[0].x, s[0].y)
-          print(s[1].x, s[1].y)
-
-
-          coords0 = self.viewport.transformadaViewPortCoordenada(s[0].x, s[0].y)
-          coords1 = self.viewport.transformadaViewPortCoordenada(s[1].x, s[1].y)
-          ctx.move_to(coords0['x'], coords0['y'])
-          ctx.line_to(coords1['x'], coords1['y'])
-
-      '''
-      for s in i.segments:
-        reta = [{"x": s[0].x, "y": s[0].y},{"x": s[1].x, "y": s[1].y}]
-        clipping = Clipping()
-        coords = clipping.cohenSutherland(reta, self.window)
-        if(coords):
-          coords0 = self.viewport.transformadaViewPortCoordenada(coords[0]['x'], coords[0]['y'])
-          coords1 = self.viewport.transformadaViewPortCoordenada(coords[1]['x'], coords[1]['y'])
-          ctx.move_to(coords0['x'], coords0['y'])
-          ctx.line_to(coords1['x'], coords1['y'])
-'''
     ctx.stroke()
     
 

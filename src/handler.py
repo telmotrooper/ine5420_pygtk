@@ -250,6 +250,15 @@ class Handler:
       self.printToLog("Line clipping algorithm set to Liang-Barsky.")
       self.clipping.setlineClippingAlgorithm("lb")
 
+
+  def onProjectionChanged(self, button):
+    if self.parallel_projection.get_active():
+      self.printToLog("Parallel.")
+      self.dm.setProjection('parallel')
+    elif self.perspective_projection.get_active():
+      self.printToLog("Perspective.")
+      self.dm.setProjection('perspective')
+
   def onRotateObjectLeft(self, button):
     if self.window_selected.get_active():
       return self.onRotateWindowLeft(button)

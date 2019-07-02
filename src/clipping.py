@@ -178,7 +178,7 @@ class Clipping:
       if(u2 < 1):
         copy_coords[1]["x"] = copy_coords[0]["x"] + u2 * dx
         copy_coords[1]["y"] = copy_coords[0]["y"] + u2 * dy
-      print(copy_coords)
+      #print(copy_coords)
       return copy_coords
 
 
